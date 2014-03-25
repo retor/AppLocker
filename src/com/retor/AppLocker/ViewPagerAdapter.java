@@ -7,9 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
-/**
- * Created by Антон on 25.03.14.
- */
 public class ViewPagerAdapter extends FragmentPagerAdapter {
     ArrayList<Fragment> fragments;
 
@@ -27,4 +24,16 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return fragments.size();
     }
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch (position) {
+            case 0:
+                return "Title One";
+            case 1:
+                return "Title Two";
+            default:
+                return null;
+        }
+    }
+
 }

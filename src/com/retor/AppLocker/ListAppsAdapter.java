@@ -59,7 +59,7 @@ public class ListAppsAdapter extends BaseAdapter  {
             vh.appOther = (TextView)v.findViewById(R.id.otherApp);
             vh.appIcon = (ImageView)v.findViewById(R.id.iconApp);
 
-            String appNameStr = appList.get(position).packageName; //appList.get(position).name + " " + appList.get(position).sourceDir;
+            String appNameStr = appList.get(position).loadLabel(pm).toString(); //appList.get(position).name + " " + appList.get(position).sourceDir;
             String appOtherStr = appList.get(position).nativeLibraryDir + " " + appList.get(position).taskAffinity;
             Drawable appIco = appList.get(position).loadIcon(pm);
 

@@ -29,8 +29,9 @@ public class Home extends FragmentActivity {
         pm = getPackageManager();
         pager = (ViewPager)findViewById(R.id.viewpager);
         pagerTab = (PagerTabStrip)findViewById(R.id.pagertab);
-        appList = new ArrayList<ApplicationInfo>(pm.getInstalledApplications(0));
 
+        appList = new ArrayList<ApplicationInfo>(pm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES));//(pm.getInstalledApplications(PackageManager.GET_ACTIVITIES));
+        //appList = ;
         appsAdapter = new ListAppsAdapter(getApplicationContext(), appList, R.layout.app, pm);
         listApps = new ListApps();
         listApps.setListAdapter(appsAdapter);

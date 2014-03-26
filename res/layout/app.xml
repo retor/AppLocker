@@ -19,7 +19,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/checkApp"
             android:layout_alignBottom="@+id/nameApp"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:focusableInTouchMode="false"
+            android:focusable="false"/>
 
     <TextView
             android:layout_width="wrap_content"

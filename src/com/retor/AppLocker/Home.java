@@ -9,18 +9,20 @@ import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Home extends FragmentActivity {
 
     ViewPager pager;
     ListApps listApps;
+    ListApps temp;
     ListAppsAdapter appsAdapter;
     ArrayList<Fragment> fragments;
     ViewPagerAdapter pagerAdapter;
     PagerTabStrip pagerTab;
 
     PackageManager pm;
-    ArrayList<ApplicationInfo> appList;
+    List<ApplicationInfo> appList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,14 +32,17 @@ public class Home extends FragmentActivity {
         pager = (ViewPager)findViewById(R.id.viewpager);
         pagerTab = (PagerTabStrip)findViewById(R.id.pagertab);
 
-        appList = new ArrayList<ApplicationInfo>(pm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES));//(pm.getInstalledApplications(PackageManager.GET_ACTIVITIES));
+        appList = new ArrayList<ApplicationInfo>();
+        appList = pm.getInstalledApplications(PackageManager.GET_ACTIVITIES);//(pm.getInstalledApplications(PackageManager.GET_ACTIVITIES));
         //appList = ;
         appsAdapter = new ListAppsAdapter(getApplicationContext(), appList, R.layout.app, pm);
         listApps = new ListApps();
+        temp = new ListApps();
         listApps.setListAdapter(appsAdapter);
 
         fragments = new ArrayList<Fragment>();
         fragments.add(0, listApps);
+        fragments.add(1,temp);
 
         pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments);
         pager.setAdapter(pagerAdapter);

@@ -7,20 +7,18 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ListAppsAdapter extends BaseAdapter  {
+public class ListAppsAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
     Context context;
-    ArrayList<ApplicationInfo> appList;
+    List<ApplicationInfo> appList;
     int res;
     PackageManager pm;
 
-    public ListAppsAdapter(Context _context, ArrayList<ApplicationInfo> _appList, int _res, PackageManager _pm) {
+    public ListAppsAdapter(Context _context, List<ApplicationInfo> _appList, int _res, PackageManager _pm) {
         context = _context;
         res = _res;
         appList = new ArrayList<ApplicationInfo>();
@@ -58,18 +56,30 @@ public class ListAppsAdapter extends BaseAdapter  {
             vh.appName = (TextView)v.findViewById(R.id.nameApp);
             vh.appOther = (TextView)v.findViewById(R.id.otherApp);
             vh.appIcon = (ImageView)v.findViewById(R.id.iconApp);
+            vh.appCheck = (CheckBox)v.findViewById(R.id.checkApp);
 
-            String appNameStr = appList.get(position).loadLabel(pm).toString(); //appList.get(position).name + " " + appList.get(position).sourceDir;
-            String appOtherStr = appList.get(position).nativeLibraryDir + " " + appList.get(position).taskAffinity;
+            String appNameStr = appList.get(position).loadLabel(pm).toString();//appList.get(position).name + " " + appList.get(position).sourceDir;
+            String appOtherStr = appList.get(position).nativeLibraryDir + " " + pm.getLaunchIntentForPackage(appList.get(position).packageName);
             Drawable appIco = appList.get(position).loadIcon(pm);
 
             vh.appName.setText(appNameStr);
             vh.appOther.setText(appOtherStr);
+            vh.appCheck.setChecked(false);
             vh.appIcon.setImageDrawable(appIco);
         }else{
             v = convertView;
         }
         return v;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        CheckBox checkBox;
+        view.setSelected(true);
+        checkBox = (CheckBox)view.findViewById(R.id.checkApp);
+        checkBox.setChecked(true);
+
     }
 
     public class ViewHolder{

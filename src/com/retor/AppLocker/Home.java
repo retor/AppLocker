@@ -15,7 +15,8 @@ public class Home extends FragmentActivity {
 
     ViewPager pager;
     ListApps listApps;
-    ListApps temp;
+    ListApps listAppsAuto;
+    ListApps listTasks;
     ListAppsAdapter appsAdapter;
     ArrayList<Fragment> fragments;
     ViewPagerAdapter pagerAdapter;
@@ -41,13 +42,15 @@ public class Home extends FragmentActivity {
 
         appsAdapter = new ListAppsAdapter(getApplicationContext(), appList, R.layout.app, pm);
         listApps = new ListApps();
-        temp = new ListApps();
+        listAppsAuto = new ListApps();
+        listTasks = new ListApps();
         listApps.setListAdapter(appsAdapter);
-        temp.setListAdapter(new ListAppsAdapter(getApplicationContext(),appListAuto, R.layout.app, getPackageManager()));
+        listAppsAuto.setListAdapter(new ListAppsAdapter(getApplicationContext(),appListAuto, R.layout.app, getPackageManager()));
 
         fragments = new ArrayList<Fragment>();
         fragments.add(0, listApps);
-        fragments.add(1,temp);
+        fragments.add(1, listAppsAuto);
+        fragments.add(2, listTasks);
 
         pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments);
         pager.setAdapter(pagerAdapter);

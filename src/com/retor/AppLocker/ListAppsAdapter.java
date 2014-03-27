@@ -1,6 +1,7 @@
 package com.retor.AppLocker;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -58,9 +59,8 @@ public class ListAppsAdapter extends BaseAdapter implements AdapterView.OnItemCl
             vh.appIcon = (ImageView)v.findViewById(R.id.iconApp);
             vh.appCheck = (CheckBox)v.findViewById(R.id.checkApp);
 
-
             String appNameStr = appList.get(position).applicationInfo.loadLabel(pm).toString();//appList.get(position).name + " " + appList.get(position).sourceDir;
-            String appOtherStr = appList.get(position).applicationInfo.nativeLibraryDir + " " + pm.getLaunchIntentForPackage(appList.get(position).packageName);
+            String appOtherStr = appList.get(position).applicationInfo.processName.toString();//.applicationInfo.manageSpaceActivityName;//.metaData.getClassLoader().toString();//pm.getLaunchIntentForPackage(appList.get(position).applicationInfo.packageName);
             Drawable appIco = appList.get(position).applicationInfo.loadIcon(pm);
 
             vh.appName.setText(appNameStr);
@@ -76,10 +76,10 @@ public class ListAppsAdapter extends BaseAdapter implements AdapterView.OnItemCl
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-       /* CheckBox checkBox;
+        CheckBox checkBox;
         view.setSelected(true);
         checkBox = (CheckBox)view.findViewById(R.id.checkApp);
-        checkBox.setChecked(true);*/
+        checkBox.setChecked(true);
 
     }
 

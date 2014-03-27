@@ -1,7 +1,7 @@
 package com.retor.AppLocker;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -14,14 +14,14 @@ import java.util.List;
 
 public class ListAppsAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
     Context context;
-    List<ApplicationInfo> appList;
+    List<PackageInfo> appList;
     int res;
     PackageManager pm;
 
-    public ListAppsAdapter(Context _context, List<ApplicationInfo> _appList, int _res, PackageManager _pm) {
+    public ListAppsAdapter(Context _context, List<PackageInfo> _appList, int _res, PackageManager _pm) {
         context = _context;
         res = _res;
-        appList = new ArrayList<ApplicationInfo>();
+        appList = new ArrayList<PackageInfo>();
         appList = _appList;
         pm = _pm;
     }
@@ -32,7 +32,7 @@ public class ListAppsAdapter extends BaseAdapter implements AdapterView.OnItemCl
     }
 
     @Override
-    public ApplicationInfo getItem(int position) {
+    public PackageInfo getItem(int position) {
         return appList.get(position);
     }
 
@@ -58,9 +58,10 @@ public class ListAppsAdapter extends BaseAdapter implements AdapterView.OnItemCl
             vh.appIcon = (ImageView)v.findViewById(R.id.iconApp);
             vh.appCheck = (CheckBox)v.findViewById(R.id.checkApp);
 
-            String appNameStr = appList.get(position).loadLabel(pm).toString();//appList.get(position).name + " " + appList.get(position).sourceDir;
-            String appOtherStr = appList.get(position).nativeLibraryDir + " " + pm.getLaunchIntentForPackage(appList.get(position).packageName);
-            Drawable appIco = appList.get(position).loadIcon(pm);
+
+            String appNameStr = appList.get(position).applicationInfo.loadLabel(pm).toString();//appList.get(position).name + " " + appList.get(position).sourceDir;
+            String appOtherStr = appList.get(position).applicationInfo.nativeLibraryDir + " " + pm.getLaunchIntentForPackage(appList.get(position).packageName);
+            Drawable appIco = appList.get(position).applicationInfo.loadIcon(pm);
 
             vh.appName.setText(appNameStr);
             vh.appOther.setText(appOtherStr);
@@ -75,10 +76,10 @@ public class ListAppsAdapter extends BaseAdapter implements AdapterView.OnItemCl
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        CheckBox checkBox;
+       /* CheckBox checkBox;
         view.setSelected(true);
         checkBox = (CheckBox)view.findViewById(R.id.checkApp);
-        checkBox.setChecked(true);
+        checkBox.setChecked(true);*/
 
     }
 

@@ -32,6 +32,11 @@ public class Home extends FragmentActivity {
         pm = getPackageManager();
         pager = (ViewPager)findViewById(R.id.viewpager);
         pagerTab = (PagerTabStrip)findViewById(R.id.pagertab);
+        int color = 0x00FF8800;
+        pagerTab.setTabIndicatorColor(color);
+        pagerTab.setFocusable(false);
+        pagerTab.setMotionEventSplittingEnabled(true);
+        
 
         appList = new ArrayList<PackageInfo>();
         appList = pm.getInstalledPackages(getPackageManager().GET_ACTIVITIES); //getInstalledApplications(4);

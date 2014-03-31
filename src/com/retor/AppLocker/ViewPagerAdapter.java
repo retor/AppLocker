@@ -1,14 +1,16 @@
 package com.retor.AppLocker;
 
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-
-import java.util.ArrayList;
+import android.support.v4.app.*;
+import android.widget.*;
+import java.util.*;
+import android.view.*;
+import android.content.*;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
+				
     ArrayList<Fragment> fragments;
+		
 
     public ViewPagerAdapter(FragmentManager fm, ArrayList<Fragment> _fragments) {
         super(fm);

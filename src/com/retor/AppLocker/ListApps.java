@@ -9,11 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Toast;
+import android.widget.AdapterView.*;
+import android.widget.*;
 
 /**
  * Created by Антон on 25.03.14.
  */
-public class ListApps extends ListFragment implements AdapterView.OnItemClickListener {
+public class ListApps extends ListFragment implements OnItemClickListener{
+
     Context context;
 
     @Override
@@ -29,6 +32,7 @@ public class ListApps extends ListFragment implements AdapterView.OnItemClickLis
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+				getListView().setOnItemClickListener(this);
     }
 
     @Override
@@ -40,6 +44,6 @@ public class ListApps extends ListFragment implements AdapterView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(context, position, Toast.LENGTH_SHORT).show();
+       Toast.makeText(context, String.valueOf(position), Toast.LENGTH_SHORT).show();
     }
 }

@@ -12,6 +12,10 @@ import android.util.TypedValue;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.widget.AdapterView.*;
+import android.widget.*;
+import android.view.*;
+import android.app.*;
 
 public class Home extends FragmentActivity{
 
@@ -38,9 +42,17 @@ public class Home extends FragmentActivity{
         pagerTab = (PagerTabStrip)findViewById(R.id.pagertab);
         int color = 0x00FF8800;
         pagerTab.setTabIndicatorColor(color);
-        pagerTab.setTextSize(TypedValue.COMPLEX_UNIT_PX, 12);
+        pagerTab.setTextSize(TypedValue.COMPLEX_UNIT_PX, 14);
         pagerTab.setFocusable(false);
         pagerTab.setMotionEventSplittingEnabled(true);
+			/*	ListView lv=;
+				lv.setOnItemClickListener(new OnItemClickListener(){
+								@Override
+						    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+										Toast.makeText(getApplicationContext(), position, Toast.LENGTH_SHORT);
+
+								}
+						});*/
 
         appList = new ArrayList<PackageInfo>();
         appList = pm.getInstalledPackages(getPackageManager().GET_ACTIVITIES); //getInstalledApplications(4);
@@ -54,6 +66,7 @@ public class Home extends FragmentActivity{
         listAppsAuto = new ListApps();
         listTasks = new ListApps();
         listApps.setListAdapter(appsAdapter);
+				
 
         listAppsAuto.setListAdapter(new ListAppsAdapter(getApplicationContext(),appListAuto, R.layout.app, getPackageManager()));
 
@@ -61,6 +74,7 @@ public class Home extends FragmentActivity{
         fragments.add(0, listApps);
         fragments.add(1, listAppsAuto);
         fragments.add(2, listTasks);
+				
 
         pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments);
         pager.setAdapter(pagerAdapter);

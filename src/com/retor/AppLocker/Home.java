@@ -1,5 +1,6 @@
 package com.retor.AppLocker;
 
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -7,11 +8,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
+import android.util.TypedValue;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Home extends FragmentActivity {
+public class Home extends FragmentActivity{
 
     ViewPager pager;
     ListApps listApps;
@@ -25,18 +27,20 @@ public class Home extends FragmentActivity {
     PackageManager pm;
     List<PackageInfo> appList;
     List<PackageInfo> appListAuto;
+    Context context;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        context = getApplicationContext();
         pm = getPackageManager();
         pager = (ViewPager)findViewById(R.id.viewpager);
         pagerTab = (PagerTabStrip)findViewById(R.id.pagertab);
         int color = 0x00FF8800;
         pagerTab.setTabIndicatorColor(color);
+        pagerTab.setTextSize(TypedValue.COMPLEX_UNIT_PX, 12);
         pagerTab.setFocusable(false);
         pagerTab.setMotionEventSplittingEnabled(true);
-        
 
         appList = new ArrayList<PackageInfo>();
         appList = pm.getInstalledPackages(getPackageManager().GET_ACTIVITIES); //getInstalledApplications(4);
@@ -44,12 +48,13 @@ public class Home extends FragmentActivity {
         appListAuto = new ArrayList<PackageInfo>();
         appListAuto = catchAutoRun(appList);
 
-
         appsAdapter = new ListAppsAdapter(getApplicationContext(), appList, R.layout.app, pm);
         listApps = new ListApps();
+
         listAppsAuto = new ListApps();
         listTasks = new ListApps();
         listApps.setListAdapter(appsAdapter);
+
         listAppsAuto.setListAdapter(new ListAppsAdapter(getApplicationContext(),appListAuto, R.layout.app, getPackageManager()));
 
         fragments = new ArrayList<Fragment>();
@@ -84,4 +89,12 @@ public class Home extends FragmentActivity {
         }
         return autoruns;
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        listApps.setRetainInstance(true);
+        listAppsAuto.setRetainInstance(true);
+    }
+
 }

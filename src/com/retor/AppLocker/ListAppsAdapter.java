@@ -1,7 +1,6 @@
 package com.retor.AppLocker;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -13,7 +12,7 @@ import android.widget.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListAppsAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
+public class ListAppsAdapter extends BaseAdapter {
     Context context;
     List<PackageInfo> appList;
     int res;
@@ -73,15 +72,14 @@ public class ListAppsAdapter extends BaseAdapter implements AdapterView.OnItemCl
         return v;
     }
 
-    @Override
+/*    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
         CheckBox checkBox;
         view.setSelected(true);
         checkBox = (CheckBox)view.findViewById(R.id.checkApp);
         checkBox.setChecked(true);
 
-    }
+    }*/
 
     public class ViewHolder{
         TextView appName;

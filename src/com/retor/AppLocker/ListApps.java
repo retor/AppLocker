@@ -8,9 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.CheckBox;
 import android.widget.Toast;
-import android.widget.AdapterView.*;
-import android.widget.*;
 
 /**
  * Created by Антон on 25.03.14.
@@ -44,6 +44,8 @@ public class ListApps extends ListFragment implements OnItemClickListener{
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-       Toast.makeText(context, String.valueOf(position), Toast.LENGTH_SHORT).show();
+        CheckBox ch =(CheckBox)view.findViewById(R.id.checkApp);
+        ch.setChecked(true);
+        Toast.makeText(context, String.valueOf(position), Toast.LENGTH_SHORT).show();
     }
 }

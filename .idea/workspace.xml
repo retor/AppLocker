@@ -23,8 +23,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ab884a8-e664-4984-969f-3756e51e35bb" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/com/retor/AppLocker/BuildConfig.java" afterPath="$PROJECT_DIR$/gen/com/retor/AppLocker/BuildConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/ListApps.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/ListApps.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="AppLocker.iws" />
@@ -351,7 +349,7 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="options.lastSelected" value="preferences.pluginManager" />
+    <property name="options.lastSelected" value="settings.github" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
@@ -630,7 +628,7 @@
       <workItem from="1395947697623" duration="3721000" />
       <workItem from="1395984483525" duration="1540000" />
       <workItem from="1395986056796" duration="7999000" />
-      <workItem from="1396340235042" duration="1512000" />
+      <workItem from="1396340235042" duration="1601000" />
     </task>
     <task id="LOCAL-00001" summary="Upd 1">
       <created>1395776599379</created>
@@ -648,11 +646,15 @@
       <created>1396274153335</created>
       <updated>1396274153335</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Upd 1">
+      <created>1396362215415</created>
+      <updated>1396362215415</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50674000" />
+    <option name="totallyTimeSpent" value="50763000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />

@@ -2,6 +2,8 @@ package com.retor.AppLocker;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -44,8 +46,15 @@ public class ListApps extends ListFragment implements OnItemClickListener{
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        CheckBox ch =(CheckBox)view.findViewById(R.id.checkApp);
-        ch.setChecked(true);
+        CheckBox cb=(CheckBox)view.findViewById(R.id.checkApp);
+        if(!cb.isChecked()) {
+            cb.setChecked(true);
+        }else{
+            cb.setChecked(false);
+        }
+        PackageInfo pi = (PackageInfo) parent.getItemAtPosition(position);
+        Intent intent = new Intent();
+       // intent.putE
         Toast.makeText(context, String.valueOf(position), Toast.LENGTH_SHORT).show();
     }
 }

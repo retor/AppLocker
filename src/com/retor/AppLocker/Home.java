@@ -1,5 +1,6 @@
 package com.retor.AppLocker;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -12,10 +13,6 @@ import android.util.TypedValue;
 
 import java.util.ArrayList;
 import java.util.List;
-import android.widget.AdapterView.*;
-import android.widget.*;
-import android.view.*;
-import android.app.*;
 
 public class Home extends FragmentActivity{
 
@@ -32,6 +29,8 @@ public class Home extends FragmentActivity{
     List<PackageInfo> appList;
     List<PackageInfo> appListAuto;
     Context context;
+    List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfoList;
+    LunchedAdapter luadapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,20 +41,16 @@ public class Home extends FragmentActivity{
         pagerTab = (PagerTabStrip)findViewById(R.id.pagertab);
         int color = 0x00FF8800;
         pagerTab.setTabIndicatorColor(color);
-        pagerTab.setTextSize(TypedValue.COMPLEX_UNIT_PX, 14);
+        pagerTab.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 11);
         pagerTab.setFocusable(false);
         pagerTab.setMotionEventSplittingEnabled(true);
-			/*	ListView lv=;
-				lv.setOnItemClickListener(new OnItemClickListener(){
-								@Override
-						    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-										Toast.makeText(getApplicationContext(), position, Toast.LENGTH_SHORT);
-
-								}
-						});*/
 
         appList = new ArrayList<PackageInfo>();
         appList = pm.getInstalledPackages(getPackageManager().GET_ACTIVITIES); //getInstalledApplications(4);
+        ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
+        runningAppProcessInfoList = new ArrayList<ActivityManager.RunningAppProcessInfo>();
+        runningAppProcessInfoList = am.getRunningAppProcesses();
+
 
         appListAuto = new ArrayList<PackageInfo>();
         appListAuto = catchAutoRun(appList);
@@ -66,7 +61,8 @@ public class Home extends FragmentActivity{
         listAppsAuto = new ListApps();
         listTasks = new ListApps();
         listApps.setListAdapter(appsAdapter);
-				
+        luadapter = new LunchedAdapter(getApplicationContext(), runningAppProcessInfoList, R.layout.app);
+		listTasks.setListAdapter(luadapter);
 
         listAppsAuto.setListAdapter(new ListAppsAdapter(getApplicationContext(),appListAuto, R.layout.app, getPackageManager()));
 

@@ -23,9 +23,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ab884a8-e664-4984-969f-3756e51e35bb" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/Home.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/Home.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/ListAppsAdapter.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/ListAppsAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/LunchedAdapter.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/LunchedAdapter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="AppLocker.iws" />
@@ -619,7 +616,7 @@
       <workItem from="1396540544285" duration="286000" />
       <workItem from="1396547577553" duration="7214000" />
       <workItem from="1396807116258" duration="1298000" />
-      <workItem from="1396808905768" duration="9017000" />
+      <workItem from="1396808905768" duration="9048000" />
     </task>
     <task id="LOCAL-00001" summary="Upd 1">
       <created>1395776599379</created>
@@ -645,11 +642,15 @@
       <created>1396557426901</created>
       <updated>1396557426901</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Upd 1">
+      <created>1396897093321</created>
+      <updated>1396897093321</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="68578000" />
+    <option name="totallyTimeSpent" value="68609000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />

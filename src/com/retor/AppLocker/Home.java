@@ -46,7 +46,7 @@ public class Home extends FragmentActivity{
         pagerTab.setMotionEventSplittingEnabled(true);
 
         appList = new ArrayList<PackageInfo>();
-        appList = pm.getInstalledPackages(getPackageManager().GET_ACTIVITIES); //getInstalledApplications(4);
+        appList = getAppList();
         ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         runningAppProcessInfoList = new ArrayList<ActivityManager.RunningAppProcessInfo>();
         runningAppProcessInfoList = am.getRunningAppProcesses();
@@ -61,7 +61,7 @@ public class Home extends FragmentActivity{
         listAppsAuto = new ListApps();
         listTasks = new ListApps();
         listApps.setListAdapter(appsAdapter);
-        luadapter = new LunchedAdapter(getApplicationContext(), runningAppProcessInfoList, R.layout.app);
+        luadapter = new LunchedAdapter(getApplicationContext(), runningAppProcessInfoList, R.layout.app, getPackageManager());
 		listTasks.setListAdapter(luadapter);
 
         listAppsAuto.setListAdapter(new ListAppsAdapter(getApplicationContext(),appListAuto, R.layout.app, getPackageManager()));
@@ -74,6 +74,13 @@ public class Home extends FragmentActivity{
 
         pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments);
         pager.setAdapter(pagerAdapter);
+    }
+
+    private List<PackageInfo> getAppList(){
+        PackageManager pm = getPackageManager();
+        List<PackageInfo> pi = new ArrayList<PackageInfo>();
+        pi = pm.getInstalledPackages(0);
+        return pi;
     }
 
     private List<PackageInfo> catchAutoRun(List<PackageInfo> packageInfos){

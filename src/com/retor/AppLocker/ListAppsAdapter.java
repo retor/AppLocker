@@ -51,35 +51,22 @@ public class ListAppsAdapter extends BaseAdapter {
         View v;
         ViewHolder vh = new ViewHolder();
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if (convertView == null){
             v = inflater.inflate(res,null);
             vh.appName = (TextView)v.findViewById(R.id.nameApp);
             vh.appOther = (TextView)v.findViewById(R.id.otherApp);
             vh.appIcon = (ImageView)v.findViewById(R.id.iconApp);
             vh.appCheck = (CheckBox)v.findViewById(R.id.checkApp);
 
-            String appNameStr = appList.get(position).applicationInfo.loadLabel(pm).toString();//appList.get(position).name + " " + appList.get(position).sourceDir;
-            String appOtherStr = appList.get(position).applicationInfo.processName.toString();//.applicationInfo.manageSpaceActivityName;//.metaData.getClassLoader().toString();//pm.getLaunchIntentForPackage(appList.get(position).applicationInfo.packageName);
+            String appNameStr = appList.get(position).applicationInfo.loadLabel(pm).toString();
+            String appOtherStr = appList.get(position).applicationInfo.processName.toString();
             Drawable appIco = appList.get(position).applicationInfo.loadIcon(pm);
 
             vh.appName.setText(appNameStr);
             vh.appOther.setText(appOtherStr);
             vh.appCheck.setChecked(false);
             vh.appIcon.setImageDrawable(appIco);
-        }else{
-            v = convertView;
-        }
         return v;
     }
-
-/*    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        CheckBox checkBox;
-        view.setSelected(true);
-        checkBox = (CheckBox)view.findViewById(R.id.checkApp);
-        checkBox.setChecked(true);
-
-    }*/
 
     public class ViewHolder{
         TextView appName;

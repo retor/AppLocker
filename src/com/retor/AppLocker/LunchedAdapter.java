@@ -20,7 +20,7 @@ public class LunchedAdapter extends BaseAdapter {
     Context context;
     List<RunningAppProcessInfo> appList;
     int res;
-    PackageManager pm;
+    final PackageManager pm;
     Drawable appIco;
 
     public LunchedAdapter(Context _context, List<RunningAppProcessInfo> _appList, int _res, PackageManager _pm) {
@@ -59,28 +59,27 @@ public class LunchedAdapter extends BaseAdapter {
             v = inflater.inflate(res,null);
             vh.appName = (TextView)v.findViewById(R.id.nameApp);
             vh.appOther = (TextView)v.findViewById(R.id.otherApp);
-            //vh.appIcon = (ImageView)v.findViewById(R.id.iconApp);
+            vh.appIcon = (ImageView)v.findViewById(R.id.iconApp);
             vh.appCheck = (CheckBox)v.findViewById(R.id.checkApp);
 
             String appNameStr = appList.get(position).processName;
             String appOtherStr = String.valueOf(appList.get(position).pid);
 
-
         try {
+            String st = appList.get(position).processName;// .importanceReasonComponent.getPackageName().toString();
+           Drawable appIcon =   pm.getApplicationIcon(pm.getApplicationInfo(st,PackageManager.GET_ACTIVITIES)); //.getApplicationIcon(st) ;//context.getPackageManager().getApplicationLabel(pm.getApplicationInfo(appList.get(position).toString(), PackageManager.GET_META_DATA)));
+            Log.i("Icon res", st.toString());
+            vh.appIcon.setImageDrawable(appIcon);
 
-            appIco = context.getPackageManager().getApplicationLabel(appList.get(position).toString(), PackageManager.GET_META_DATA).loadIcon(context.getPackageManager());
-            // getApplicationIcon(appList.get(position).);
-            Log.i("Icon res", String.valueOf(appIco.getMinimumHeight()));
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         } catch (java.lang.NullPointerException e){
             e.printStackTrace();
         }
-        //vh.appIcon.setImageDrawable(appIco);
-        //Drawable appIco = appList.get(position).applicationInfo.loadIcon(pm);
             vh.appName.setText(appNameStr);
             vh.appOther.setText(appOtherStr);
             vh.appCheck.setChecked(false);
+            //vh.appIcon.setImageDrawable(appIcon);
         return v;
     }
 

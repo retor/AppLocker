@@ -3,7 +3,6 @@ package com.retor.AppLocker;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -52,7 +51,7 @@ public class ListApps extends ListFragment implements OnItemClickListener{
         }else{
             cb.setChecked(false);
         }
-        PackageInfo pi = (PackageInfo) parent.getItemAtPosition(position);
+//        PackageInfo pi = (PackageInfo) parent.getItemAtPosition(position);
         Intent intent = new Intent();
        // intent.putE
         Toast.makeText(context, String.valueOf(position), Toast.LENGTH_SHORT).show();

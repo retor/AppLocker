@@ -19,7 +19,7 @@ public class Home extends FragmentActivity{
     ViewPager pager;
     ListApps listApps;
     ListApps listAppsAuto;
-    ListApps listTasks;
+    ListLunchedApps listTasks;
     ListAppsAdapter appsAdapter;
     ArrayList<Fragment> fragments;
     ViewPagerAdapter pagerAdapter;
@@ -59,9 +59,10 @@ public class Home extends FragmentActivity{
         listApps = new ListApps();
 
         listAppsAuto = new ListApps();
-        listTasks = new ListApps();
+        listTasks = new ListLunchedApps();
         listApps.setListAdapter(appsAdapter);
         luadapter = new LunchedAdapter(getApplicationContext(), runningAppProcessInfoList, R.layout.app, getPackageManager());
+        luadapter.notifyDataSetChanged();
 		listTasks.setListAdapter(luadapter);
 
         listAppsAuto.setListAdapter(new ListAppsAdapter(getApplicationContext(),appListAuto, R.layout.app, getPackageManager()));
@@ -74,6 +75,7 @@ public class Home extends FragmentActivity{
 
         pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments);
         pager.setAdapter(pagerAdapter);
+
     }
 
     private List<PackageInfo> getAppList(){

@@ -3,7 +3,7 @@ package com.retor.AppLocker;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
-import android.os.*;
+import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,23 +44,22 @@ public class ListLunchedApps extends ListFragment implements OnItemClickListener
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-/*        CheckBox cb=(CheckBox)view.findViewById(R.id.checkApp);
-        if(!cb.isChecked()) {
-            cb.setChecked(true);
-        }else{
-            cb.setChecked(false);
-        }*/
         ActivityManager.RunningAppProcessInfo ri = (ActivityManager.RunningAppProcessInfo)parent.getItemAtPosition(position);
+        ActivityManager am = (ActivityManager) context.getSystemService(context.ACTIVITY_SERVICE);
+        am.killBackgroundProcesses(((ActivityManager.RunningAppProcessInfo) parent.getItemAtPosition(position)).processName);
+
         int myPid = android.os.Process.myPid();
         int killPid = ri.pid;
         if (killPid!=myPid){
-            android.os.Process.sendSignal(killPid, android.os.Process.SIGNAL_KILL);// killProcess(killPid);
-this.getListView().invalidate();
+           /* Process.sendSignal(killPid, Process.SIGNAL_KILL);
+            Process.killProcess(killPid);*/
+            LunchedAdapter la = (LunchedAdapter)getListAdapter();//notifyDataSetChanged();
+            la.appList = am.getRunningAppProcesses();
+            la.notifyDataSetInvalidated();
+            la.notifyDataSetChanged();
             Toast.makeText(context, String.valueOf(position), Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(context, "Can't kill himself", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 }

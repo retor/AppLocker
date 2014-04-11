@@ -23,6 +23,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ab884a8-e664-4984-969f-3756e51e35bb" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/retor4i/AppInfo.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/retor4i/AppInfo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/Home.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/Home.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/InfoFragment.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/InfoFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/ListApps.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/ListApps.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/ListAppsAdapter.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/ListAppsAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/ListLunchedApps.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/ListLunchedApps.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/LunchedAdapter.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/LunchedAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/retor4i/RetorClass.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/retor4i/RetorClass.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/ViewPagerAdapter.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/ViewPagerAdapter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="AppLocker.iws" />
@@ -87,39 +97,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="main.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="102" max-vertical-offset="442">
-              <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Home.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/Home.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1377" max-vertical-offset="1921">
-              <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LunchedAdapter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/LunchedAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="880" max-vertical-offset="1615">
-              <caret line="88" column="66" selection-start-line="87" selection-start-column="6" selection-end-line="88" selection-end-column="66" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="493" max-vertical-offset="1394">
+              <caret line="49" column="87" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="87" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#3152#3153#0" expanded="true" />
-                <element signature="e#3196#3197#0" expanded="true" />
-                <element signature="class#ViewHolder#0;class#LunchedAdapter#0" expanded="false" />
+                <element signature="method#getAppList#0;class#Home#0" expanded="false" />
+                <element signature="method#catchAutoRun#0;class#Home#0" expanded="false" />
+                <element signature="method#onSaveInstanceState#0;class#Home#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -128,18 +114,18 @@
       <file leaf-file-name="ListLunchedApps.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/ListLunchedApps.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.073275864" vertical-offset="442" max-vertical-offset="986">
-              <caret line="41" column="44" selection-start-line="41" selection-start-column="44" selection-end-line="50" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.5944954" vertical-offset="390" max-vertical-offset="969">
+              <caret line="56" column="53" selection-start-line="56" selection-start-column="53" selection-end-line="56" selection-end-column="53" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AdapterView.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Desktop/adt-bundle-windows-x86_64-20131030/sdk/sources/android-19/android/widget/AdapterView.java">
+      <file leaf-file-name="LunchedAdapter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/LunchedAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1570" max-vertical-offset="19465">
-              <caret line="147" column="30" selection-start-line="146" selection-start-column="4" selection-end-line="147" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="803" max-vertical-offset="1428">
+              <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -161,7 +147,6 @@
         <option value="$PROJECT_DIR$/res/layout/listapps.xml" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/retor4i/AppInfo.java" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/ViewPagerAdapter.java" />
-        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/res/layout/app.xml" />
         <option value="$PROJECT_DIR$/res/layout/main.xml" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/inffragment.java" />
@@ -169,8 +154,9 @@
         <option value="$PROJECT_DIR$/res/layout/info.xml" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/ListAppsAdapter.java" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/ListApps.java" />
-        <option value="$PROJECT_DIR$/src/com/retor/AppLocker/LunchedAdapter.java" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/Home.java" />
+        <option value="$PROJECT_DIR$/src/com/retor/AppLocker/LunchedAdapter.java" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/ListLunchedApps.java" />
       </list>
     </option>
@@ -178,8 +164,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1376" />
-    <option name="height" value="744" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -226,6 +212,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -322,7 +309,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -602,6 +588,11 @@
     </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SliceManager">
+    <option name="analysisUIOptions">
+      <AnalysisUIOptions />
+    </option>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -624,7 +615,9 @@
       <workItem from="1396547577553" duration="7214000" />
       <workItem from="1396807116258" duration="1298000" />
       <workItem from="1396808905768" duration="9048000" />
-      <workItem from="1396943723706" duration="12030000" />
+      <workItem from="1396943723706" duration="19716000" />
+      <workItem from="1397216999103" duration="246000" />
+      <workItem from="1397217266487" duration="7587000" />
     </task>
     <task id="LOCAL-00001" summary="Upd 1">
       <created>1395776599379</created>
@@ -662,21 +655,46 @@
       <created>1397156343924</created>
       <updated>1397156343924</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Upd 1">
+      <created>1397156393056</created>
+      <updated>1397156393056</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="80639000" />
+    <option name="totallyTimeSpent" value="96158000" />
+  </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1376" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850778" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3975501" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -684,20 +702,19 @@
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32739422" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850778" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.556314" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36191538" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21808511" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15298508" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32628062" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32829046" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39863715" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -723,7 +740,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="4" />
+      <option name="time" value="8" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -731,14 +748,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/Home.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="1343">
-          <caret line="52" column="36" selection-start-line="52" selection-start-column="36" selection-end-line="52" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/ListAppsAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1054" max-vertical-offset="1683">
@@ -794,7 +803,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="901" max-vertical-offset="1445">
           <caret line="53" column="5" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
-          <folding />
+          <folding>
+            <element signature="method#getAppList#0;class#Home#0" expanded="false" />
+            <element signature="method#catchAutoRun#0;class#Home#0" expanded="false" />
+            <element signature="method#onSaveInstanceState#0;class#Home#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -839,7 +852,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="629" max-vertical-offset="952">
           <caret line="37" column="47" selection-start-line="37" selection-start-column="47" selection-end-line="37" selection-end-column="47" />
-          <folding />
+          <folding>
+            <element signature="method#getAppList#0;class#Home#0" expanded="false" />
+            <element signature="method#catchAutoRun#0;class#Home#0" expanded="false" />
+            <element signature="method#onSaveInstanceState#0;class#Home#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -876,7 +893,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="629" max-vertical-offset="952">
           <caret line="37" column="47" selection-start-line="37" selection-start-column="47" selection-end-line="37" selection-end-column="47" />
-          <folding />
+          <folding>
+            <element signature="method#getAppList#0;class#Home#0" expanded="false" />
+            <element signature="method#catchAutoRun#0;class#Home#0" expanded="false" />
+            <element signature="method#onSaveInstanceState#0;class#Home#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -913,7 +934,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="629" max-vertical-offset="952">
           <caret line="37" column="47" selection-start-line="37" selection-start-column="47" selection-end-line="37" selection-end-column="47" />
-          <folding />
+          <folding>
+            <element signature="method#getAppList#0;class#Home#0" expanded="false" />
+            <element signature="method#catchAutoRun#0;class#Home#0" expanded="false" />
+            <element signature="method#onSaveInstanceState#0;class#Home#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -950,7 +975,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="428" max-vertical-offset="952">
           <caret line="37" column="47" selection-start-line="37" selection-start-column="47" selection-end-line="37" selection-end-column="47" />
-          <folding />
+          <folding>
+            <element signature="method#getAppList#0;class#Home#0" expanded="false" />
+            <element signature="method#catchAutoRun#0;class#Home#0" expanded="false" />
+            <element signature="method#onSaveInstanceState#0;class#Home#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -987,7 +1016,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="748">
           <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="method#getAppList#0;class#Home#0" expanded="false" />
+            <element signature="method#catchAutoRun#0;class#Home#0" expanded="false" />
+            <element signature="method#onSaveInstanceState#0;class#Home#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1052,14 +1085,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3252174" vertical-offset="0" max-vertical-offset="575">
-          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/info.xml">
       <provider selected="true" editor-type-id="android-designer">
         <state />
@@ -1078,13 +1103,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/ViewPagerAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.67663044" vertical-offset="193" max-vertical-offset="697">
-          <caret line="34" column="32" selection-start-line="34" selection-start-column="32" selection-end-line="34" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/app.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -1096,22 +1114,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="442">
-          <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/ListApps.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.625" vertical-offset="306" max-vertical-offset="850">
           <caret line="53" column="2" selection-start-line="53" selection-start-column="2" selection-end-line="53" selection-end-column="2" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1119,7 +1125,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.45772058" vertical-offset="27665" max-vertical-offset="36890">
           <caret line="1776" column="34" selection-start-line="1775" selection-start-column="11" selection-end-line="1776" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1127,7 +1132,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5202206" vertical-offset="40177" max-vertical-offset="54298">
           <caret line="2413" column="82" selection-start-line="2411" selection-start-column="7" selection-end-line="2413" selection-end-column="82" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1135,15 +1139,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5625" vertical-offset="272" max-vertical-offset="1122">
           <caret line="52" column="108" selection-start-line="52" selection-start-column="108" selection-end-line="52" selection-end-column="108" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/Home.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1377" max-vertical-offset="1921">
-          <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1155,23 +1150,65 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/ViewPagerAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.508046" vertical-offset="0" max-vertical-offset="870">
+          <caret line="34" column="32" selection-start-line="34" selection-start-column="32" selection-end-line="34" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/LunchedAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="931" max-vertical-offset="1615">
-          <caret line="88" column="66" selection-start-line="87" selection-start-column="6" selection-end-line="88" selection-end-column="66" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="803" max-vertical-offset="1428">
+          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18715596" vertical-offset="0" max-vertical-offset="545">
+          <caret line="6" column="84" selection-start-line="6" selection-start-column="84" selection-end-line="6" selection-end-column="84" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/adt-bundle-windows-x86_64-20131030/sdk/sources/android-19/java/lang/Object.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7376147" vertical-offset="4630" max-vertical-offset="6970">
+          <caret line="328" column="57" selection-start-line="318" selection-start-column="9" selection-end-line="328" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1969112" vertical-offset="0" max-vertical-offset="518">
+          <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/Home.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="493" max-vertical-offset="1394">
+          <caret line="49" column="87" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="87" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3152#3153#0" expanded="true" />
-            <element signature="e#3196#3197#0" expanded="true" />
-            <element signature="class#ViewHolder#0;class#LunchedAdapter#0" expanded="false" />
+            <element signature="method#getAppList#0;class#Home#0" expanded="false" />
+            <element signature="method#catchAutoRun#0;class#Home#0" expanded="false" />
+            <element signature="method#onSaveInstanceState#0;class#Home#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/ListLunchedApps.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.073275864" vertical-offset="442" max-vertical-offset="986">
-          <caret line="41" column="44" selection-start-line="41" selection-start-column="44" selection-end-line="50" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.5944954" vertical-offset="390" max-vertical-offset="969">
+          <caret line="56" column="53" selection-start-line="56" selection-start-column="53" selection-end-line="56" selection-end-column="53" />
           <folding />
         </state>
       </provider>

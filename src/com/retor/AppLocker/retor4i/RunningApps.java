@@ -11,6 +11,7 @@ import java.util.HashSet;
  * Created by Антон on 14.04.2014.
  */
 public class RunningApps {
+
     private Context context;
     private PackageManager mPm;
     private PackageInfo mPackageInfo;

@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
+import com.retor.AppLocker.retor4i.AppInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,8 @@ public class Home extends FragmentActivity{
     Context context;
     List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfoList;
     LunchedAdapter luadapter;
+
+    ArrayList<AppInfo> appInfos;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +64,12 @@ public class Home extends FragmentActivity{
         listAppsAuto = new ListApps();
         listTasks = new ListLunchedApps();
         listApps.setListAdapter(appsAdapter);
-        luadapter = new LunchedAdapter(getApplicationContext(), runningAppProcessInfoList, R.layout.app, getPackageManager());
+        appInfos = new ArrayList<AppInfo>();
+        for (ActivityManager.RunningAppProcessInfo running:runningAppProcessInfoList){
+            AppInfo appInfo = new AppInfo(getApplicationContext(), running.processName);
+        }
+        luadapter = new LunchedAdapter(pm, getApplicationContext(), appInfos, R.layout.app);
+        //luadapter = new LunchedAdapter(getApplicationContext(), runningAppProcessInfoList, R.layout.app, getPackageManager());
         luadapter.notifyDataSetChanged();
 		listTasks.setListAdapter(luadapter);
 

@@ -11,6 +11,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
+import com.retor.AppLocker.retor4i.AppInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Антон on 25.03.14.
@@ -54,12 +58,23 @@ public class ListLunchedApps extends ListFragment implements OnItemClickListener
            /* Process.sendSignal(killPid, Process.SIGNAL_KILL);
             Process.killProcess(killPid);*/
             LunchedAdapter la = (LunchedAdapter)getListAdapter();//notifyDataSetChanged();
-            la.appList = am.getRunningAppProcesses();
+            ArrayList<AppInfo> app = getListAppInfo(am.getRunningAppProcesses());
+            la.appInfos = app;
+            //la.appList = am.getRunningAppProcesses();
             la.notifyDataSetInvalidated();
             la.notifyDataSetChanged();
             Toast.makeText(context, String.valueOf(position), Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(context, "Can't kill himself", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public ArrayList<AppInfo> getListAppInfo(List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfo) {
+        ArrayList<AppInfo> appInfo = new ArrayList<AppInfo>();
+        for (ActivityManager.RunningAppProcessInfo running:runningAppProcessInfo){
+            AppInfo temp = new AppInfo(running.processName);
+            appInfo.add(temp);
+        }
+        return appInfo;
     }
 }

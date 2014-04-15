@@ -12,16 +12,26 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.retor.AppLocker.retor4i.AppInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LunchedAdapter extends BaseAdapter {
     Context context;
+    ArrayList<AppInfo> appInfos;
     List<RunningAppProcessInfo> appList;
     int res;
     final PackageManager pm;
     Drawable appIco;
+
+    public LunchedAdapter(PackageManager pm, Context context, ArrayList<AppInfo> appInfos, int res) {
+        this.pm = pm;
+        this.context = context;
+        this.appInfos = new ArrayList<AppInfo>();
+        this.appInfos = appInfos;
+        this.res = res;
+    }
 
     public LunchedAdapter(Context _context, List<RunningAppProcessInfo> _appList, int _res, PackageManager _pm) {
         context = _context;

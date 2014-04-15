@@ -3,7 +3,6 @@ package com.retor.AppLocker.retor4i;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.widget.Button;
 
 import java.util.HashSet;
 
@@ -16,7 +15,7 @@ public class RunningApps {
     private PackageManager mPm;
     private PackageInfo mPackageInfo;
     private final HashSet<String> mHomePackages = new HashSet<String>();
-    private ApplicationsState.AppEntry mAppEntry;
+   // private ApplicationsState.AppEntry mAppEntry;
 
     public RunningApps() {
     }
@@ -36,7 +35,7 @@ public class RunningApps {
         }
     }
 
-    private boolean handleDisableable(Button button) {
+    /*private boolean handleDisableable(Button button) {
         boolean disableable = false;
         // Try to prevent the user from bricking their phone
         // by not allowing disabling of apps signed with the
@@ -45,7 +44,7 @@ public class RunningApps {
         if (mHomePackages.contains(mAppEntry.info.packageName) || isThisASystemPackage()) {
             // Disable button for core system applications.
             button.setText("Disable");
-        } else if (mAppEntry.info.enabled) {
+        } else if (mAppEntry info.enabled) {
             button.setText("Disable1");
             disableable = true;
         } else {
@@ -54,10 +53,9 @@ public class RunningApps {
         }
 
         return disableable;
-    }
+    }*/
 
     private void appDisable(String packageName){
         boolean current;
-        current = mPm.getApplicationEnabledSetting(packageName);
     }
 }

@@ -15,28 +15,29 @@ import com.retor.AppLocker.retor4i.AppInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Home extends FragmentActivity{
+import static android.app.ActivityManager.*;
 
+public class Home extends FragmentActivity{
+    //view pager
     ViewPager pager;
+    ArrayList<Fragment> fragments;
+    PagerTabStrip pagerTab;
+    //fragments
     ListApps listApps;
     ListApps listAppsAuto;
     ListLunchedApps listTasks;
-    ListAppsAdapter appsAdapter;
-    ArrayList<Fragment> fragments;
-    ViewPagerAdapter pagerAdapter;
-    PagerTabStrip pagerTab;
-
-    PackageManager pm;
+    //arrays
     List<PackageInfo> appList;
     List<PackageInfo> appListAuto;
+    ArrayList<AppInfo> appInfos; //my class
+    //other
+    PackageManager pm;
     Context context;
-    List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfoList;
-    LunchedAdapter luadapter;
 
-    ArrayList<AppInfo> appInfos;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //set first parameters
         setContentView(R.layout.main);
         context = getApplicationContext();
         pm = getPackageManager();
@@ -47,43 +48,32 @@ public class Home extends FragmentActivity{
         pagerTab.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 11);
         pagerTab.setFocusable(false);
         pagerTab.setMotionEventSplittingEnabled(true);
+        ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
 
+        //create Arrays
         appList = new ArrayList<PackageInfo>();
         appList = getAppList();
-        ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
-        runningAppProcessInfoList = new ArrayList<ActivityManager.RunningAppProcessInfo>();
-        runningAppProcessInfoList = am.getRunningAppProcesses();
-
-
         appListAuto = new ArrayList<PackageInfo>();
         appListAuto = catchAutoRun(appList);
+        appInfos = new ArrayList<AppInfo>();
+        appInfos = getListAppInfo(am.getRunningAppProcesses());
 
-        appsAdapter = new ListAppsAdapter(getApplicationContext(), appList, R.layout.app, pm);
+        //create/init fragments
         listApps = new ListApps();
-
         listAppsAuto = new ListApps();
         listTasks = new ListLunchedApps();
-        listApps.setListAdapter(appsAdapter);
-        appInfos = new ArrayList<AppInfo>();
-        for (ActivityManager.RunningAppProcessInfo running:runningAppProcessInfoList){
-            AppInfo appInfo = new AppInfo(getApplicationContext(), running.processName);
-        }
-        luadapter = new LunchedAdapter(pm, getApplicationContext(), appInfos, R.layout.app);
-        //luadapter = new LunchedAdapter(getApplicationContext(), runningAppProcessInfoList, R.layout.app, getPackageManager());
-        luadapter.notifyDataSetChanged();
-		listTasks.setListAdapter(luadapter);
 
-        listAppsAuto.setListAdapter(new ListAppsAdapter(getApplicationContext(),appListAuto, R.layout.app, getPackageManager()));
+        //create/set adapters for fragments
+        listApps.setListAdapter(new ListAppsAdapter(getApplicationContext(), appList, R.layout.app, pm));
+        listAppsAuto.setListAdapter(new ListAppsAdapter(getApplicationContext(),appListAuto, R.layout.app, pm));
+        listTasks.setListAdapter(new LunchedAdapter(pm, context, appInfos, R.layout.app));
 
+        //fill viewpager
         fragments = new ArrayList<Fragment>();
         fragments.add(0, listApps);
         fragments.add(1, listAppsAuto);
         fragments.add(2, listTasks);
-				
-
-        pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments);
-        pager.setAdapter(pagerAdapter);
-
+        pager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
     }
 
     private List<PackageInfo> getAppList(){
@@ -122,6 +112,15 @@ public class Home extends FragmentActivity{
         super.onSaveInstanceState(outState);
         listApps.setRetainInstance(true);
         listAppsAuto.setRetainInstance(true);
+    }
+
+    public ArrayList<AppInfo> getListAppInfo(List<RunningAppProcessInfo> runningAppProcessInfo) {
+        ArrayList<AppInfo> appInfoList = new ArrayList<AppInfo>();
+        for (RunningAppProcessInfo running:runningAppProcessInfo){
+            AppInfo temp = new AppInfo(context, running.processName);
+            appInfoList.add(temp);
+        }
+        return appInfoList;
     }
 
 }

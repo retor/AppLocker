@@ -9,12 +9,13 @@ import android.graphics.drawable.Drawable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.ActivityManager.*;
+
 /**
  * Created by retor on 25.03.2014.
  */
 public class AppInfo {
     private String PackageName;
-    private String Activity;
     private Context context;
     private int uid;
     private String locationDir;
@@ -23,13 +24,14 @@ public class AppInfo {
     private PackageManager packageManager;
     private ActivityManager activityManager;
     private PackageInfo mPackageInfo;
+    private String appLabel;
 
     public AppInfo() {
     }
 
-    public ArrayList<AppInfo> getListAppInfo(List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfo) {
+    public ArrayList<AppInfo> getListAppInfo(List<RunningAppProcessInfo> runningAppProcessInfo) {
         ArrayList<AppInfo> appInfo = new ArrayList<AppInfo>();
-        for (ActivityManager.RunningAppProcessInfo running:runningAppProcessInfo){
+        for (RunningAppProcessInfo running:runningAppProcessInfo){
             AppInfo temp = new AppInfo(running.processName);
             appInfo.add(temp);
         }
@@ -37,22 +39,26 @@ public class AppInfo {
     }
 
     public AppInfo(String packageName) {
-        PackageName = packageName;
+        setPackageName(packageName);
         isSystem();
         setUid();
         setLocationDir();
         setIcon();
+        setAppLabel(packageName);
+        //appList.get(position).applicationInfo.loadLabel(packageManager).toString();
     }
 
     public AppInfo(Context context, String packageName) {
         this.context = context;
         packageManager = context.getPackageManager();
         activityManager = (ActivityManager)context.getSystemService(context.ACTIVITY_SERVICE);
-        this.setPackageName(packageName);
+        setPackageName(packageName);
         isSystem();
         setUid();
         setLocationDir();
         setIcon();
+        setAppLabel(packageName);
+        //appList.get(position).applicationInfo.loadLabel(packageManager).toString();
     }
 
     public String getPackageName() {
@@ -60,7 +66,7 @@ public class AppInfo {
     }
 
     private void setPackageName(String packageName) {
-        PackageName = packageName;
+        this.PackageName = packageName;
     }
 
     public int getUid() {
@@ -81,7 +87,7 @@ public class AppInfo {
 
     private void setLocationDir() {
         try {
-            this.locationDir = packageManager.getPackageInfo(getPackageName(),packageManager.GET_META_DATA).applicationInfo.sourceDir;
+            locationDir = packageManager.getPackageInfo(getPackageName(),packageManager.GET_META_DATA).applicationInfo.sourceDir;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -111,6 +117,20 @@ public class AppInfo {
     private void setIcon() {
         try {
             this.icon = packageManager.getPackageInfo(getPackageName(),packageManager.GET_META_DATA).applicationInfo.loadIcon(packageManager);
+        } catch (PackageManager.NameNotFoundException e) {
+            icon = context.getResources().getDrawable(android.R.drawable.ic_delete);
+            //e.printStackTrace();
+        }
+    }
+
+    public String getAppLabel() {
+        return appLabel;
+    }
+
+    public void setAppLabel(String appString) {
+
+        try {
+            this.appLabel= packageManager.getApplicationInfo(appString,0).loadLabel(packageManager).toString();
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

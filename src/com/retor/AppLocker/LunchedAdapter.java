@@ -43,12 +43,12 @@ public class LunchedAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return appList.size();
+         return appInfos.size();
     }
 
     @Override
-    public RunningAppProcessInfo getItem(int position) {
-        return appList.get(position);
+    public Object getItem(int position) {
+        return appInfos.get(position);
     }
 
     @Override
@@ -66,38 +66,42 @@ public class LunchedAdapter extends BaseAdapter {
         View v;
         ViewHolder vh = new ViewHolder();
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inflater.inflate(res,null);
-            vh.appName = (TextView)v.findViewById(R.id.nameApp);
-            vh.appOther = (TextView)v.findViewById(R.id.otherApp);
-            vh.appIcon = (ImageView)v.findViewById(R.id.iconApp);
-            vh.appCheck = (CheckBox)v.findViewById(R.id.checkApp);
+        v = inflater.inflate(res,null);
+        vh.appName = (TextView) v.findViewById(R.id.nameApp);
+        vh.appOther = (TextView) v.findViewById(R.id.otherApp);
+        vh.appIcon = (ImageView) v.findViewById(R.id.iconApp);
+        vh.appCheck = (CheckBox) v.findViewById(R.id.checkApp);
 
-            String appNameStr = appList.get(position).processName;
-            String appOtherStr = String.valueOf(appList.get(position).pid);
+        String appNameStr=""; 
+        String appOtherStr="";
+        Drawable appIcon=null;
 
+        if (appInfos.size()==0) {
+             appNameStr = appList.get(position).processName;
+             appOtherStr = String.valueOf(appList.get(position).pid);
+            try {
+                String st = appList.get(position).processName;// .importanceReasonComponent.getPackageName().toString();
+                appIcon = pm.getApplicationIcon(pm.getApplicationInfo(st, PackageManager.GET_ACTIVITIES)); //.getApplicationIcon(st) ;//context.getPackageManager().getApplicationLabel(pm.getApplicationInfo(appList.get(position).toString(), PackageManager.GET_META_DATA)));
+                Log.i("Icon res", st.toString());
+                vh.appIcon.setImageDrawable(appIcon);
 
-        try {
-            String st = appList.get(position).processName;// .importanceReasonComponent.getPackageName().toString();
-           Drawable appIcon =   pm.getApplicationIcon(pm.getApplicationInfo(st,PackageManager.GET_ACTIVITIES)); //.getApplicationIcon(st) ;//context.getPackageManager().getApplicationLabel(pm.getApplicationInfo(appList.get(position).toString(), PackageManager.GET_META_DATA)));
-            Log.i("Icon res", st.toString());
-            vh.appIcon.setImageDrawable(appIcon);
-
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        } catch (java.lang.NullPointerException e){
-            e.printStackTrace();
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            } catch (java.lang.NullPointerException e) {
+                e.printStackTrace();
+            }
+        }else {
+            appNameStr = appInfos.get(position).getAppLabel();//.getPackageName();
+            appOtherStr = String.valueOf(appInfos.get(position).getUid());
+            appIcon = appInfos.get(position).getIcon();
         }
             vh.appName.setText(appNameStr);
             vh.appOther.setText(appOtherStr);
             vh.appCheck.setChecked(false);
-            //vh.appIcon.setImageDrawable(appIcon);
+            vh.appIcon.setImageDrawable(appIcon);
         return v;
     }
 
-    /**
-     * Notifies the attached observers that the underlying data has been changed
-     * and any View reflecting the data set should refresh itself.
-     */
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();

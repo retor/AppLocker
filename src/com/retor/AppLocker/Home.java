@@ -15,7 +15,7 @@ import com.retor.AppLocker.retor4i.AppInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.app.ActivityManager.*;
+import static android.app.ActivityManager.RunningAppProcessInfo;
 
 public class Home extends FragmentActivity{
     //view pager

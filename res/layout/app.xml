@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:name = "@+id/list"
+              android:name = "@+id/list"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="70dp">
@@ -15,24 +15,17 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="0dp"/>
 
-    <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkApp"
-            android:layout_alignBottom="@+id/nameApp"
-            android:layout_alignParentEnd="true"
-            android:focusableInTouchMode="false"
-            android:focusable="false"/>
-
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:lines="2"
             android:ems="10"
+            android:text="Small Text"
             android:id="@+id/nameApp"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/iconApp"
-            android:layout_toLeftOf="@+id/checkApp"/>
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
 
     <TextView
             android:layout_width="wrap_content"
@@ -42,5 +35,6 @@
             android:id="@+id/otherApp"
             android:layout_alignBottom="@+id/iconApp"
             android:layout_toRightOf="@+id/iconApp"
-            android:layout_alignEnd="@+id/checkApp"/>
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
 </RelativeLayout>

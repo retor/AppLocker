@@ -70,7 +70,7 @@ public class LunchedAdapter extends BaseAdapter {
         vh.appName = (TextView) v.findViewById(R.id.nameApp);
         vh.appOther = (TextView) v.findViewById(R.id.otherApp);
         vh.appIcon = (ImageView) v.findViewById(R.id.iconApp);
-        vh.appCheck = (CheckBox) v.findViewById(R.id.checkApp);
+        //vh.appCheck = (CheckBox) v.findViewById(R.id.checkApp);
 
         String appNameStr=""; 
         String appOtherStr="";
@@ -97,7 +97,7 @@ public class LunchedAdapter extends BaseAdapter {
         }
             vh.appName.setText(appNameStr);
             vh.appOther.setText(appOtherStr);
-            vh.appCheck.setChecked(false);
+            //vh.appCheck.setChecked(false);
             vh.appIcon.setImageDrawable(appIcon);
         return v;
     }

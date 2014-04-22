@@ -9,7 +9,7 @@ import android.graphics.drawable.Drawable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.app.ActivityManager.*;
+import static android.app.ActivityManager.RunningAppProcessInfo;
 
 /**
  * Created by retor on 25.03.2014.

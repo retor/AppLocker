@@ -35,8 +35,7 @@ public class ListApps extends ListFragment implements OnItemClickListener{
         super.onViewCreated(view, savedInstanceState);
 		getListView().setOnItemClickListener(this);
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        getListView().setSelector(R.drawable.selector);
-        //getListView().setBackgroundResource(R.drawable.selector);
+        getListView().setBackgroundColor(getResources().getColor(R.color.background_default));
     }
 
     @Override
@@ -47,9 +46,19 @@ public class ListApps extends ListFragment implements OnItemClickListener{
     }
 
     @Override
+    public void setSelection(int position) {
+        super.setSelection(position);
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        view.setBackgroundResource(R.drawable.selector);
-        view.setSelected(true);
+        if (!view.isSelected()) {
+            view.setBackgroundColor(getResources().getColor(R.color.background_checked));
+            view.setSelected(true);
+        }else{
+            view.setBackgroundColor(getResources().getColor(R.color.background_default));
+            view.setSelected(false);
+        }
 
         /*CheckBox cb=(CheckBox)view.findViewById(R.id.checkApp);
         if(!cb.isChecked()) {
@@ -60,6 +69,6 @@ public class ListApps extends ListFragment implements OnItemClickListener{
 //        PackageInfo pi = (PackageInfo) parent.getItemAtPosition(position);
         Intent intent = new Intent();
        // intent.putE
-        Toast.makeText(context, String.valueOf(position), Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, String.valueOf(getListView().getCheckedItemCount()), Toast.LENGTH_SHORT).show();
     }
 }

@@ -25,6 +25,7 @@ public class AppInfo {
     private ActivityManager activityManager;
     private PackageInfo mPackageInfo;
     private String appLabel;
+    public boolean check;
 
     public AppInfo() {
     }
@@ -134,5 +135,9 @@ public class AppInfo {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setCheck(boolean check) {
+        if (!this.check)this.check = check;
     }
 }

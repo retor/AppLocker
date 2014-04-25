@@ -35,7 +35,14 @@ public class ListLunchedApps extends ListFragment implements OnItemClickListener
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-				getListView().setOnItemClickListener(this);
+		getListView().setOnItemClickListener(this);
+        int countList = getListView().getCount();
+        for (int i = 0; i<countList;i++){
+            AppInfo tmp = (AppInfo)getListView().getItemAtPosition(i);
+            if (tmp.isChecked()) {
+                getListView().getChildAt(i).setSelected(true);
+            }
+        }
     }
 
     @Override
@@ -47,6 +54,15 @@ public class ListLunchedApps extends ListFragment implements OnItemClickListener
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        AppInfo apptm = (AppInfo)parent.getItemAtPosition(position);
+        if (!apptm.isChecked()) {
+            apptm.setCheck(true);
+        }else {
+            apptm.setCheck(false);
+        }
+
+
+
         ActivityManager.RunningAppProcessInfo ri = (ActivityManager.RunningAppProcessInfo)parent.getItemAtPosition(position);
         ActivityManager am = (ActivityManager) context.getSystemService(context.ACTIVITY_SERVICE);
         am.killBackgroundProcesses(((ActivityManager.RunningAppProcessInfo) parent.getItemAtPosition(position)).processName);

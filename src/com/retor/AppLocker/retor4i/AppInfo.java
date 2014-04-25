@@ -15,7 +15,7 @@ import static android.app.ActivityManager.RunningAppProcessInfo;
  * Created by retor on 25.03.2014.
  */
 public class AppInfo {
-    private String PackageName;
+    private String packageName;
     private Context context;
     private int uid;
     private String locationDir;
@@ -25,85 +25,59 @@ public class AppInfo {
     private ActivityManager activityManager;
     private PackageInfo mPackageInfo;
     private String appLabel;
-    public boolean check;
+    private boolean check;
 
     public AppInfo() {
     }
 
+    public AppInfo(Context _context, RunningAppProcessInfo runningAppProcessInfo){
+        context = _context;
+        setPackageName(runningAppProcessInfo);
+        setAppLabel(runningAppProcessInfo);
+        setIcon(runningAppProcessInfo);
+        setLocationDir(runningAppProcessInfo);
+        setUid(runningAppProcessInfo);
+
+    }
     public ArrayList<AppInfo> getListAppInfo(List<RunningAppProcessInfo> runningAppProcessInfo) {
         ArrayList<AppInfo> appInfo = new ArrayList<AppInfo>();
         for (RunningAppProcessInfo running:runningAppProcessInfo){
-            AppInfo temp = new AppInfo(running.processName);
+            AppInfo temp = new AppInfo(context, running);
             appInfo.add(temp);
         }
         return appInfo;
     }
 
-    public AppInfo(String packageName) {
-        setPackageName(packageName);
-        isSystem();
-        setUid();
-        setLocationDir();
-        setIcon();
-        setAppLabel(packageName);
-        //appList.get(position).applicationInfo.loadLabel(packageManager).toString();
-    }
-
-    public AppInfo(Context context, String packageName) {
-        this.context = context;
-        packageManager = context.getPackageManager();
-        activityManager = (ActivityManager)context.getSystemService(context.ACTIVITY_SERVICE);
-        setPackageName(packageName);
-        isSystem();
-        setUid();
-        setLocationDir();
-        setIcon();
-        setAppLabel(packageName);
-        //appList.get(position).applicationInfo.loadLabel(packageManager).toString();
-    }
-
     public String getPackageName() {
-        return PackageName;
+        return packageName;
     }
 
-    private void setPackageName(String packageName) {
-        this.PackageName = packageName;
+    public void setPackageName(RunningAppProcessInfo runningAppProcessInfo) {
+        packageName = runningAppProcessInfo.processName;
     }
 
     public int getUid() {
         return uid;
     }
 
-    private void setUid() {
-        try {
-            uid = packageManager.getPackageInfo(getPackageName(),packageManager.GET_META_DATA).applicationInfo.uid;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+    public void setUid(RunningAppProcessInfo runningAppProcessInfo) {
+        uid = runningAppProcessInfo.uid;
     }
 
     public String getLocationDir() {
         return locationDir;
     }
 
-    private void setLocationDir() {
+    public void setLocationDir(RunningAppProcessInfo runningAppProcessInfo) {
+        packageManager = context.getPackageManager();
         try {
-            locationDir = packageManager.getPackageInfo(getPackageName(),packageManager.GET_META_DATA).applicationInfo.sourceDir;
+            locationDir = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA).sourceDir.toString();
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    private boolean isSystem() {
-        try {
-            PackageInfo sys = packageManager.getPackageInfo("android", PackageManager.GET_SIGNATURES);
-            if (mPackageInfo != null && mPackageInfo.signatures != null &&
-                    sys.signatures[0].equals(mPackageInfo.signatures[0])){
-                isSystem = true;
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            isSystem = false;
-        }
+    public boolean isSystem() {
         return isSystem;
     }
 
@@ -115,12 +89,13 @@ public class AppInfo {
         return icon;
     }
 
-    private void setIcon() {
+    public void setIcon(RunningAppProcessInfo runningAppProcessInfo) {
+        packageManager = context.getPackageManager();
         try {
-            this.icon = packageManager.getPackageInfo(getPackageName(),packageManager.GET_META_DATA).applicationInfo.loadIcon(packageManager);
+            icon = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA).loadIcon(packageManager);
         } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
             icon = context.getResources().getDrawable(android.R.drawable.ic_delete);
-            //e.printStackTrace();
         }
     }
 
@@ -128,16 +103,21 @@ public class AppInfo {
         return appLabel;
     }
 
-    public void setAppLabel(String appString) {
-
+    public void setAppLabel(RunningAppProcessInfo runningAppProcessInfo) {
+        packageManager = context.getPackageManager();
         try {
-            this.appLabel= packageManager.getApplicationInfo(appString,0).loadLabel(packageManager).toString();
+            appLabel = packageManager.getApplicationInfo(runningAppProcessInfo.processName, PackageManager.GET_META_DATA).loadLabel(packageManager).toString();
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
+            appLabel = "no name";
         }
     }
 
+    public boolean isChecked() {
+        return check;
+    }
+
     public void setCheck(boolean check) {
-        if (!this.check)this.check = check;
+        this.check = check;
     }
 }

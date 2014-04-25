@@ -2,15 +2,14 @@ package com.retor.AppLocker;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 import android.widget.Toast;
 
 /**
@@ -34,8 +33,9 @@ public class ListApps extends ListFragment implements OnItemClickListener{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 		getListView().setOnItemClickListener(this);
-        getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        getListView().setBackgroundColor(getResources().getColor(R.color.background_default));
+        getListView().setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+/*        //test
+        getListView().setItemChecked(2,true);*/
     }
 
     @Override
@@ -46,29 +46,14 @@ public class ListApps extends ListFragment implements OnItemClickListener{
     }
 
     @Override
-    public void setSelection(int position) {
-        super.setSelection(position);
-    }
-
-    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (!view.isSelected()) {
-            view.setBackgroundColor(getResources().getColor(R.color.background_checked));
-            view.setSelected(true);
-        }else{
-            view.setBackgroundColor(getResources().getColor(R.color.background_default));
+        if(getListView().getCheckedItemPosition() != position){
             view.setSelected(false);
-        }
-
-        /*CheckBox cb=(CheckBox)view.findViewById(R.id.checkApp);
-        if(!cb.isChecked()) {
-            cb.setChecked(true);
+            Toast.makeText(context, "+", Toast.LENGTH_SHORT).show();
         }else{
-            cb.setChecked(false);
-        }*/
-//        PackageInfo pi = (PackageInfo) parent.getItemAtPosition(position);
-        Intent intent = new Intent();
-       // intent.putE
-        Toast.makeText(context, String.valueOf(getListView().getCheckedItemCount()), Toast.LENGTH_SHORT).show();
+            view.setSelected(true);
+            Toast.makeText(context, "-", Toast.LENGTH_SHORT).show();
+        }
+        Toast.makeText(context, String.valueOf(getListView().getCheckedItemCount()), 50).show();
     }
 }

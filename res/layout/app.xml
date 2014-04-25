@@ -4,7 +4,8 @@
               android:name = "@+id/list"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="70dp">
+              android:layout_height="70dp"
+              android:background="?android:attr/activatedBackgroundIndicator">
 
     <ImageView
             android:layout_width="50dp"

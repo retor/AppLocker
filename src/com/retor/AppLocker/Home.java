@@ -117,7 +117,7 @@ public class Home extends FragmentActivity{
     public ArrayList<AppInfo> getListAppInfo(List<RunningAppProcessInfo> runningAppProcessInfo) {
         ArrayList<AppInfo> appInfoList = new ArrayList<AppInfo>();
         for (RunningAppProcessInfo running:runningAppProcessInfo){
-            AppInfo temp = new AppInfo(context, running.processName);
+            AppInfo temp = new AppInfo(getApplicationContext(), running);
             appInfoList.add(temp);
         }
         return appInfoList;

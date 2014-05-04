@@ -26,6 +26,7 @@ public class AppInfo {
     private PackageInfo mPackageInfo;
     private String appLabel;
     private boolean check;
+    private int pid;
 
     public AppInfo() {
     }
@@ -39,13 +40,23 @@ public class AppInfo {
         setUid(runningAppProcessInfo);
 
     }
-    public ArrayList<AppInfo> getListAppInfo(List<RunningAppProcessInfo> runningAppProcessInfo) {
+/*    public ArrayList<AppInfo> getListAppInfo(List<RunningAppProcessInfo> runningAppProcessInfo) {
         ArrayList<AppInfo> appInfo = new ArrayList<AppInfo>();
         for (RunningAppProcessInfo running:runningAppProcessInfo){
             AppInfo temp = new AppInfo(context, running);
             appInfo.add(temp);
         }
         return appInfo;
+    }*/
+    public ArrayList<AppInfo> getListAppInfo(List<RunningAppProcessInfo> runningAppProcessInfo, Context cont) {
+    ArrayList<AppInfo> appInfoList = new ArrayList<AppInfo>();
+
+        for (RunningAppProcessInfo running:runningAppProcessInfo){
+        AppInfo temp = new AppInfo(cont, running);
+        appInfoList.add(temp);
+        }
+
+        return appInfoList;
     }
 
     public String getPackageName() {
@@ -106,11 +117,19 @@ public class AppInfo {
     public void setAppLabel(RunningAppProcessInfo runningAppProcessInfo) {
         packageManager = context.getPackageManager();
         try {
-            appLabel = packageManager.getApplicationInfo(runningAppProcessInfo.processName, PackageManager.GET_META_DATA).loadLabel(packageManager).toString();
+            appLabel = packageManager.getApplicationInfo(runningAppProcessInfo.processName,0).loadLabel(packageManager).toString();// (runningAppProcessInfo.processName, PackageManager.GET_ACTIVITIES).loadLabel(packageManager).toString();
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
             appLabel = "no name";
         }
+    }
+
+    public int getPid() {
+        return pid;
+    }
+
+    public void setPid(RunningAppProcessInfo runningAppProcessInfo) {
+        pid = runningAppProcessInfo.pid;
     }
 
     public boolean isChecked() {

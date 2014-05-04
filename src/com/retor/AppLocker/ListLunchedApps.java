@@ -13,14 +13,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 import com.retor.AppLocker.retor4i.AppInfo;
 
-import java.util.ArrayList;
-
 /**
  * Created by Антон on 25.03.14.
  */
 public class ListLunchedApps extends ListFragment implements OnItemClickListener{
 
-    Context context;
+    private Context context;
 
     @Override
     public void onAttach(Activity activity) {
@@ -36,13 +34,13 @@ public class ListLunchedApps extends ListFragment implements OnItemClickListener
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 		getListView().setOnItemClickListener(this);
-        int countList = getListView().getCount();
+/*        int countList = getListView().getCount();
         for (int i = 0; i<countList;i++){
             AppInfo tmp = (AppInfo)getListView().getItemAtPosition(i);
             if (tmp.isChecked()) {
                 getListView().getChildAt(i).setSelected(true);
             }
-        }
+        }*/
     }
 
     @Override
@@ -54,32 +52,21 @@ public class ListLunchedApps extends ListFragment implements OnItemClickListener
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        AppInfo apptm = (AppInfo)parent.getItemAtPosition(position);
-        if (!apptm.isChecked()) {
-            apptm.setCheck(true);
-        }else {
-            apptm.setCheck(false);
-        }
+        final ActivityManager activityManager = (ActivityManager) context.getSystemService(context.ACTIVITY_SERVICE);
+        AppInfo appInfo=(AppInfo)parent.getItemAtPosition(position);
+        this.appKilling(appInfo,activityManager);
+    }
 
-
-
-        ActivityManager.RunningAppProcessInfo ri = (ActivityManager.RunningAppProcessInfo)parent.getItemAtPosition(position);
-        ActivityManager am = (ActivityManager) context.getSystemService(context.ACTIVITY_SERVICE);
-        am.killBackgroundProcesses(((ActivityManager.RunningAppProcessInfo) parent.getItemAtPosition(position)).processName);
-
-        int myPid = android.os.Process.myPid();
-        int killPid = ri.pid;
-        if (killPid!=myPid){
-           /* Process.sendSignal(killPid, Process.SIGNAL_KILL);
-            Process.killProcess(killPid);*/
-            LunchedAdapter la = (LunchedAdapter)getListAdapter();//notifyDataSetChanged();
-            AppInfo appo = new AppInfo();
-            ArrayList<AppInfo> app = appo.getListAppInfo(am.getRunningAppProcesses());
-            la.appInfos = app;
-            //la.appList = am.getRunningAppProcesses();
-            la.notifyDataSetInvalidated();
-            la.notifyDataSetChanged();
-            Toast.makeText(context, String.valueOf(position), Toast.LENGTH_SHORT).show();
+    private void appKilling(AppInfo appInfo, ActivityManager activityManager){
+        int appUid = android.os.Process.myUid();
+        int killUid = appInfo.getUid();
+        if (killUid!=appUid){
+            activityManager.killBackgroundProcesses(appInfo.getPackageName());
+            Toast.makeText(context, "App: "+ appInfo.getAppLabel()+" killed.", Toast.LENGTH_SHORT).show();
+            LunchedAdapter lunchedAdapter = (LunchedAdapter)getListAdapter();
+            lunchedAdapter.appInfos = appInfo.getListAppInfo(activityManager.getRunningAppProcesses(), context);
+            lunchedAdapter.notifyDataSetInvalidated();
+            lunchedAdapter.notifyDataSetChanged();
         }else {
             Toast.makeText(context, "Can't kill himself", Toast.LENGTH_SHORT).show();
         }

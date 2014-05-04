@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.retor.AppLocker.retor4i.AppInfo;
@@ -64,13 +63,9 @@ public class LunchedAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v;
-        ViewHolder vh = new ViewHolder();
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         v = inflater.inflate(res,null);
-        vh.appName = (TextView) v.findViewById(R.id.nameApp);
-        vh.appOther = (TextView) v.findViewById(R.id.otherApp);
-        vh.appIcon = (ImageView) v.findViewById(R.id.iconApp);
-        //vh.appCheck = (CheckBox) v.findViewById(R.id.checkApp);
+        ViewHolder vh = new ViewHolder(v);
 
         String appNameStr=""; 
         String appOtherStr="";
@@ -111,6 +106,10 @@ public class LunchedAdapter extends BaseAdapter {
         TextView appName;
         TextView appOther;
         ImageView appIcon;
-        CheckBox appCheck;
+    public ViewHolder(View v){
+        appName = (TextView) v.findViewById(R.id.nameApp);
+        appOther = (TextView) v.findViewById(R.id.otherApp);
+        appIcon = (ImageView) v.findViewById(R.id.iconApp);
+    }
     }
 }

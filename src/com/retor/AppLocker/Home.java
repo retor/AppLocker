@@ -18,6 +18,7 @@ import java.util.List;
 import static android.app.ActivityManager.RunningAppProcessInfo;
 
 public class Home extends FragmentActivity{
+
     //view pager
     ViewPager pager;
     ArrayList<Fragment> fragments;
@@ -49,6 +50,7 @@ public class Home extends FragmentActivity{
         pagerTab.setFocusable(false);
         pagerTab.setMotionEventSplittingEnabled(true);
         ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
+        getSupportFragmentManager();
 
         //create Arrays
         appList = new ArrayList<PackageInfo>();

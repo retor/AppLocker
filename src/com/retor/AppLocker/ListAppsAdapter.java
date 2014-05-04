@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -52,22 +51,17 @@ public class ListAppsAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v;
-        ViewHolder vh = new ViewHolder();
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inflater.inflate(res,null);
-            vh.appName = (TextView)v.findViewById(R.id.nameApp);
-            vh.appOther = (TextView)v.findViewById(R.id.otherApp);
-            vh.appIcon = (ImageView)v.findViewById(R.id.iconApp);
-            //vh.appCheck = (CheckBox)v.findViewById(R.id.checkApp);
+        v = inflater.inflate(res,null);
+        ViewHolder vh = new ViewHolder(v);
 
             String appNameStr = appList.get(position).applicationInfo.loadLabel(pm).toString();
             String appOtherStr = appList.get(position).applicationInfo.processName.toString();
             Drawable appIco = appList.get(position).applicationInfo.loadIcon(pm);
 
-            vh.appName.setText(appNameStr);
-            vh.appOther.setText(appOtherStr);
-            //vh.appCheck.setChecked(false);
-            vh.appIcon.setImageDrawable(appIco);
+        vh.appName.setText(appNameStr);
+        vh.appOther.setText(appOtherStr);
+        vh.appIcon.setImageDrawable(appIco);
         return v;
     }
 
@@ -75,7 +69,13 @@ public class ListAppsAdapter extends BaseAdapter {
         TextView appName;
         TextView appOther;
         ImageView appIcon;
-        CheckBox appCheck;
+        public boolean checked;
+        public ViewHolder(View v){
+            appName = (TextView) v.findViewById(R.id.nameApp);
+            appOther = (TextView) v.findViewById(R.id.otherApp);
+            appIcon = (ImageView) v.findViewById(R.id.iconApp);
+            checked = false;
+        }
 
     }
 }

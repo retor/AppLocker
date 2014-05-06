@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AppLocker.iml" filepath="$PROJECT_DIR$/AppLocker.iml" />
+      <module fileurl="file://C:/TEST/SlidingMenu-master/library/library.iml" filepath="C:/TEST/SlidingMenu-master/library/library.iml" />
     </modules>
   </component>
 </project>

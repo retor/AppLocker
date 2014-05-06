@@ -3,7 +3,7 @@ package com.retor.AppLocker;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
-import android.os.Bundle;
+import android.os.*;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,6 +61,8 @@ public class ListLunchedApps extends ListFragment implements OnItemClickListener
         int appUid = android.os.Process.myUid();
         int killUid = appInfo.getUid();
         if (killUid!=appUid){
+            android.os.Process.sendSignal(appInfo.getPid(), 9);
+            android.os.Process.killProcess(appInfo.getPid());
             activityManager.killBackgroundProcesses(appInfo.getPackageName());
             Toast.makeText(context, "App: "+ appInfo.getAppLabel()+" killed.", Toast.LENGTH_SHORT).show();
             LunchedAdapter lunchedAdapter = (LunchedAdapter)getListAdapter();

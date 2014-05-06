@@ -1,5 +1,6 @@
 package com.retor.AppLocker;
 
+import android.app.ActionBar;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -9,7 +10,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.retor.AppLocker.retor4i.AppInfo;
 
 import java.util.ArrayList;
@@ -17,7 +24,7 @@ import java.util.List;
 
 import static android.app.ActivityManager.RunningAppProcessInfo;
 
-public class Home extends FragmentActivity{
+public class Home extends FragmentActivity implements View.OnClickListener {
 
     //view pager
     ViewPager pager;
@@ -33,7 +40,8 @@ public class Home extends FragmentActivity{
     ArrayList<AppInfo> appInfos; //my class
     //other
     PackageManager pm;
-    Context context;
+    private Context context;
+    private SlidingMenu sm;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,7 +58,35 @@ public class Home extends FragmentActivity{
         pagerTab.setFocusable(false);
         pagerTab.setMotionEventSplittingEnabled(true);
         ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
-        getSupportFragmentManager();
+
+
+        //SlidingMenu
+        sm = new SlidingMenu(getApplicationContext());
+        sm.setMode(SlidingMenu.LEFT);
+        sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+        sm.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+        sm.setBehindWidth(200);
+        sm.setMenu(R.layout.slidingmenu);
+        sm.setOnClickListener(this);
+        //OnClick for SlidingMenu
+        TextView menu1 = (TextView)findViewById(R.id.textView1);
+        menu1.setOnClickListener(this);
+        TextView menu2 = (TextView)findViewById(R.id.textView2);
+        menu2.setOnClickListener(this);
+        TextView menu3 = (TextView)findViewById(R.id.textView3);
+        menu3.setOnClickListener(this);
+        TextView menu4 = (TextView)findViewById(R.id.textView4);
+        menu4.setOnClickListener(this);
+
+        //ActionBar
+
+        ActionBar actionBar=(ActionBar)getActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setNavigationMode(actionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setTitle("Hahaha");
+
 
         //create Arrays
         appList = new ArrayList<PackageInfo>();
@@ -125,4 +161,30 @@ public class Home extends FragmentActivity{
         return appInfoList;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                sm.toggle(true);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Log.i("SlidingMenu", "pressed" + String.valueOf(v.getId()));
+        switch (v.getId()) {
+            case R.id.textView1:
+                pager.setCurrentItem(1);
+                Toast.makeText(context, "Menu 1", Toast.LENGTH_SHORT).show();
+            case R.id.textView2:
+                Toast.makeText(context, "Menu 2", Toast.LENGTH_SHORT).show();
+            case R.id.textView3:
+                Toast.makeText(context, "Menu 3", Toast.LENGTH_SHORT).show();
+            case R.id.textView4:
+                Toast.makeText(context, "Menu 4", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
+

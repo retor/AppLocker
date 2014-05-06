@@ -3,6 +3,7 @@ package com.retor.AppLocker;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
@@ -20,8 +21,6 @@ import android.widget.Toast;
 public class ListApps extends ListFragment implements OnItemClickListener {
 
     Context context;
-    int MAX = 10;
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -55,18 +54,29 @@ public class ListApps extends ListFragment implements OnItemClickListener {
         final InfoFragment dialogFragment = new InfoFragment();
         final FragmentManager fragmentManager = getFragmentManager();
         dialogFragment.setStyle(DialogFragment.STYLE_NO_FRAME, android.R.style.Theme_Holo_Dialog);
-        ListAppsAdapter.ViewHolder vh = (ListAppsAdapter.ViewHolder)view.findViewById(R.layout.app);// parent.getItemAtPosition(position);
-        if(!vh.checked){
-            //do what you want
-            vh.checked=true;
-            dialogFragment.show(fragmentManager, "321");
-            // view.setSelected(true);
-            Toast.makeText(context, "+",Toast.LENGTH_SHORT).show();
-        } else {
-            vh.checked=false;
-            // view.setSelected(false);
-            Toast.makeText(context, "-", Toast.LENGTH_SHORT).show();
-        }
+//        Activity am = (Activity)context.getSystemService(Context.ACTIVITY_SERVICE);
+//        ActionBar ab = (ActionBar)am.getActionBar();
+        Vibrator vib;
+        vib = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+        vib.vibrate(100);
+//        String actionString = String.valueOf(position);
+//        ab.setTitle(actionString);
+        //View vv = (View)parent.getItemAtPosition(position);
+
+        //ListAppsAdapter.ViewHolder vh = (ListAppsAdapter.ViewHolder)view.findViewById(R.layout.app);// parent.getItemAtPosition(position);
+
+/*            if(!vv.isSelected()){
+                //do what you want
+                vv.setSelected(true);
+                dialogFragment.show(fragmentManager, "321");
+                // view.setSelected(true);
+                Toast.makeText(context, "+",Toast.LENGTH_SHORT).show();
+            } else {
+                vv.setSelected(false);
+                // view.setSelected(false);
+                Toast.makeText(context, "-", Toast.LENGTH_SHORT).show();
+            }*/
+
         Toast.makeText(context, String.valueOf(getListView().getCheckedItemCount()), Toast.LENGTH_SHORT).show();
     }
 

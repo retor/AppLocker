@@ -40,22 +40,13 @@ public class AppInfo {
         setUid(runningAppProcessInfo);
 
     }
-/*    public ArrayList<AppInfo> getListAppInfo(List<RunningAppProcessInfo> runningAppProcessInfo) {
-        ArrayList<AppInfo> appInfo = new ArrayList<AppInfo>();
-        for (RunningAppProcessInfo running:runningAppProcessInfo){
-            AppInfo temp = new AppInfo(context, running);
-            appInfo.add(temp);
-        }
-        return appInfo;
-    }*/
+
     public ArrayList<AppInfo> getListAppInfo(List<RunningAppProcessInfo> runningAppProcessInfo, Context cont) {
     ArrayList<AppInfo> appInfoList = new ArrayList<AppInfo>();
-
         for (RunningAppProcessInfo running:runningAppProcessInfo){
         AppInfo temp = new AppInfo(cont, running);
         appInfoList.add(temp);
         }
-
         return appInfoList;
     }
 

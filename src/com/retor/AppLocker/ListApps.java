@@ -3,16 +3,15 @@ package com.retor.AppLocker;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Vibrator;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 import android.widget.Toast;
 
 /**
@@ -38,6 +37,7 @@ public class ListApps extends ListFragment implements OnItemClickListener {
 		getListView().setOnItemClickListener(this);
         getListView().setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         getListView().setSelector(R.drawable.selector);
+        //android:background="?android:attr/activatedBackgroundIndicator"
 /*        //test
         getListView().setItemChecked(2,true);*/
     }
@@ -50,15 +50,39 @@ public class ListApps extends ListFragment implements OnItemClickListener {
     }
 
     @Override
+    public void onListItemClick(ListView lv, View view, int position, long id) {
+
+        if (!lv.getChildAt(position).isSelected()) {
+            lv.getChildAt(position).setSelected(true);
+            Toast.makeText(context,"+",Toast.LENGTH_SHORT).show();
+        }else{
+            lv.getChildAt(position).setSelected(false);
+            Toast.makeText(context,"-",Toast.LENGTH_SHORT).show();
+        }
+
+
+        super.onListItemClick(lv, view, position, id);
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        final InfoFragment dialogFragment = new InfoFragment();
+        ListView lv = (ListView)parent;
+        SparseBooleanArray checked = lv.getCheckedItemPositions();
+        for (int i=0; i<checked.size();i++){
+            if (checked.get(i) == true){
+                Toast.makeText(context, String.valueOf(checked.get(i)),Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
+/*        final InfoFragment dialogFragment = new InfoFragment();
         final FragmentManager fragmentManager = getFragmentManager();
         dialogFragment.setStyle(DialogFragment.STYLE_NO_FRAME, android.R.style.Theme_Holo_Dialog);
 //        Activity am = (Activity)context.getSystemService(Context.ACTIVITY_SERVICE);
 //        ActionBar ab = (ActionBar)am.getActionBar();
         Vibrator vib;
         vib = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
-        vib.vibrate(100);
+        vib.vibrate(100);*/
 //        String actionString = String.valueOf(position);
 //        ab.setTitle(actionString);
         //View vv = (View)parent.getItemAtPosition(position);

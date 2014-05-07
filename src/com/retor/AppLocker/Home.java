@@ -5,12 +5,12 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,11 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.retor.AppLocker.retor4i.AppInfo;
-
+import com.retor.AppLocker.retor4i.Apps;
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.ActivityManager.RunningAppProcessInfo;
+import static com.retor.AppLocker.retor4i.Apps.makeApps;
 
 public class Home extends FragmentActivity implements View.OnClickListener {
 
@@ -42,6 +43,10 @@ public class Home extends FragmentActivity implements View.OnClickListener {
     PackageManager pm;
     private Context context;
     private SlidingMenu sm;
+    Typeface tf;
+
+    //tests
+    ArrayList<Apps> testArray;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,8 @@ public class Home extends FragmentActivity implements View.OnClickListener {
         pagerTab.setFocusable(false);
         pagerTab.setMotionEventSplittingEnabled(true);
         ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
+        String pathTTF = "fonts/ModernAntiqua.ttf";
+        tf = Typeface.createFromAsset(getAssets(), pathTTF);
 
 
         //SlidingMenu
@@ -70,12 +77,16 @@ public class Home extends FragmentActivity implements View.OnClickListener {
         sm.setOnClickListener(this);
         //OnClick for SlidingMenu
         TextView menu1 = (TextView)findViewById(R.id.textView1);
+        menu1.setTypeface(tf);
         menu1.setOnClickListener(this);
         TextView menu2 = (TextView)findViewById(R.id.textView2);
+        menu2.setTypeface(tf);
         menu2.setOnClickListener(this);
         TextView menu3 = (TextView)findViewById(R.id.textView3);
+        menu3.setTypeface(tf);
         menu3.setOnClickListener(this);
         TextView menu4 = (TextView)findViewById(R.id.textView4);
+        menu4.setTypeface(tf);
         menu4.setOnClickListener(this);
 
         //ActionBar
@@ -89,6 +100,8 @@ public class Home extends FragmentActivity implements View.OnClickListener {
 
 
         //create Arrays
+        testArray = new ArrayList<Apps>();
+        testArray = makeApps(getAppList());
         appList = new ArrayList<PackageInfo>();
         appList = getAppList();
         appListAuto = new ArrayList<PackageInfo>();
@@ -119,6 +132,22 @@ public class Home extends FragmentActivity implements View.OnClickListener {
         List<PackageInfo> pi = new ArrayList<PackageInfo>();
         pi = pm.getInstalledPackages(0);
         return pi;
+    }
+    //test
+    private List<Apps> getAppListS(){
+        PackageManager pm = getPackageManager();
+        List<PackageInfo> pi = new ArrayList<PackageInfo>();
+        List<Apps> apps = new ArrayList<Apps>();
+        pi = pm.getInstalledPackages(0);
+        for (PackageInfo pinf:pi){
+            Apps tmp = new Apps();
+            tmp.packageName = pinf.packageName;
+            tmp.permissions = pinf.permissions;
+            tmp.requestedPermissions = pinf.requestedPermissions;
+
+            apps.add(tmp);
+        }
+        return apps;
     }
 
     private List<PackageInfo> catchAutoRun(List<PackageInfo> packageInfos){
@@ -173,7 +202,7 @@ public class Home extends FragmentActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Log.i("SlidingMenu", "pressed" + String.valueOf(v.getId()));
+        //Log.i("SlidingMenu", "pressed" + String.valueOf(v.getId()));
         switch (v.getId()) {
             case R.id.textView1:
                 pager.setCurrentItem(1);

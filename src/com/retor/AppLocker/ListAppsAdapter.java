@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -65,17 +66,42 @@ public class ListAppsAdapter extends BaseAdapter {
         return v;
     }
 
-    public class ViewHolder{
+    public class ViewHolder implements Checkable{
         TextView appName;
         TextView appOther;
         ImageView appIcon;
-        public boolean checked;
+        public boolean check;
         public ViewHolder(View v){
             appName = (TextView) v.findViewById(R.id.nameApp);
             appOther = (TextView) v.findViewById(R.id.otherApp);
             appIcon = (ImageView) v.findViewById(R.id.iconApp);
-            checked = false;
+            check = false;
         }
 
+        /**
+         * Change the checked state of the view
+         *
+         * @param checked The new checked state
+         */
+        @Override
+        public void setChecked(boolean checked) {
+            check=checked;
+        }
+
+        /**
+         * @return The current checked state of the view
+         */
+        @Override
+        public boolean isChecked() {
+            return check;
+        }
+
+        /**
+         * Change the checked state of the view to the inverse of its current state
+         */
+        @Override
+        public void toggle() {
+            if (isChecked())check=false;
+        }
     }
 }

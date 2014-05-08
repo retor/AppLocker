@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.retor.AppLocker.retor4i.Apps;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +21,21 @@ public class ListAppsAdapter extends BaseAdapter {
     List<PackageInfo> appList;
     int res;
     PackageManager pm;
+    ArrayList<Apps> tests;
 
     public ListAppsAdapter(Context _context, List<PackageInfo> _appList, int _res, PackageManager _pm) {
         context = _context;
         res = _res;
         appList = new ArrayList<PackageInfo>();
         appList = _appList;
+        pm = _pm;
+    }
+
+    public ListAppsAdapter(Context _context, ArrayList<Apps> _appList, int _res, PackageManager _pm) {
+        context = _context;
+        res = _res;
+        tests = new ArrayList<Apps>();
+        tests = _appList;
         pm = _pm;
     }
 

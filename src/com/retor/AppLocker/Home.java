@@ -102,6 +102,7 @@ public class Home extends FragmentActivity implements View.OnClickListener {
         //create Arrays
         testArray = new ArrayList<Apps>();
         testArray = makeApps(getAppList());
+
         appList = new ArrayList<PackageInfo>();
         appList = getAppList();
         appListAuto = new ArrayList<PackageInfo>();
@@ -115,7 +116,7 @@ public class Home extends FragmentActivity implements View.OnClickListener {
         listTasks = new ListLunchedApps();
 
         //create/set adapters for fragments
-        listApps.setListAdapter(new ListAppsAdapter(getApplicationContext(), appList, R.layout.app, pm));
+        listApps.setListAdapter(new ListAppsAdapter(getApplicationContext(), testArray, R.layout.app, pm));
         listAppsAuto.setListAdapter(new ListAppsAdapter(getApplicationContext(),appListAuto, R.layout.app, pm));
         listTasks.setListAdapter(new LunchedAdapter(pm, context, appInfos, R.layout.app));
 

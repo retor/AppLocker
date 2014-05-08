@@ -2,6 +2,9 @@ package com.retor.AppLocker.retor4i;
 
 import android.content.pm.PackageInfo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Антон on 07.05.2014.
  */
@@ -13,22 +16,26 @@ public class Apps extends PackageInfo {
         check=false;
     }
 
-
-     public static Apps makeApps(PackageInfo packageInfo){
-         Apps apps = new Apps();;
+     public static ArrayList<Apps> makeApps(List<PackageInfo> packageInfo){
+        ArrayList<Apps> arrayApps = new ArrayList<Apps>();
+        Apps apps;
         if (packageInfo!=null) {
-            apps.applicationInfo = packageInfo.applicationInfo;
-            apps.packageName = packageInfo.packageName;
-            apps.permissions = packageInfo.permissions;
-            apps.requestedPermissions = packageInfo.requestedPermissions;
-            apps.activities = packageInfo.activities;
-            apps.firstInstallTime = packageInfo.firstInstallTime;
-            apps.gids = packageInfo.gids;
-            apps.configPreferences = packageInfo.configPreferences;
-            apps.providers = packageInfo.providers;
-            apps.receivers = packageInfo.receivers;
+            for (PackageInfo tmpInfo:packageInfo) {
+                apps = new Apps();
+                apps.applicationInfo = tmpInfo.applicationInfo;
+                apps.packageName = tmpInfo.packageName;
+                apps.permissions = tmpInfo.permissions;
+                apps.requestedPermissions = tmpInfo.requestedPermissions;
+                apps.activities = tmpInfo.activities;
+                apps.firstInstallTime = tmpInfo.firstInstallTime;
+                apps.gids = tmpInfo.gids;
+                apps.configPreferences = tmpInfo.configPreferences;
+                apps.providers = tmpInfo.providers;
+                apps.receivers = tmpInfo.receivers;
+                arrayApps.add(apps);
+            }
         }
-         return apps;
+         return arrayApps;
     }
 
     public boolean isCheck() {

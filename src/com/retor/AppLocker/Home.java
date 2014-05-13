@@ -1,6 +1,5 @@
 package com.retor.AppLocker;
 
-import android.app.ActionBar;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -8,9 +7,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,13 +18,15 @@ import android.widget.Toast;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.retor.AppLocker.retor4i.AppInfo;
 import com.retor.AppLocker.retor4i.Apps;
+
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.ActivityManager.RunningAppProcessInfo;
 import static com.retor.AppLocker.retor4i.Apps.makeApps;
 
-public class Home extends FragmentActivity implements View.OnClickListener {
+public class Home extends ActionBarActivity implements View.OnClickListener {
 
     //view pager
     ViewPager pager;
@@ -47,10 +48,13 @@ public class Home extends FragmentActivity implements View.OnClickListener {
 
     //tests
     ArrayList<Apps> testArray;
+    ArrayList<Apps> testArray1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        setTheme(android.support.v7.appcompat.R.style.Theme_AppCompat_Light);
         super.onCreate(savedInstanceState);
+
         //set first parameters
         setContentView(R.layout.main);
         context = getApplicationContext();
@@ -91,22 +95,25 @@ public class Home extends FragmentActivity implements View.OnClickListener {
 
         //ActionBar
 
-        ActionBar actionBar=(ActionBar)getActionBar();
-        actionBar.setDisplayShowCustomEnabled(true);
+        android.support.v7.app.ActionBar actionBar=getSupportActionBar();
+
+/*        actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setHomeButtonEnabled(true);
         actionBar.setNavigationMode(actionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setTitle("Hahaha");
+        actionBar.setTitle("Hahaha");*/
 
 
         //create Arrays
         testArray = new ArrayList<Apps>();
         testArray = makeApps(getAppList());
+        testArray1 = new ArrayList<Apps>();
+        testArray1 = makeApps(catchAutoRun(getAppList()));
 
-        appList = new ArrayList<PackageInfo>();
+/*        appList = new ArrayList<PackageInfo>();
         appList = getAppList();
         appListAuto = new ArrayList<PackageInfo>();
-        appListAuto = catchAutoRun(appList);
+        appListAuto = catchAutoRun(appList);*/
         appInfos = new ArrayList<AppInfo>();
         appInfos = getListAppInfo(am.getRunningAppProcesses());
 
@@ -117,7 +124,7 @@ public class Home extends FragmentActivity implements View.OnClickListener {
 
         //create/set adapters for fragments
         listApps.setListAdapter(new ListAppsAdapter(getApplicationContext(), testArray, R.layout.app, pm));
-        listAppsAuto.setListAdapter(new ListAppsAdapter(getApplicationContext(),appListAuto, R.layout.app, pm));
+        listAppsAuto.setListAdapter(new ListAppsAdapter(getApplicationContext(),testArray1, R.layout.app, pm));
         listTasks.setListAdapter(new LunchedAdapter(pm, context, appInfos, R.layout.app));
 
         //fill viewpager

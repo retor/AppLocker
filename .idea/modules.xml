@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AppLocker.iml" filepath="$PROJECT_DIR$/AppLocker.iml" />
+      <module fileurl="file://$USER_HOME$/Desktop/adt-bundle-windows-x86_64-20131030/sdk/extras/android/support/v7/appcompat/appcompat.iml" filepath="$USER_HOME$/Desktop/adt-bundle-windows-x86_64-20131030/sdk/extras/android/support/v7/appcompat/appcompat.iml" />
       <module fileurl="file://C:/TEST/SlidingMenu-master/library/library.iml" filepath="C:/TEST/SlidingMenu-master/library/library.iml" />
     </modules>
   </component>

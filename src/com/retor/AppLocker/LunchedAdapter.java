@@ -42,7 +42,7 @@ public class LunchedAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-         return appInfos.size();
+        return appInfos.size();
     }
 
     @Override
@@ -67,13 +67,13 @@ public class LunchedAdapter extends BaseAdapter {
         v = inflater.inflate(res,null);
         ViewHolder vh = new ViewHolder(v);
 
-        String appNameStr=""; 
+        String appNameStr="";
         String appOtherStr="";
         Drawable appIcon=null;
 
         if (appInfos.size()==0) {
-             appNameStr = appList.get(position).processName;
-             appOtherStr = String.valueOf(appList.get(position).pid);
+            appNameStr = appList.get(position).processName;
+            appOtherStr = String.valueOf(appList.get(position).pid);
             try {
                 String st = appList.get(position).processName;// .importanceReasonComponent.getPackageName().toString();
                 appIcon = pm.getApplicationIcon(pm.getApplicationInfo(st, PackageManager.GET_ACTIVITIES)); //.getApplicationIcon(st) ;//context.getPackageManager().getApplicationLabel(pm.getApplicationInfo(appList.get(position).toString(), PackageManager.GET_META_DATA)));
@@ -90,10 +90,10 @@ public class LunchedAdapter extends BaseAdapter {
             appOtherStr = String.valueOf(appInfos.get(position).getUid());
             appIcon = appInfos.get(position).getIcon();
         }
-            vh.appName.setText(appNameStr);
-            vh.appOther.setText(appOtherStr);
-            //vh.appCheck.setChecked(false);
-            vh.appIcon.setImageDrawable(appIcon);
+        vh.appName.setText(appNameStr);
+        vh.appOther.setText(appOtherStr);
+        //vh.appCheck.setChecked(false);
+        vh.appIcon.setImageDrawable(appIcon);
         return v;
     }
 
@@ -106,10 +106,10 @@ public class LunchedAdapter extends BaseAdapter {
         TextView appName;
         TextView appOther;
         ImageView appIcon;
-    public ViewHolder(View v){
-        appName = (TextView) v.findViewById(R.id.nameApp);
-        appOther = (TextView) v.findViewById(R.id.otherApp);
-        appIcon = (ImageView) v.findViewById(R.id.iconApp);
-    }
+        public ViewHolder(View v){
+            appName = (TextView) v.findViewById(R.id.nameApp);
+            appOther = (TextView) v.findViewById(R.id.otherApp);
+            appIcon = (ImageView) v.findViewById(R.id.iconApp);
+        }
     }
 }

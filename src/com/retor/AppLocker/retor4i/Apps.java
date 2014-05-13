@@ -35,6 +35,7 @@ public class Apps extends PackageInfo {
                 arrayApps.add(apps);
             }
         }
+
          return arrayApps;
     }
 

@@ -3,16 +3,18 @@ package com.retor.AppLocker;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Vibrator;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 import android.widget.Toast;
+import com.retor.AppLocker.retor4i.Apps;
 
 /**
  * Created by Антон on 25.03.14.
@@ -36,7 +38,7 @@ public class ListApps extends ListFragment implements OnItemClickListener {
         super.onViewCreated(view, savedInstanceState);
 		getListView().setOnItemClickListener(this);
         getListView().setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-        getListView().setSelector(R.drawable.selector);
+        //getListView().setSelector(R.drawable.selector);
         //android:background="?android:attr/activatedBackgroundIndicator"
 /*        //test
         getListView().setItemChecked(2,true);*/
@@ -50,58 +52,44 @@ public class ListApps extends ListFragment implements OnItemClickListener {
     }
 
     @Override
-    public void onListItemClick(ListView lv, View view, int position, long id) {
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Apps tmpApps = (Apps) parent.getItemAtPosition(position);
 
-        if (!lv.getChildAt(position).isSelected()) {
-            lv.getChildAt(position).setSelected(true);
-            Toast.makeText(context,"+",Toast.LENGTH_SHORT).show();
+        assert tmpApps != null;
+        if (!tmpApps.isCheck()){
+            tmpApps.setCheck(true);
+
+            vibration(context, 1);
+            Toast.makeText(context, "+",Toast.LENGTH_SHORT).show();
         }else{
-            lv.getChildAt(position).setSelected(false);
-            Toast.makeText(context,"-",Toast.LENGTH_SHORT).show();
+            tmpApps.setCheck(false);
+            vibration(context, 2);
+            Toast.makeText(context, "-",Toast.LENGTH_SHORT).show();
         }
-
-
-        super.onListItemClick(lv, view, position, id);
+        Toast.makeText(context, String.valueOf(getListView().getCheckedItemCount()), Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ListView lv = (ListView)parent;
-        SparseBooleanArray checked = lv.getCheckedItemPositions();
-        for (int i=0; i<checked.size();i++){
-            if (checked.get(i) == true){
-                Toast.makeText(context, String.valueOf(checked.get(i)),Toast.LENGTH_SHORT).show();
-            }
+    private void vibration(Context _context, int _repeat){
+        Vibrator vibrator = (Vibrator)_context.getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator.hasVibrator())
+        switch (_repeat) {
+            case 1:
+                vibrator.vibrate(30);
+            case 2:
+                vibrator.vibrate(15);
         }
+    }
 
-
-/*        final InfoFragment dialogFragment = new InfoFragment();
-        final FragmentManager fragmentManager = getFragmentManager();
+    private DialogFragment createDialog(){
+        final InfoFragment dialogFragment = new InfoFragment();
         dialogFragment.setStyle(DialogFragment.STYLE_NO_FRAME, android.R.style.Theme_Holo_Dialog);
-//        Activity am = (Activity)context.getSystemService(Context.ACTIVITY_SERVICE);
-//        ActionBar ab = (ActionBar)am.getActionBar();
-        Vibrator vib;
-        vib = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
-        vib.vibrate(100);*/
-//        String actionString = String.valueOf(position);
-//        ab.setTitle(actionString);
-        //View vv = (View)parent.getItemAtPosition(position);
+        return dialogFragment;
+    }
 
-        //ListAppsAdapter.ViewHolder vh = (ListAppsAdapter.ViewHolder)view.findViewById(R.layout.app);// parent.getItemAtPosition(position);
+    private void showDialogInfo(DialogFragment dialogFragment, Apps apps){
+        final FragmentManager fragmentManager = getFragmentManager();
 
-/*            if(!vv.isSelected()){
-                //do what you want
-                vv.setSelected(true);
-                dialogFragment.show(fragmentManager, "321");
-                // view.setSelected(true);
-                Toast.makeText(context, "+",Toast.LENGTH_SHORT).show();
-            } else {
-                vv.setSelected(false);
-                // view.setSelected(false);
-                Toast.makeText(context, "-", Toast.LENGTH_SHORT).show();
-            }*/
-
-        Toast.makeText(context, String.valueOf(getListView().getCheckedItemCount()), Toast.LENGTH_SHORT).show();
+        dialogFragment.show(fragmentManager, "321");
     }
 
 }

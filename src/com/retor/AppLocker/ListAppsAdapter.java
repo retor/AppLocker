@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.retor.AppLocker.retor4i.Apps;
@@ -41,12 +40,20 @@ public class ListAppsAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return appList.size();
+        if (appList==null){
+            return tests.size();
+        }else{
+            return appList.size();
+        }
     }
 
     @Override
     public PackageInfo getItem(int position) {
-        return appList.get(position);
+        if (appList==null){
+            return tests.get(position);
+        }else{
+            return appList.get(position);
+        }
     }
 
     @Override
@@ -62,21 +69,28 @@ public class ListAppsAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v;
-        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        v = inflater.inflate(res,null);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        v = inflater.inflate(res, null);
         ViewHolder vh = new ViewHolder(v);
-
-            String appNameStr = appList.get(position).applicationInfo.loadLabel(pm).toString();
-            String appOtherStr = appList.get(position).applicationInfo.processName.toString();
-            Drawable appIco = appList.get(position).applicationInfo.loadIcon(pm);
-
+        String appNameStr;
+        String appOtherStr;
+        Drawable appIco;
+        if (appList==null){
+            appNameStr = tests.get(position).applicationInfo.loadLabel(pm).toString();
+            appOtherStr = tests.get(position).applicationInfo.processName.toString();
+            appIco = tests.get(position).applicationInfo.loadIcon(pm);
+        }else {
+            appNameStr = appList.get(position).applicationInfo.loadLabel(pm).toString();
+            appOtherStr = appList.get(position).applicationInfo.processName.toString();
+            appIco = appList.get(position).applicationInfo.loadIcon(pm);
+        }
         vh.appName.setText(appNameStr);
         vh.appOther.setText(appOtherStr);
         vh.appIcon.setImageDrawable(appIco);
         return v;
     }
 
-    public class ViewHolder implements Checkable{
+    public class ViewHolder{
         TextView appName;
         TextView appOther;
         ImageView appIcon;
@@ -86,32 +100,6 @@ public class ListAppsAdapter extends BaseAdapter {
             appOther = (TextView) v.findViewById(R.id.otherApp);
             appIcon = (ImageView) v.findViewById(R.id.iconApp);
             check = false;
-        }
-
-        /**
-         * Change the checked state of the view
-         *
-         * @param checked The new checked state
-         */
-        @Override
-        public void setChecked(boolean checked) {
-            check=checked;
-        }
-
-        /**
-         * @return The current checked state of the view
-         */
-        @Override
-        public boolean isChecked() {
-            return check;
-        }
-
-        /**
-         * Change the checked state of the view to the inverse of its current state
-         */
-        @Override
-        public void toggle() {
-            if (isChecked())check=false;
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.retor.AppLocker;
+package com.retor.AppLocker.adapters;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.retor.AppLocker.retor4i.Apps;
+import com.retor.AppLocker.R;
+import com.retor.AppLocker.classes.Apps;
 
 import java.util.ArrayList;
 import java.util.List;

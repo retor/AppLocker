@@ -1,4 +1,4 @@
-package com.retor.AppLocker;
+package com.retor.AppLocker.adapters;
 
 import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.Context;
@@ -11,14 +11,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.retor.AppLocker.retor4i.AppInfo;
+import com.retor.AppLocker.R;
+import com.retor.AppLocker.classes.AppInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LunchedAdapter extends BaseAdapter {
     Context context;
-    ArrayList<AppInfo> appInfos;
+    public ArrayList<AppInfo> appInfos;
     List<RunningAppProcessInfo> appList;
     int res;
     final PackageManager pm;

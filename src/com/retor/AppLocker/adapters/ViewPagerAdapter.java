@@ -1,20 +1,26 @@
-package com.retor.AppLocker;
+package com.retor.AppLocker.adapters;
 
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v7.app.ActionBar;
 
 import java.util.ArrayList;
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+public class ViewPagerAdapter extends FragmentPagerAdapter{
 				
     ArrayList<Fragment> fragments;
-		
+    Context context;
+	ActionBar actionBar;
 
-    public ViewPagerAdapter(FragmentManager fm, ArrayList<Fragment> _fragments) {
+    public ViewPagerAdapter(FragmentManager fm, ArrayList<Fragment> _fragments, Context context, ActionBar actionBar) {
         super(fm);
         fragments = _fragments;
+        this.context = context;
+        this.actionBar = actionBar;
+
     }
 
     @Override
@@ -39,5 +45,4 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                 return null;
         }
     }
-
 }

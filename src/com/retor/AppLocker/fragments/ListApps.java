@@ -1,4 +1,4 @@
-package com.retor.AppLocker;
+package com.retor.AppLocker.fragments;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,7 +14,8 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
-import com.retor.AppLocker.retor4i.Apps;
+import com.retor.AppLocker.R;
+import com.retor.AppLocker.classes.Apps;
 
 /**
  * Created by Антон on 25.03.14.
@@ -54,11 +55,10 @@ public class ListApps extends ListFragment implements OnItemClickListener {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Apps tmpApps = (Apps) parent.getItemAtPosition(position);
-
         assert tmpApps != null;
         if (!tmpApps.isCheck()){
             tmpApps.setCheck(true);
-
+            createDialog(tmpApps);
             vibration(context, 1);
             Toast.makeText(context, "+",Toast.LENGTH_SHORT).show();
         }else{
@@ -80,16 +80,13 @@ public class ListApps extends ListFragment implements OnItemClickListener {
         }
     }
 
-    private DialogFragment createDialog(){
-        final InfoFragment dialogFragment = new InfoFragment();
+    private void createDialog(Apps apps){
+        InfoFragment dialogFragment = null;
+        if (apps!=null)
+        dialogFragment = new InfoFragment(apps);
         dialogFragment.setStyle(DialogFragment.STYLE_NO_FRAME, android.R.style.Theme_Holo_Dialog);
-        return dialogFragment;
-    }
-
-    private void showDialogInfo(DialogFragment dialogFragment, Apps apps){
         final FragmentManager fragmentManager = getFragmentManager();
-
-        dialogFragment.show(fragmentManager, "321");
+        dialogFragment.show(fragmentManager, "Apps");
     }
 
 }

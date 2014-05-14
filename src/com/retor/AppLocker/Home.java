@@ -11,22 +11,27 @@ import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.retor.AppLocker.retor4i.AppInfo;
-import com.retor.AppLocker.retor4i.Apps;
-
+import com.retor.AppLocker.adapters.ListAppsAdapter;
+import com.retor.AppLocker.adapters.LunchedAdapter;
+import com.retor.AppLocker.adapters.ViewPagerAdapter;
+import com.retor.AppLocker.classes.AppInfo;
+import com.retor.AppLocker.classes.Apps;
+import com.retor.AppLocker.fragments.ListApps;
+import com.retor.AppLocker.fragments.ListLunchedApps;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.ActivityManager.RunningAppProcessInfo;
-import static com.retor.AppLocker.retor4i.Apps.makeApps;
+import static com.retor.AppLocker.classes.Apps.makeApps;
 
-public class Home extends ActionBarActivity implements View.OnClickListener {
+public class Home extends ActionBarActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
     //view pager
     ViewPager pager;
@@ -45,10 +50,17 @@ public class Home extends ActionBarActivity implements View.OnClickListener {
     private Context context;
     private SlidingMenu sm;
     Typeface tf;
+    android.support.v7.app.ActionBar actionBar;
 
     //tests
     ArrayList<Apps> testArray;
     ArrayList<Apps> testArray1;
+
+    @Override
+    public boolean onCreatePanelMenu(int featureId, Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar, menu);
+        return super.onCreatePanelMenu(featureId, menu);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,15 +106,8 @@ public class Home extends ActionBarActivity implements View.OnClickListener {
         menu4.setOnClickListener(this);
 
         //ActionBar
-
-        android.support.v7.app.ActionBar actionBar=getSupportActionBar();
-
-/*        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar=getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
-        actionBar.setNavigationMode(actionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setTitle("Hahaha");*/
-
 
         //create Arrays
         testArray = new ArrayList<Apps>();
@@ -110,10 +115,6 @@ public class Home extends ActionBarActivity implements View.OnClickListener {
         testArray1 = new ArrayList<Apps>();
         testArray1 = makeApps(catchAutoRun(getAppList()));
 
-/*        appList = new ArrayList<PackageInfo>();
-        appList = getAppList();
-        appListAuto = new ArrayList<PackageInfo>();
-        appListAuto = catchAutoRun(appList);*/
         appInfos = new ArrayList<AppInfo>();
         appInfos = getListAppInfo(am.getRunningAppProcesses());
 
@@ -132,7 +133,9 @@ public class Home extends ActionBarActivity implements View.OnClickListener {
         fragments.add(0, listApps);
         fragments.add(1, listAppsAuto);
         fragments.add(2, listTasks);
-        pager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
+        ViewPagerAdapter vpa = new ViewPagerAdapter(getSupportFragmentManager(), fragments, getApplicationContext(), actionBar);
+        pager.setAdapter(vpa);
+        pager.setOnPageChangeListener(this);
     }
 
     private List<PackageInfo> getAppList(){
@@ -140,22 +143,6 @@ public class Home extends ActionBarActivity implements View.OnClickListener {
         List<PackageInfo> pi = new ArrayList<PackageInfo>();
         pi = pm.getInstalledPackages(0);
         return pi;
-    }
-    //test
-    private List<Apps> getAppListS(){
-        PackageManager pm = getPackageManager();
-        List<PackageInfo> pi = new ArrayList<PackageInfo>();
-        List<Apps> apps = new ArrayList<Apps>();
-        pi = pm.getInstalledPackages(0);
-        for (PackageInfo pinf:pi){
-            Apps tmp = new Apps();
-            tmp.packageName = pinf.packageName;
-            tmp.permissions = pinf.permissions;
-            tmp.requestedPermissions = pinf.requestedPermissions;
-
-            apps.add(tmp);
-        }
-        return apps;
     }
 
     private List<PackageInfo> catchAutoRun(List<PackageInfo> packageInfos){
@@ -222,6 +209,31 @@ public class Home extends ActionBarActivity implements View.OnClickListener {
             case R.id.textView4:
                 Toast.makeText(context, "Menu 4", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onPageScrolled(int i, float v, int i2) {
+
+    }
+
+    @Override
+    public void onPageSelected(int i) {
+        TextView textView = (TextView)findViewById(R.id.item1);
+        textView.setText(getStringToBar(i));
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int i) {
+
+    }
+
+    public String getStringToBar(int i){
+        switch (i){
+            case 0: return String.valueOf(testArray.size());
+            case 1: return String.valueOf(testArray1.size());
+            case 2: return String.valueOf(appInfos.size());
+        }
+        return null;
     }
 }
 

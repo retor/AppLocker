@@ -1,4 +1,4 @@
-package com.retor.AppLocker.retor4i;
+package com.retor.AppLocker.classes;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;

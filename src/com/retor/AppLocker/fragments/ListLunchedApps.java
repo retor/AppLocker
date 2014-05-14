@@ -1,9 +1,9 @@
-package com.retor.AppLocker;
+package com.retor.AppLocker.fragments;
 
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
-import android.os.*;
+import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
-import com.retor.AppLocker.retor4i.AppInfo;
+import com.retor.AppLocker.R;
+import com.retor.AppLocker.adapters.LunchedAdapter;
+import com.retor.AppLocker.classes.AppInfo;
 
 /**
  * Created by Антон on 25.03.14.

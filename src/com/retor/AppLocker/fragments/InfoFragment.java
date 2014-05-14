@@ -1,4 +1,4 @@
-package com.retor.AppLocker;
+package com.retor.AppLocker.fragments;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import com.retor.AppLocker.R;
+import com.retor.AppLocker.classes.Apps;
 
 /**
  * Created by retor on 03.04.2014.
@@ -13,10 +16,17 @@ import android.view.ViewGroup;
 public class InfoFragment extends android.support.v4.app.DialogFragment implements DialogInterface {
     int mNum=0;
     final String TAG = "321";
+    Apps apps;
 
     public InfoFragment() {
         super();
     }
+
+    public InfoFragment(Apps apps) {
+        super();
+        this.apps = apps;
+    }
+
     static InfoFragment newInstance(int num) {
         InfoFragment f = new InfoFragment();
 
@@ -36,6 +46,10 @@ public class InfoFragment extends android.support.v4.app.DialogFragment implemen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.info, container, false);
+        TextView name = (TextView)v.findViewById(R.id.textView);
+        name.setText(apps.packageName.toString());
+        TextView loca = (TextView)v.findViewById(R.id.textView2);
+        loca.setText(apps.applicationInfo.sourceDir.toString());
 
         /*View tv = v.findViewById(R.id.text);
         ((TextView)tv).setText("Dialog #" + mNum + ": using style "

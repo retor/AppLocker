@@ -1,4 +1,4 @@
-package com.retor.AppLocker.retor4i;
+package com.retor.AppLocker.classes;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -14,7 +14,7 @@ import static android.app.ActivityManager.RunningAppProcessInfo;
 /**
  * Created by retor on 25.03.2014.
  */
-public class AppInfo {
+public class AppInfo extends RunningAppProcessInfo{
     private String packageName;
     private Context context;
     private int uid;
@@ -32,6 +32,15 @@ public class AppInfo {
     }
 
     public AppInfo(Context _context, RunningAppProcessInfo runningAppProcessInfo){
+        super.uid = runningAppProcessInfo.uid;
+        super.pid = runningAppProcessInfo.pid;
+        super.processName = runningAppProcessInfo.processName;
+        super.importance = runningAppProcessInfo.importance;
+        super.pkgList = runningAppProcessInfo.pkgList;
+        super.importanceReasonCode = runningAppProcessInfo.importanceReasonCode;
+        super.importanceReasonComponent = runningAppProcessInfo.importanceReasonComponent;
+        super.importanceReasonPid = runningAppProcessInfo.importanceReasonPid;
+
         context = _context;
         setPackageName(runningAppProcessInfo);
         setAppLabel(runningAppProcessInfo);

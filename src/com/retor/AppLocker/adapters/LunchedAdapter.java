@@ -68,8 +68,8 @@ public class LunchedAdapter extends BaseAdapter {
         v = inflater.inflate(res,null);
         ViewHolder vh = new ViewHolder(v);
 
-        String appNameStr="";
-        String appOtherStr="";
+        String appNameStr=null;
+        String appOtherStr=null;
         Drawable appIcon=null;
 
         if (appInfos.size()==0) {
@@ -77,7 +77,7 @@ public class LunchedAdapter extends BaseAdapter {
             appOtherStr = String.valueOf(appList.get(position).pid);
             try {
                 String st = appList.get(position).processName;// .importanceReasonComponent.getPackageName().toString();
-                appIcon = pm.getApplicationIcon(pm.getApplicationInfo(st, PackageManager.GET_ACTIVITIES)); //.getApplicationIcon(st) ;//context.getPackageManager().getApplicationLabel(pm.getApplicationInfo(appList.get(position).toString(), PackageManager.GET_META_DATA)));
+                appIcon = pm.getApplicationIcon(appList.get(position).processName);//pm.getApplicationInfo(st, PackageManager.GET_ACTIVITIES)); //.getApplicationIcon(st) ;//context.getPackageManager().getApplicationLabel(pm.getApplicationInfo(appList.get(position).toString(), PackageManager.GET_META_DATA)));
                 Log.i("Icon res", st.toString());
                 vh.appIcon.setImageDrawable(appIcon);
 
@@ -88,7 +88,7 @@ public class LunchedAdapter extends BaseAdapter {
             }
         }else {
             appNameStr = appInfos.get(position).getAppLabel();//.getPackageName();
-            appOtherStr = String.valueOf(appInfos.get(position).getUid());
+            appOtherStr = String.valueOf(appInfos.get(position).uid);
             appIcon = appInfos.get(position).getIcon();
         }
         vh.appName.setText(appNameStr);

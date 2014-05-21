@@ -1,10 +1,9 @@
 package com.retor.AppLocker.classes;
 
-import android.app.ActivityManager;
 import android.content.Context;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,26 +13,26 @@ import static android.app.ActivityManager.RunningAppProcessInfo;
 /**
  * Created by retor on 25.03.2014.
  */
-public class AppInfo extends RunningAppProcessInfo{
-    private String packageName;
+public class AppInfo extends RunningAppProcessInfo implements Parcelable{
+
     private Context context;
-    private int uid;
-    private String locationDir;
+
     private boolean isSystem = false;
     private Drawable icon;
     private PackageManager packageManager;
-    private ActivityManager activityManager;
-    private PackageInfo mPackageInfo;
     private String appLabel;
     private boolean check;
-    private int pid;
+
+
 
     public AppInfo() {
     }
-
-    public AppInfo(Context _context, RunningAppProcessInfo runningAppProcessInfo){
+      public AppInfo(Context _context, RunningAppProcessInfo runningAppProcessInfo){
+          context = _context;
+        if (runningAppProcessInfo!=null)
         super.uid = runningAppProcessInfo.uid;
-        super.pid = runningAppProcessInfo.pid;
+          assert runningAppProcessInfo != null;
+          super.pid = runningAppProcessInfo.pid;
         super.processName = runningAppProcessInfo.processName;
         super.importance = runningAppProcessInfo.importance;
         super.pkgList = runningAppProcessInfo.pkgList;
@@ -41,13 +40,8 @@ public class AppInfo extends RunningAppProcessInfo{
         super.importanceReasonComponent = runningAppProcessInfo.importanceReasonComponent;
         super.importanceReasonPid = runningAppProcessInfo.importanceReasonPid;
 
-        context = _context;
-        setPackageName(runningAppProcessInfo);
         setAppLabel(runningAppProcessInfo);
         setIcon(runningAppProcessInfo);
-        setLocationDir(runningAppProcessInfo);
-        setUid(runningAppProcessInfo);
-
     }
 
     public ArrayList<AppInfo> getListAppInfo(List<RunningAppProcessInfo> runningAppProcessInfo, Context cont) {
@@ -59,41 +53,8 @@ public class AppInfo extends RunningAppProcessInfo{
         return appInfoList;
     }
 
-    public String getPackageName() {
-        return packageName;
-    }
-
-    public void setPackageName(RunningAppProcessInfo runningAppProcessInfo) {
-        packageName = runningAppProcessInfo.processName;
-    }
-
-    public int getUid() {
-        return uid;
-    }
-
-    public void setUid(RunningAppProcessInfo runningAppProcessInfo) {
-        uid = runningAppProcessInfo.uid;
-    }
-
-    public String getLocationDir() {
-        return locationDir;
-    }
-
-    public void setLocationDir(RunningAppProcessInfo runningAppProcessInfo) {
-        packageManager = context.getPackageManager();
-        try {
-            locationDir = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA).sourceDir.toString();
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
     public boolean isSystem() {
         return isSystem;
-    }
-
-    public void setSystem(boolean isSystem) {
-        this.isSystem = isSystem;
     }
 
     public Drawable getIcon() {
@@ -103,7 +64,7 @@ public class AppInfo extends RunningAppProcessInfo{
     public void setIcon(RunningAppProcessInfo runningAppProcessInfo) {
         packageManager = context.getPackageManager();
         try {
-            icon = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA).loadIcon(packageManager);
+            icon = packageManager.getApplicationInfo(super.processName, PackageManager.GET_META_DATA).loadIcon(packageManager);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
             icon = context.getResources().getDrawable(android.R.drawable.ic_delete);
@@ -122,14 +83,6 @@ public class AppInfo extends RunningAppProcessInfo{
             e.printStackTrace();
             appLabel = "no name";
         }
-    }
-
-    public int getPid() {
-        return pid;
-    }
-
-    public void setPid(RunningAppProcessInfo runningAppProcessInfo) {
-        pid = runningAppProcessInfo.pid;
     }
 
     public boolean isChecked() {

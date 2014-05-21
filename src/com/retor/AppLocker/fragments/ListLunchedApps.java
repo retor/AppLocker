@@ -61,11 +61,11 @@ public class ListLunchedApps extends ListFragment implements OnItemClickListener
 
     private void appKilling(AppInfo appInfo, ActivityManager activityManager){
         int appUid = android.os.Process.myUid();
-        int killUid = appInfo.getUid();
+        int killUid = appInfo.uid;
         if (killUid!=appUid){
-            android.os.Process.sendSignal(appInfo.getPid(), 9);
-            android.os.Process.killProcess(appInfo.getPid());
-            activityManager.killBackgroundProcesses(appInfo.getPackageName());
+            android.os.Process.sendSignal(appInfo.pid, 9);
+            android.os.Process.killProcess(appInfo.pid);
+            activityManager.killBackgroundProcesses(appInfo.processName);
             Toast.makeText(context, "App: "+ appInfo.getAppLabel()+" killed.", Toast.LENGTH_SHORT).show();
             LunchedAdapter lunchedAdapter = (LunchedAdapter)getListAdapter();
             lunchedAdapter.appInfos = appInfo.getListAppInfo(activityManager.getRunningAppProcesses(), context);

@@ -34,33 +34,28 @@ import static com.retor.AppLocker.classes.Apps.makeApps;
 public class Home extends ActionBarActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
     //view pager
-    ViewPager pager;
-    ArrayList<Fragment> fragments;
-    PagerTabStrip pagerTab;
+    private ViewPager pager;
+    private ArrayList<Fragment> fragments;
+    private PagerTabStrip pagerTab;
+    private ViewPagerAdapter vpa;
     //fragments
-    ListApps listApps;
-    ListApps listAppsAuto;
-    ListLunchedApps listTasks;
+    private ListApps listApps;
+    private ListApps listAppsAuto;
+    private ListLunchedApps listTasks;
     //arrays
-    List<PackageInfo> appList;
-    List<PackageInfo> appListAuto;
-    ArrayList<AppInfo> appInfos; //my class
+    private List<PackageInfo> appList;
+    private List<PackageInfo> appListAuto;
+    private ArrayList<AppInfo> appInfos; //my class
     //other
-    PackageManager pm;
+    private PackageManager pm;
     private Context context;
     private SlidingMenu sm;
-    Typeface tf;
-    android.support.v7.app.ActionBar actionBar;
+    private Typeface tf;
+    private android.support.v7.app.ActionBar actionBar;
 
     //tests
-    ArrayList<Apps> testArray;
-    ArrayList<Apps> testArray1;
-
-    @Override
-    public boolean onCreatePanelMenu(int featureId, Menu menu) {
-        getMenuInflater().inflate(R.menu.actionbar, menu);
-        return super.onCreatePanelMenu(featureId, menu);
-    }
+    private ArrayList<Apps> testArray;
+    private ArrayList<Apps> testArray1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,10 +73,9 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         pagerTab.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 11);
         pagerTab.setFocusable(false);
         pagerTab.setMotionEventSplittingEnabled(true);
-        ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
+        ActivityManager am = (ActivityManager)this.getSystemService(ACTIVITY_SERVICE);
         String pathTTF = "fonts/ModernAntiqua.ttf";
         tf = Typeface.createFromAsset(getAssets(), pathTTF);
-
 
         //SlidingMenu
         sm = new SlidingMenu(getApplicationContext());
@@ -108,6 +102,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         //ActionBar
         actionBar=getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         //create Arrays
         testArray = new ArrayList<Apps>();
@@ -133,9 +128,19 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         fragments.add(0, listApps);
         fragments.add(1, listAppsAuto);
         fragments.add(2, listTasks);
-        ViewPagerAdapter vpa = new ViewPagerAdapter(getSupportFragmentManager(), fragments, getApplicationContext(), actionBar);
+        vpa = new ViewPagerAdapter(getSupportFragmentManager(), fragments, getApplicationContext(), actionBar);
         pager.setAdapter(vpa);
         pager.setOnPageChangeListener(this);
+
+    }
+
+    @Override
+    public boolean onCreatePanelMenu(int featureId, Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar, menu);
+        String firs=String.valueOf(testArray.size());
+        menu.getItem(0).setTitle(firs);
+        menu.getItem(0).setEnabled(false);
+        return super.onCreatePanelMenu(featureId, menu);
     }
 
     private List<PackageInfo> getAppList(){
@@ -147,7 +152,6 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
 
     private List<PackageInfo> catchAutoRun(List<PackageInfo> packageInfos){
         ArrayList<PackageInfo> autoruns = new ArrayList<PackageInfo>();
-
         for (PackageInfo pi : packageInfos){
             PackageInfo temp;
             int i = 0;
@@ -213,7 +217,6 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
 
     @Override
     public void onPageScrolled(int i, float v, int i2) {
-
     }
 
     @Override
@@ -224,16 +227,18 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
 
     @Override
     public void onPageScrollStateChanged(int i) {
-
     }
 
     public String getStringToBar(int i){
-        switch (i){
-            case 0: return String.valueOf(testArray.size());
-            case 1: return String.valueOf(testArray1.size());
-            case 2: return String.valueOf(appInfos.size());
+        switch (i) {
+            case 0:
+                return String.valueOf(testArray.size());
+            case 1:
+                return String.valueOf(testArray1.size());
+            case 2:
+                return String.valueOf(appInfos.size());
         }
-        return null;
+    return null;
     }
 }
 

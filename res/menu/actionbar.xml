@@ -5,6 +5,7 @@
             android:id="@+id/item1"
             android:showAsAction="always"
             android:title="item1"
+            android:checkable="false"
             >
     </item>
     <item

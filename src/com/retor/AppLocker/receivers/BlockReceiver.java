@@ -3,7 +3,9 @@ package com.retor.AppLocker.receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
+import com.retor.AppLocker.services.ListenService;
 
 /**
  * Created by Антон on 20.05.2014.
@@ -47,6 +49,12 @@ public class BlockReceiver extends BroadcastReceiver {
      */
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "EEEE", Toast.LENGTH_SHORT).show();
+        Log.d("Receiver", intent.getAction());
+        String action = intent.getAction();
+            if (action!=null && action.equals(Intent.ACTION_BOOT_COMPLETED) | action.equals(Intent.ACTION_DREAMING_STOPPED)){
+                Intent serviceIntent = new Intent(context, ListenService.class);
+                context.startService(intent);
+                Toast.makeText(context, "EEEE", Toast.LENGTH_SHORT).show();
+            }
     }
 }

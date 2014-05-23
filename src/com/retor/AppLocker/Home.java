@@ -1,10 +1,13 @@
 package com.retor.AppLocker;
 
 import android.app.ActivityManager;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerTabStrip;
@@ -24,6 +27,7 @@ import com.retor.AppLocker.classes.AppInfo;
 import com.retor.AppLocker.classes.Apps;
 import com.retor.AppLocker.fragments.ListApps;
 import com.retor.AppLocker.fragments.ListLunchedApps;
+import com.retor.AppLocker.services.ListenService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +56,8 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     private SlidingMenu sm;
     private Typeface tf;
     private android.support.v7.app.ActionBar actionBar;
+    ActivityManager am;
+    ProgressDialog pd;
 
     //tests
     private ArrayList<Apps> testArray;
@@ -73,65 +79,30 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         pagerTab.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 11);
         pagerTab.setFocusable(false);
         pagerTab.setMotionEventSplittingEnabled(true);
-        ActivityManager am = (ActivityManager)this.getSystemService(ACTIVITY_SERVICE);
+        am = (ActivityManager)this.getSystemService(ACTIVITY_SERVICE);
         String pathTTF = "fonts/ModernAntiqua.ttf";
         tf = Typeface.createFromAsset(getAssets(), pathTTF);
 
-        //SlidingMenu
-        sm = new SlidingMenu(getApplicationContext());
-        sm.setMode(SlidingMenu.LEFT);
-        sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-        sm.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-        sm.setBehindWidth(200);
-        sm.setMenu(R.layout.slidingmenu);
-        sm.setOnClickListener(this);
-        //OnClick for SlidingMenu
-        TextView menu1 = (TextView)findViewById(R.id.textView1);
-        menu1.setTypeface(tf);
-        menu1.setOnClickListener(this);
-        TextView menu2 = (TextView)findViewById(R.id.textView2);
-        menu2.setTypeface(tf);
-        menu2.setOnClickListener(this);
-        TextView menu3 = (TextView)findViewById(R.id.textView3);
-        menu3.setTypeface(tf);
-        menu3.setOnClickListener(this);
-        TextView menu4 = (TextView)findViewById(R.id.textView4);
-        menu4.setTypeface(tf);
-        menu4.setOnClickListener(this);
-
-        //ActionBar
-        actionBar=getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-        //create Arrays
-        testArray = new ArrayList<Apps>();
-        testArray = makeApps(getAppList());
-        testArray1 = new ArrayList<Apps>();
-        testArray1 = makeApps(catchAutoRun(getAppList()));
-
-        appInfos = new ArrayList<AppInfo>();
-        appInfos = getListAppInfo(am.getRunningAppProcesses());
+        initSlidingMenu();
 
         //create/init fragments
         listApps = new ListApps();
         listAppsAuto = new ListApps();
         listTasks = new ListLunchedApps();
-
-        //create/set adapters for fragments
-        listApps.setListAdapter(new ListAppsAdapter(getApplicationContext(), testArray, R.layout.app, pm));
-        listAppsAuto.setListAdapter(new ListAppsAdapter(getApplicationContext(),testArray1, R.layout.app, pm));
-        listTasks.setListAdapter(new LunchedAdapter(pm, context, appInfos, R.layout.app));
-
-        //fill viewpager
+        testArray = new ArrayList<Apps>();
+        testArray1 = new ArrayList<Apps>();
+        appInfos = new ArrayList<AppInfo>();
         fragments = new ArrayList<Fragment>();
-        fragments.add(0, listApps);
-        fragments.add(1, listAppsAuto);
-        fragments.add(2, listTasks);
-        vpa = new ViewPagerAdapter(getSupportFragmentManager(), fragments, getApplicationContext(), actionBar);
-        pager.setAdapter(vpa);
-        pager.setOnPageChangeListener(this);
 
+        //ActionBar
+        actionBar=getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        pd = new ProgressDialog(this).show(this, null, "Loading...", true, true);
+        testArray = new ArrayList<Apps>();
+        new RequestInfo();
+        vpa = new ViewPagerAdapter(getSupportFragmentManager(), fragments, getApplicationContext(), actionBar);
+        pager.setOnPageChangeListener(this);
     }
 
     @Override
@@ -201,17 +172,23 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
 
     @Override
     public void onClick(View v) {
-        //Log.i("SlidingMenu", "pressed" + String.valueOf(v.getId()));
+        //Log.d("SlidingMenu", "pressed" + String.valueOf(v.getId()));
         switch (v.getId()) {
             case R.id.textView1:
                 pager.setCurrentItem(1);
                 Toast.makeText(context, "Menu 1", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.textView2:
+                Intent service = new Intent(this, ListenService.class);
+                startService(service);
                 Toast.makeText(context, "Menu 2", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.textView3:
                 Toast.makeText(context, "Menu 3", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.textView4:
                 Toast.makeText(context, "Menu 4", Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 
@@ -229,6 +206,42 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     public void onPageScrollStateChanged(int i) {
     }
 
+    private void initSlidingMenu(){
+        //SlidingMenu
+        sm = new SlidingMenu(getApplicationContext());
+        sm.setBehindWidth(200);
+        sm.setMenu(R.layout.slidingmenu);
+        sm.setMode(SlidingMenu.LEFT);
+        sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+        sm.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+        sm.setOnCloseListener(new SlidingMenu.OnCloseListener() {
+            @Override
+            public void onClose() {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
+        });
+        sm.setOnOpenListener(new SlidingMenu.OnOpenListener() {
+            @Override
+            public void onOpen() {
+                actionBar.setDisplayHomeAsUpEnabled(false);
+            }
+        });
+        //sm.setOnClickListener(this);
+        //OnClick for SlidingMenu
+        TextView menu1 = (TextView)findViewById(R.id.textView1);
+        menu1.setTypeface(tf);
+        menu1.setOnClickListener(this);
+        TextView menu2 = (TextView)findViewById(R.id.textView2);
+        menu2.setTypeface(tf);
+        menu2.setOnClickListener(this);
+        TextView menu3 = (TextView)findViewById(R.id.textView3);
+        menu3.setTypeface(tf);
+        menu3.setOnClickListener(this);
+        TextView menu4 = (TextView)findViewById(R.id.textView4);
+        menu4.setTypeface(tf);
+        menu4.setOnClickListener(this);
+    }
+
     public String getStringToBar(int i){
         switch (i) {
             case 0:
@@ -239,6 +252,42 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
                 return String.valueOf(appInfos.size());
         }
     return null;
+    }
+
+    private class RequestInfo extends AsyncTask<Void,Void,Void>{
+
+        public RequestInfo() {
+            execute();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            pd.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            //create/set adapters for fragments
+            listApps.setListAdapter(new ListAppsAdapter(getApplicationContext(), testArray, R.layout.app, pm));
+            listAppsAuto.setListAdapter(new ListAppsAdapter(getApplicationContext(),testArray1, R.layout.app, pm));
+            listTasks.setListAdapter(new LunchedAdapter(pm, context, appInfos, R.layout.app));
+            //fill viewpager
+            fragments.add(0, listApps);
+            fragments.add(1, listAppsAuto);
+            fragments.add(2, listTasks);
+            pager.setAdapter(vpa);
+            pd.dismiss();
+            super.onPostExecute(aVoid);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            testArray = makeApps(getAppList());
+            testArray1 = makeApps(catchAutoRun(getAppList()));
+            appInfos = getListAppInfo(am.getRunningAppProcesses());
+            return null;
+        }
     }
 }
 

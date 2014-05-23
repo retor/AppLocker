@@ -53,8 +53,23 @@ public class BlockReceiver extends BroadcastReceiver {
         String action = intent.getAction();
             if (action!=null && action.equals(Intent.ACTION_BOOT_COMPLETED) | action.equals(Intent.ACTION_DREAMING_STOPPED)){
                 Intent serviceIntent = new Intent(context, ListenService.class);
-                context.startService(intent);
+                context.startService(serviceIntent);
                 Toast.makeText(context, "EEEE", Toast.LENGTH_SHORT).show();
             }
+    }
+
+
+
+    class MyTask implements Runnable {
+
+        /**
+         * Starts executing the active part of the class' code. This method is
+         * called when a thread is started that has been created with a class which
+         * implements {@code Runnable}.
+         */
+        @Override
+        public void run() {
+
+        }
     }
 }

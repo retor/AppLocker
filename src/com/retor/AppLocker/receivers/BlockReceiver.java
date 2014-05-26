@@ -1,11 +1,14 @@
 package com.retor.AppLocker.receivers;
 
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 import com.retor.AppLocker.services.ListenService;
+
+import java.util.ArrayList;
 
 /**
  * Created by Антон on 20.05.2014.
@@ -53,12 +56,28 @@ public class BlockReceiver extends BroadcastReceiver {
         String action = intent.getAction();
             if (action!=null && action.equals(Intent.ACTION_BOOT_COMPLETED) | action.equals(Intent.ACTION_DREAMING_STOPPED)){
                 Intent serviceIntent = new Intent(context, ListenService.class);
-                context.startService(serviceIntent);
-                Toast.makeText(context, "EEEE", Toast.LENGTH_SHORT).show();
+                if (isServiceRunning(context)){
+                    context.startService(serviceIntent);
+                }else {
+                    Toast.makeText(context, "Running", Toast.LENGTH_SHORT).show();
+                }
             }
     }
 
+    public  boolean isServiceRunning(Context context){
+        Boolean returning = null;
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        ArrayList<ActivityManager.RunningServiceInfo> running = (ArrayList)manager.getRunningServices(Integer.MAX_VALUE);
+        for (ActivityManager.RunningServiceInfo service: running){
+            if (service.service.getClassName().equals(ListenService.class.getName())){
+                returning =  true;
+            }else{
+                returning =  false;
+            }
+        }
 
+        return returning;
+    }
 
     class MyTask implements Runnable {
 
@@ -72,4 +91,5 @@ public class BlockReceiver extends BroadcastReceiver {
 
         }
     }
+
 }

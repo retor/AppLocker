@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -103,6 +104,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         new RequestInfo();
         vpa = new ViewPagerAdapter(getSupportFragmentManager(), fragments, getApplicationContext(), actionBar);
         pager.setOnPageChangeListener(this);
+
     }
 
     @Override
@@ -165,7 +167,12 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         switch (item.getItemId()){
             case android.R.id.home:
                 sm.toggle(true);
-                return true;
+                break;
+            case R.id.item2:
+                Log.d("SendBroadcast", "Yes");
+                Intent intent = new Intent("android.intent.action.RUN");
+                sendBroadcast(intent);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

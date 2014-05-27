@@ -84,6 +84,13 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         String pathTTF = "fonts/ModernAntiqua.ttf";
         tf = Typeface.createFromAsset(getAssets(), pathTTF);
 
+/*        //DrawerLayout tests
+        DrawerLayout drawer = new DrawerLayout(getApplicationContext());
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        drawer.findViewById(R.id.drawer);
+        drawer.setActivated(true);
+        //Tests*/
+
         initSlidingMenu();
 
         //create/init fragments

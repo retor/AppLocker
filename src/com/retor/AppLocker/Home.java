@@ -115,6 +115,18 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     }
 
     @Override
+    protected void onStop() {
+        stopService(new Intent(getApplicationContext(), ListenService.class));
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onCreatePanelMenu(int featureId, Menu menu) {
         getMenuInflater().inflate(R.menu.actionbar, menu);
         String firs=String.valueOf(testArray.size());
@@ -177,9 +189,8 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
                 break;
             case R.id.item2:
                 Log.d("SendBroadcast", "Yes");
-                Intent intent = new Intent("android.intent.action.RUN");
-                sendBroadcast(intent);
-                break;
+                Intent serviceIntent = new Intent(getApplicationContext(), ListenService.class);
+                startService(serviceIntent);
         }
         return super.onOptionsItemSelected(item);
     }

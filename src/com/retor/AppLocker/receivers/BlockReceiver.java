@@ -66,6 +66,7 @@ public class BlockReceiver extends BroadcastReceiver {
 
     public  boolean isServiceRunning(Context context){
         Boolean returning = false;
+        Log.d("isServiceRun", ListenService.class.getName().toString());
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         ArrayList<ActivityManager.RunningServiceInfo> running = (ArrayList)manager.getRunningServices(Integer.MAX_VALUE);
         for (ActivityManager.RunningServiceInfo service: running){

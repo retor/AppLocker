@@ -25,9 +25,12 @@
             </intent-filter>
         </activity>
         <service android:name=".services.ListenService"
-                 android:enabled="true">
+                 android:enabled="true"
+
+                 android:exported="false">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+
+                <action android:name="com.retor.AppLocker.services.ListenService"/>
             </intent-filter>
         </service>
         <receiver android:name=".receivers.BlockReceiver"

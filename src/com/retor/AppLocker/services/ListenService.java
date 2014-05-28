@@ -1,10 +1,13 @@
 package com.retor.AppLocker.services;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Created by Антон on 19.05.2014.
@@ -12,9 +15,33 @@ import android.util.Log;
 public class ListenService extends Service {
 
     private static String SERVICE_ACTION = "com.retor.applocker.home";
-    private Context context;
-    private Intent intent = null;
+    private String arguments;
+    static final String testapp = "INVISIBLE";
 
+    public void setArguments(){
+        arguments = "logcat CustomViewBehind *:S";
+    }
+
+    public class Checking implements Runnable {
+        @Override
+        public void run() {
+            setArguments();
+            try {
+                Process process = Runtime.getRuntime().exec(arguments);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                while (reader.readLine() !=null){
+                    String tmp = reader.readLine();
+                    Log.d("CheckApps", tmp);
+                    if (tmp.contains(testapp)) {
+                        Log.d("FindingApp", "App Finded!!!");
+                        Runtime.getRuntime().exec("logcat -c");
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     /**
      * Called by the system every time a client explicitly starts the service by calling
      * {@link android.content.Context#startService}, providing the arguments it supplied and a
@@ -31,14 +58,6 @@ public class ListenService extends Service {
      * <p/>
      * {@sample development/samples/ApiDemos/src/com/example/android/apis/app/ForegroundService.java
      * start_compatibility}
-     * <p/>
-     * <p class="caution">Note that the system calls this on your
-     * service's main thread.  A service's main thread is the same
-     * thread where UI operations take place for Activities running in the
-     * same process.  You should always avoid stalling the main
-     * thread's event loop.  When doing long-running operations,
-     * network calls, or heavy disk I/O, you should kick off a new
-     * thread, or use {@link android.os.AsyncTask}.</p>
      *
      * @param intent  The Intent supplied to {@link android.content.Context#startService},
      *                as given.  This may be null if the service is being restarted after
@@ -55,30 +74,22 @@ public class ListenService extends Service {
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-//        Toast.makeText(context, "Service Started", Toast.LENGTH_SHORT).show();
         Log.d("Service", "Created");
-        //return super.onStartCommand(intent, flags, startId);
         return Service.START_STICKY;
     }
 
-    /**
-     * Called by the system to notify a Service that it is no longer used and is being removed.  The
-     * service should clean up any resources it holds (threads, registered
-     * receivers, etc) at this point.  Upon return, there will be no more calls
-     * in to this Service object and it is effectively dead.  Do not call this method directly.
-     */
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.d("ListenService", "Closed");
+        startService(new Intent(this, ListenService.class));
     }
 
-    /**
-     * Called by the system when the service is first created.  Do not call this method directly.
-     */
     @Override
     public void onCreate() {
         super.onCreate();
+        Thread thread = new Thread(new Checking());
+        thread.start();
     }
 
     /**
@@ -106,5 +117,6 @@ public class ListenService extends Service {
 
         return null;
     }
+
 
 }

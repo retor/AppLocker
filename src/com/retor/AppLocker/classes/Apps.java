@@ -12,15 +12,15 @@ public class Apps extends PackageInfo {
 
     private boolean check;
 
-    public Apps(){
-        check=false;
+    public Apps() {
+        check = false;
     }
 
-     public static ArrayList<Apps> makeApps(List<PackageInfo> packageInfo){
+    public static ArrayList<Apps> makeApps(List<PackageInfo> packageInfo) {
         ArrayList<Apps> arrayApps = new ArrayList<Apps>();
         Apps apps;
-        if (packageInfo!=null) {
-            for (PackageInfo tmpInfo:packageInfo) {
+        if (packageInfo != null) {
+            for (PackageInfo tmpInfo : packageInfo) {
                 apps = new Apps();
                 apps.applicationInfo = tmpInfo.applicationInfo;
                 apps.packageName = tmpInfo.packageName;
@@ -36,7 +36,7 @@ public class Apps extends PackageInfo {
             }
         }
 
-         return arrayApps;
+        return arrayApps;
     }
 
     public boolean isCheck() {

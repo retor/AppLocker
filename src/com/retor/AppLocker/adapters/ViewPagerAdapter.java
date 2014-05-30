@@ -9,11 +9,11 @@ import android.support.v7.app.ActionBar;
 
 import java.util.ArrayList;
 
-public class ViewPagerAdapter extends FragmentPagerAdapter{
-				
+public class ViewPagerAdapter extends FragmentPagerAdapter {
+
     ArrayList<Fragment> fragments;
     Context context;
-	ActionBar actionBar;
+    ActionBar actionBar;
 
     public ViewPagerAdapter(FragmentManager fm, ArrayList<Fragment> _fragments, Context context, ActionBar actionBar) {
         super(fm);
@@ -32,6 +32,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter{
     public int getCount() {
         return fragments.size();
     }
+
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position) {

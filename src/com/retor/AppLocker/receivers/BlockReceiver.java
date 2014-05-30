@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
+import com.retor.AppLocker.activitys.BlockActivity;
 import com.retor.AppLocker.services.ListenService;
 
 import java.util.ArrayList;
@@ -54,27 +55,31 @@ public class BlockReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.d("Receiver", intent.getAction());
         String action = intent.getAction();
-            if (action!=null && action.equals(Intent.ACTION_BOOT_COMPLETED) | action.equals(Intent.ACTION_DREAMING_STOPPED)){
-                Intent serviceIntent = new Intent(context, ListenService.class);
-                if (isServiceRunning(context)){
-                    context.startService(serviceIntent);
-                }else {
-                    Toast.makeText(context, "Running", Toast.LENGTH_SHORT).show();
-                }
+        if (action != null && action.equals(Intent.ACTION_BOOT_COMPLETED) | action.equals(Intent.ACTION_DREAMING_STOPPED)) {
+            Intent serviceIntent = new Intent(context, ListenService.class);
+            if (isServiceRunning(context)) {
+                context.startService(serviceIntent);
+            } else {
+                Toast.makeText(context, "Running", Toast.LENGTH_SHORT).show();
             }
+        }
+        if (action != null && action.equals("com.retor.APP_FINDED")) {
+            Toast.makeText(context, "AppFinded", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public  boolean isServiceRunning(Context context){
+    public boolean isServiceRunning(Context context) {
         Boolean returning = false;
         Log.d("isServiceRun", ListenService.class.getName().toString());
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        ArrayList<ActivityManager.RunningServiceInfo> running = (ArrayList)manager.getRunningServices(Integer.MAX_VALUE);
-        for (ActivityManager.RunningServiceInfo service: running){
-            if(service.service.getClassName().equals(ListenService.class.getName().toString())){
-                returning =  true;
-            }else{
-                returning =  false;
+        ArrayList<ActivityManager.RunningServiceInfo> running = (ArrayList) manager.getRunningServices(Integer.MAX_VALUE);
+        for (ActivityManager.RunningServiceInfo service : running) {
+            if (service.service.getClassName().equals(ListenService.class.getName().toString())) {
+                returning = true;
+            } else {
+                returning = false;
             }
+
         }
 
         return returning;

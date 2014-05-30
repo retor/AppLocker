@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
+import com.retor.AppLocker.activitys.BlockActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,34 +15,14 @@ import java.io.InputStreamReader;
  */
 public class ListenService extends Service {
 
+    static final String testapp = "com.android.contacts";
     private static String SERVICE_ACTION = "com.retor.applocker.home";
     private String arguments;
-    static final String testapp = "INVISIBLE";
 
-    public void setArguments(){
-        arguments = "logcat CustomViewBehind *:S";
+    public void setArguments() {
+        arguments = "logcat ActivityManager *:S";
     }
 
-    public class Checking implements Runnable {
-        @Override
-        public void run() {
-            setArguments();
-            try {
-                Process process = Runtime.getRuntime().exec(arguments);
-                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                while (reader.readLine() !=null){
-                    String tmp = reader.readLine();
-                    Log.d("CheckApps", tmp);
-                    if (tmp.contains(testapp)) {
-                        Log.d("FindingApp", "App Finded!!!");
-                        Runtime.getRuntime().exec("logcat -c");
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
     /**
      * Called by the system every time a client explicitly starts the service by calling
      * {@link android.content.Context#startService}, providing the arguments it supplied and a
@@ -118,5 +99,40 @@ public class ListenService extends Service {
         return null;
     }
 
+    public void sendBroadcastToReceiver() {
+        Intent tosend = new Intent();
+        tosend.setAction("com.retor.APP_FINDED");
+        sendBroadcast(tosend);
+    }
 
+
+    public class Checking implements Runnable {
+        @Override
+        public void run() {
+            setArguments();
+            try {
+                Runtime.getRuntime().exec("logcat -c");
+                Process process = Runtime.getRuntime().exec(arguments);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                while (reader.readLine() != null) {
+                    String tmp = reader.readLine();
+                    Log.d("CheckApps", tmp);
+                    if (tmp!=null && tmp.contains("START")){
+                    if (tmp.contains(testapp)) {
+                        sendBroadcastToReceiver();
+                        startBlockActivity();
+                        Log.d("FindingApp", "App Finded!!!");
+                    }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    private void startBlockActivity(){
+        Intent block = new Intent(this, BlockActivity.class);
+        block.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(block);
+    }
 }

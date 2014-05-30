@@ -14,8 +14,8 @@ import com.retor.AppLocker.classes.Apps;
  * Created by retor on 03.04.2014.
  */
 public class InfoFragment extends android.support.v4.app.DialogFragment implements DialogInterface {
-    int mNum=0;
     final String TAG = "321";
+    int mNum = 0;
     Apps apps;
 
     public InfoFragment() {
@@ -37,6 +37,7 @@ public class InfoFragment extends android.support.v4.app.DialogFragment implemen
 
         return f;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +47,9 @@ public class InfoFragment extends android.support.v4.app.DialogFragment implemen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.info, container, false);
-        TextView name = (TextView)v.findViewById(R.id.textView);
+        TextView name = (TextView) v.findViewById(R.id.textView);
         name.setText(apps.packageName.toString());
-        TextView loca = (TextView)v.findViewById(R.id.textView2);
+        TextView loca = (TextView) v.findViewById(R.id.textView2);
         loca.setText(apps.applicationInfo.sourceDir.toString());
 
         /*View tv = v.findViewById(R.id.text);
@@ -71,7 +72,7 @@ public class InfoFragment extends android.support.v4.app.DialogFragment implemen
     public void dismiss() {
         super.dismiss();
         FragmentManager fm = getFragmentManager();
-        InfoFragment ii =(InfoFragment) fm.findFragmentByTag(TAG);
+        InfoFragment ii = (InfoFragment) fm.findFragmentByTag(TAG);
         fm.beginTransaction().remove(ii).commit();
     }
 

@@ -18,7 +18,7 @@ import com.retor.AppLocker.classes.AppInfo;
 /**
  * Created by Антон on 25.03.14.
  */
-public class ListLunchedApps extends ListFragment implements OnItemClickListener{
+public class ListLunchedApps extends ListFragment implements OnItemClickListener {
 
     private Context context;
 
@@ -35,7 +35,7 @@ public class ListLunchedApps extends ListFragment implements OnItemClickListener
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-		getListView().setOnItemClickListener(this);
+        getListView().setOnItemClickListener(this);
 /*        int countList = getListView().getCount();
         for (int i = 0; i<countList;i++){
             AppInfo tmp = (AppInfo)getListView().getItemAtPosition(i);
@@ -55,23 +55,23 @@ public class ListLunchedApps extends ListFragment implements OnItemClickListener
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         final ActivityManager activityManager = (ActivityManager) context.getSystemService(context.ACTIVITY_SERVICE);
-        AppInfo appInfo=(AppInfo)parent.getItemAtPosition(position);
-        this.appKilling(appInfo,activityManager);
+        AppInfo appInfo = (AppInfo) parent.getItemAtPosition(position);
+        this.appKilling(appInfo, activityManager);
     }
 
-    private void appKilling(AppInfo appInfo, ActivityManager activityManager){
+    private void appKilling(AppInfo appInfo, ActivityManager activityManager) {
         int appUid = android.os.Process.myUid();
         int killUid = appInfo.uid;
-        if (killUid!=appUid){
+        if (killUid != appUid) {
             android.os.Process.sendSignal(appInfo.pid, 9);
             android.os.Process.killProcess(appInfo.pid);
             activityManager.killBackgroundProcesses(appInfo.processName);
-            Toast.makeText(context, "App: "+ appInfo.getAppLabel()+" killed.", Toast.LENGTH_SHORT).show();
-            LunchedAdapter lunchedAdapter = (LunchedAdapter)getListAdapter();
+            Toast.makeText(context, "App: " + appInfo.getAppLabel() + " killed.", Toast.LENGTH_SHORT).show();
+            LunchedAdapter lunchedAdapter = (LunchedAdapter) getListAdapter();
             lunchedAdapter.appInfos = appInfo.getListAppInfo(activityManager.getRunningAppProcesses(), context);
             lunchedAdapter.notifyDataSetInvalidated();
             lunchedAdapter.notifyDataSetChanged();
-        }else {
+        } else {
             Toast.makeText(context, "Can't kill himself", Toast.LENGTH_SHORT).show();
         }
     }

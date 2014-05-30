@@ -13,7 +13,7 @@ import static android.app.ActivityManager.RunningAppProcessInfo;
 /**
  * Created by retor on 25.03.2014.
  */
-public class AppInfo extends RunningAppProcessInfo implements Parcelable{
+public class AppInfo extends RunningAppProcessInfo implements Parcelable {
 
     private Context context;
 
@@ -24,15 +24,15 @@ public class AppInfo extends RunningAppProcessInfo implements Parcelable{
     private boolean check;
 
 
-
     public AppInfo() {
     }
-      public AppInfo(Context _context, RunningAppProcessInfo runningAppProcessInfo){
-          context = _context;
-        if (runningAppProcessInfo!=null)
-        super.uid = runningAppProcessInfo.uid;
-          assert runningAppProcessInfo != null;
-          super.pid = runningAppProcessInfo.pid;
+
+    public AppInfo(Context _context, RunningAppProcessInfo runningAppProcessInfo) {
+        context = _context;
+        if (runningAppProcessInfo != null)
+            super.uid = runningAppProcessInfo.uid;
+        assert runningAppProcessInfo != null;
+        super.pid = runningAppProcessInfo.pid;
         super.processName = runningAppProcessInfo.processName;
         super.importance = runningAppProcessInfo.importance;
         super.pkgList = runningAppProcessInfo.pkgList;
@@ -45,10 +45,10 @@ public class AppInfo extends RunningAppProcessInfo implements Parcelable{
     }
 
     public ArrayList<AppInfo> getListAppInfo(List<RunningAppProcessInfo> runningAppProcessInfo, Context cont) {
-    ArrayList<AppInfo> appInfoList = new ArrayList<AppInfo>();
-        for (RunningAppProcessInfo running:runningAppProcessInfo){
-        AppInfo temp = new AppInfo(cont, running);
-        appInfoList.add(temp);
+        ArrayList<AppInfo> appInfoList = new ArrayList<AppInfo>();
+        for (RunningAppProcessInfo running : runningAppProcessInfo) {
+            AppInfo temp = new AppInfo(cont, running);
+            appInfoList.add(temp);
         }
         return appInfoList;
     }
@@ -78,7 +78,7 @@ public class AppInfo extends RunningAppProcessInfo implements Parcelable{
     public void setAppLabel(RunningAppProcessInfo runningAppProcessInfo) {
         packageManager = context.getPackageManager();
         try {
-            appLabel = packageManager.getApplicationInfo(runningAppProcessInfo.processName,0).loadLabel(packageManager).toString();// (runningAppProcessInfo.processName, PackageManager.GET_ACTIVITIES).loadLabel(packageManager).toString();
+            appLabel = packageManager.getApplicationInfo(runningAppProcessInfo.processName, 0).loadLabel(packageManager).toString();// (runningAppProcessInfo.processName, PackageManager.GET_ACTIVITIES).loadLabel(packageManager).toString();
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
             appLabel = "no name";

@@ -41,18 +41,18 @@ public class ListAppsAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (appList==null){
+        if (appList == null) {
             return tests.size();
-        }else{
+        } else {
             return appList.size();
         }
     }
 
     @Override
     public PackageInfo getItem(int position) {
-        if (appList==null){
+        if (appList == null) {
             return tests.get(position);
-        }else{
+        } else {
             return appList.get(position);
         }
     }
@@ -76,11 +76,11 @@ public class ListAppsAdapter extends BaseAdapter {
         String appNameStr;
         String appOtherStr;
         Drawable appIco;
-        if (appList==null){
+        if (appList == null) {
             appNameStr = tests.get(position).applicationInfo.loadLabel(pm).toString();
             appOtherStr = tests.get(position).applicationInfo.processName.toString();
             appIco = tests.get(position).applicationInfo.loadIcon(pm);
-        }else {
+        } else {
             appNameStr = appList.get(position).applicationInfo.loadLabel(pm).toString();
             appOtherStr = appList.get(position).applicationInfo.processName.toString();
             appIco = appList.get(position).applicationInfo.loadIcon(pm);
@@ -91,12 +91,13 @@ public class ListAppsAdapter extends BaseAdapter {
         return v;
     }
 
-    public class ViewHolder{
+    public class ViewHolder {
+        public boolean check;
         TextView appName;
         TextView appOther;
         ImageView appIcon;
-        public boolean check;
-        public ViewHolder(View v){
+
+        public ViewHolder(View v) {
             appName = (TextView) v.findViewById(R.id.nameApp);
             appOther = (TextView) v.findViewById(R.id.otherApp);
             appIcon = (ImageView) v.findViewById(R.id.iconApp);

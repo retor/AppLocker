@@ -11,11 +11,11 @@ import java.util.HashSet;
  */
 public class RunningApps {
 
+    private final HashSet<String> mHomePackages = new HashSet<String>();
     private Context context;
     private PackageManager mPm;
     private PackageInfo mPackageInfo;
-    private final HashSet<String> mHomePackages = new HashSet<String>();
-   // private ApplicationsState.AppEntry mAppEntry;
+    // private ApplicationsState.AppEntry mAppEntry;
 
     public RunningApps() {
     }
@@ -55,7 +55,7 @@ public class RunningApps {
         return disableable;
     }*/
 
-    private void appDisable(String packageName){
+    private void appDisable(String packageName) {
         boolean current;
     }
 }

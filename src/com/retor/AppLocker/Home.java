@@ -38,6 +38,8 @@ import static com.retor.AppLocker.classes.Apps.makeApps;
 
 public class Home extends ActionBarActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
+    ActivityManager am;
+    ProgressDialog pd;
     //view pager
     private ViewPager pager;
     private ArrayList<Fragment> fragments;
@@ -57,39 +59,30 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     private SlidingMenu sm;
     private Typeface tf;
     private android.support.v7.app.ActionBar actionBar;
-    ActivityManager am;
-    ProgressDialog pd;
-
     //tests
     private ArrayList<Apps> testArray;
     private ArrayList<Apps> testArray1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTheme(android.support.v7.appcompat.R.style.Theme_AppCompat_Light);
+        setTheme(R.style.Theme_AppCompat_Light);
         super.onCreate(savedInstanceState);
+        startService(new Intent(getApplicationContext(), ListenService.class));
 
         //set first parameters
         setContentView(R.layout.main);
         context = getApplicationContext();
         pm = getPackageManager();
-        pager = (ViewPager)findViewById(R.id.viewpager);
-        pagerTab = (PagerTabStrip)findViewById(R.id.pagertab);
+        pager = (ViewPager) findViewById(R.id.viewpager);
+        pagerTab = (PagerTabStrip) findViewById(R.id.pagertab);
         int color = 0x00FF8800;
         pagerTab.setTabIndicatorColor(color);
         pagerTab.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 11);
         pagerTab.setFocusable(false);
         pagerTab.setMotionEventSplittingEnabled(true);
-        am = (ActivityManager)this.getSystemService(ACTIVITY_SERVICE);
+        am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         String pathTTF = "fonts/ModernAntiqua.ttf";
         tf = Typeface.createFromAsset(getAssets(), pathTTF);
-
-/*        //DrawerLayout tests
-        DrawerLayout drawer = new DrawerLayout(getApplicationContext());
-        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-        drawer.findViewById(R.id.drawer);
-        drawer.setActivated(true);
-        //Tests*/
 
         initSlidingMenu();
 
@@ -103,7 +96,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         fragments = new ArrayList<Fragment>();
 
         //ActionBar
-        actionBar=getSupportActionBar();
+        actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         pd = new ProgressDialog(this).show(this, null, "Loading...", true, true);
@@ -116,41 +109,39 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
 
     @Override
     protected void onStop() {
-        stopService(new Intent(getApplicationContext(), ListenService.class));
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-
         super.onDestroy();
     }
 
     @Override
     public boolean onCreatePanelMenu(int featureId, Menu menu) {
         getMenuInflater().inflate(R.menu.actionbar, menu);
-        String firs=String.valueOf(testArray.size());
+        String firs = String.valueOf(testArray.size());
         menu.getItem(0).setTitle(firs);
         menu.getItem(0).setEnabled(false);
         return super.onCreatePanelMenu(featureId, menu);
     }
 
-    private List<PackageInfo> getAppList(){
+    private List<PackageInfo> getAppList() {
         PackageManager pm = getPackageManager();
         List<PackageInfo> pi = new ArrayList<PackageInfo>();
         pi = pm.getInstalledPackages(0);
         return pi;
     }
 
-    private List<PackageInfo> catchAutoRun(List<PackageInfo> packageInfos){
+    private List<PackageInfo> catchAutoRun(List<PackageInfo> packageInfos) {
         ArrayList<PackageInfo> autoruns = new ArrayList<PackageInfo>();
-        for (PackageInfo pi : packageInfos){
+        for (PackageInfo pi : packageInfos) {
             PackageInfo temp;
             int i = 0;
             try {
                 temp = getPackageManager().getPackageInfo(pi.packageName, getPackageManager().GET_PERMISSIONS);
                 String[] p = temp.requestedPermissions;
-                if (p!=null) {
+                if (p != null) {
                     for (String t : p) {
                         if (t.contains("android.permission.RECEIVE_BOOT_COMPLETED")) {
                             autoruns.add(i, pi);
@@ -174,7 +165,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
 
     public ArrayList<AppInfo> getListAppInfo(List<RunningAppProcessInfo> runningAppProcessInfo) {
         ArrayList<AppInfo> appInfoList = new ArrayList<AppInfo>();
-        for (RunningAppProcessInfo running:runningAppProcessInfo){
+        for (RunningAppProcessInfo running : runningAppProcessInfo) {
             AppInfo temp = new AppInfo(getApplicationContext(), running);
             appInfoList.add(temp);
         }
@@ -183,7 +174,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 sm.toggle(true);
                 break;
@@ -223,7 +214,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
 
     @Override
     public void onPageSelected(int i) {
-        TextView textView = (TextView)findViewById(R.id.item1);
+        TextView textView = (TextView) findViewById(R.id.item1);
         textView.setText(getStringToBar(i));
     }
 
@@ -231,7 +222,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     public void onPageScrollStateChanged(int i) {
     }
 
-    private void initSlidingMenu(){
+    private void initSlidingMenu() {
         //SlidingMenu
         sm = new SlidingMenu(getApplicationContext());
         sm.setBehindWidth(200);
@@ -253,21 +244,21 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         });
         //sm.setOnClickListener(this);
         //OnClick for SlidingMenu
-        TextView menu1 = (TextView)findViewById(R.id.textView1);
+        TextView menu1 = (TextView) findViewById(R.id.textView1);
         menu1.setTypeface(tf);
         menu1.setOnClickListener(this);
-        TextView menu2 = (TextView)findViewById(R.id.textView2);
+        TextView menu2 = (TextView) findViewById(R.id.textView2);
         menu2.setTypeface(tf);
         menu2.setOnClickListener(this);
-        TextView menu3 = (TextView)findViewById(R.id.textView3);
+        TextView menu3 = (TextView) findViewById(R.id.textView3);
         menu3.setTypeface(tf);
         menu3.setOnClickListener(this);
-        TextView menu4 = (TextView)findViewById(R.id.textView4);
+        TextView menu4 = (TextView) findViewById(R.id.textView4);
         menu4.setTypeface(tf);
         menu4.setOnClickListener(this);
     }
 
-    public String getStringToBar(int i){
+    public String getStringToBar(int i) {
         switch (i) {
             case 0:
                 return String.valueOf(testArray.size());
@@ -276,10 +267,10 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
             case 2:
                 return String.valueOf(appInfos.size());
         }
-    return null;
+        return null;
     }
 
-    private class RequestInfo extends AsyncTask<Void,Void,Void>{
+    private class RequestInfo extends AsyncTask<Void, Void, Void> {
 
         public RequestInfo() {
             execute();
@@ -295,7 +286,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         protected void onPostExecute(Void aVoid) {
             //create/set adapters for fragments
             listApps.setListAdapter(new ListAppsAdapter(getApplicationContext(), testArray, R.layout.app, pm));
-            listAppsAuto.setListAdapter(new ListAppsAdapter(getApplicationContext(),testArray1, R.layout.app, pm));
+            listAppsAuto.setListAdapter(new ListAppsAdapter(getApplicationContext(), testArray1, R.layout.app, pm));
             listTasks.setListAdapter(new LunchedAdapter(pm, context, appInfos, R.layout.app));
             //fill viewpager
             fragments.add(0, listApps);

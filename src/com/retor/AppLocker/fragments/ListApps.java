@@ -67,15 +67,13 @@ public class ListApps extends ListFragment implements OnItemClickListener {
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Apps tmpApps = (Apps) parent.getItemAtPosition(position);
         SharedPreferences preferences = context.getSharedPreferences("applock", Context.MODE_PRIVATE);
-
-
         assert tmpApps != null;
-        preferences.getBoolean(tmpApps.packageName, false);
         if (!tmpApps.isCheck()) {
             tmpApps.setCheck(true);
             createDialog(tmpApps);
             vibration(context, 1);
-            preferences.edit().putBoolean(tmpApps.packageName, true).commit();
+            if (!preferences.contains(tmpApps.packageName))
+            preferences.edit().putString(tmpApps.packageName, tmpApps.applicationInfo.processName.toString()).commit();
             Toast.makeText(context, "+", Toast.LENGTH_SHORT).show();
         } else {
             tmpApps.setCheck(false);

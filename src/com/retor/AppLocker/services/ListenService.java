@@ -1,7 +1,9 @@
 package com.retor.AppLocker.services;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.util.Log;
 import com.retor.AppLocker.activitys.BlockActivity;
@@ -9,6 +11,7 @@ import com.retor.AppLocker.activitys.BlockActivity;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Map;
 
 /**
  * Created by Антон on 19.05.2014.
@@ -18,6 +21,8 @@ public class ListenService extends Service {
     static final String testapp = "com.android.contacts";
     private static String SERVICE_ACTION = "com.retor.applocker.home";
     private String arguments;
+    private SharedPreferences preferences;
+    String[] apps = null;
 
     public void setArguments() {
         arguments = "logcat ActivityManager *:S";
@@ -69,7 +74,10 @@ public class ListenService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        apps = openPref(this);
         Thread thread = new Thread(new Checking());
+        thread.setDaemon(true);
+        thread.setPriority(Thread.MAX_PRIORITY);
         thread.start();
     }
 
@@ -95,7 +103,6 @@ public class ListenService extends Service {
      */
     @Override
     public IBinder onBind(Intent intent) {
-
         return null;
     }
 
@@ -117,12 +124,16 @@ public class ListenService extends Service {
                 while (reader.readLine() != null) {
                     String tmp = reader.readLine();
                     Log.d("CheckApps", tmp);
-                    if (tmp!=null && tmp.contains("START")){
-                    if (tmp.contains(testapp)) {
-                        sendBroadcastToReceiver();
-                        startBlockActivity();
-                        Log.d("FindingApp", "App Finded!!!");
-                    }
+                    if (checkParam(tmp)){
+                    //if ((tmp!=null && (tmp.contains("START") || tmp.contains("Displayed")))  && tmp.contains("act=android.intent.action.MAIN")){
+                        for (String st:apps){
+                            if (tmp.contains(st)) {
+                                sendBroadcastToReceiver();
+                                startBlockActivity(st);
+                                Log.d("FindingApp", "App Finded!!!");
+                            }
+                        }
+
                     }
                 }
             } catch (IOException e) {
@@ -130,9 +141,33 @@ public class ListenService extends Service {
             }
         }
     }
-    private void startBlockActivity(){
+    private void startBlockActivity(String appname){
         Intent block = new Intent(this, BlockActivity.class);
+        block.putExtra("appname", appname);
         block.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(block);
+    }
+
+    private boolean checkParam(String in){
+        if (in!=null){
+            if (in.contains("START") &  in.contains("act=android.intent.action.MAIN")){
+                return true;
+            }
+            if (in.contains("Displayed")){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String[] openPref(Context context){
+        preferences = context.getSharedPreferences("applock", 0);
+        String[] out = null;
+        Map<String, ?> map = preferences.getAll();
+        if (map!=null) {
+            out =  preferences. map.values().toArray();
+            Log.d("openPref", out[0].toString());
+        }
+        return out;
     }
 }

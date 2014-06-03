@@ -67,6 +67,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     public void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.Theme_AppCompat_Light);
         super.onCreate(savedInstanceState);
+        getSharedPreferences("applock", MODE_MULTI_PROCESS).edit().commit();
         startService(new Intent(getApplicationContext(), ListenService.class));
 
         //set first parameters
@@ -104,6 +105,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         new RequestInfo();
         vpa = new ViewPagerAdapter(getSupportFragmentManager(), fragments, getApplicationContext(), actionBar);
         pager.setOnPageChangeListener(this);
+
 
     }
 
@@ -181,6 +183,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
             case R.id.item2:
                 Log.d("SendBroadcast", "Yes");
                 Intent serviceIntent = new Intent(getApplicationContext(), ListenService.class);
+                stopService(serviceIntent);
                 startService(serviceIntent);
         }
         return super.onOptionsItemSelected(item);

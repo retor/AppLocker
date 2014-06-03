@@ -1,7 +1,6 @@
 package com.retor.AppLocker.services;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
@@ -11,6 +10,7 @@ import com.retor.AppLocker.activitys.BlockActivity;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -18,11 +18,11 @@ import java.util.Map;
  */
 public class ListenService extends Service {
 
-    static final String testapp = "com.android.contacts";
+    //static final String testapp = "com.android.contacts";
     private static String SERVICE_ACTION = "com.retor.applocker.home";
     private String arguments;
     private SharedPreferences preferences;
-    String[] apps = null;
+    ArrayList<String> apps;
 
     public void setArguments() {
         arguments = "logcat ActivityManager *:S";
@@ -74,7 +74,7 @@ public class ListenService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        apps = openPref(this);
+        apps = openPref();
         Thread thread = new Thread(new Checking());
         thread.setDaemon(true);
         thread.setPriority(Thread.MAX_PRIORITY);
@@ -118,14 +118,13 @@ public class ListenService extends Service {
         public void run() {
             setArguments();
             try {
-                Runtime.getRuntime().exec("logcat -c");
+                //Runtime.getRuntime().exec("logcat -c");
                 Process process = Runtime.getRuntime().exec(arguments);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                 while (reader.readLine() != null) {
                     String tmp = reader.readLine();
                     Log.d("CheckApps", tmp);
                     if (checkParam(tmp)){
-                    //if ((tmp!=null && (tmp.contains("START") || tmp.contains("Displayed")))  && tmp.contains("act=android.intent.action.MAIN")){
                         for (String st:apps){
                             if (tmp.contains(st)) {
                                 sendBroadcastToReceiver();
@@ -152,22 +151,28 @@ public class ListenService extends Service {
         if (in!=null){
             if (in.contains("START") &  in.contains("act=android.intent.action.MAIN")){
                 return true;
+
             }
-            if (in.contains("Displayed")){
+            if(in.contains("Start proc")){
                 return true;
             }
+            /*if (in.contains("Displayed")){
+                return true;
+            }*/
         }
         return false;
     }
 
-    private String[] openPref(Context context){
-        preferences = context.getSharedPreferences("applock", 0);
-        String[] out = null;
-        Map<String, ?> map = preferences.getAll();
-        if (map!=null) {
-            out =  preferences. map.values().toArray();
-            Log.d("openPref", out[0].toString());
+    private ArrayList<String> openPref(){
+        ArrayList<String> out = new ArrayList<String>();
+        if ((preferences = getSharedPreferences("applock", MODE_MULTI_PROCESS))!=null) {
+                for (Map.Entry<?, ?> val : preferences.getAll().entrySet()) {
+                    Object obj = val.getValue();
+                    String tmp = obj.toString();
+                    out.add(tmp);
+            }
         }
+//            Log.d("openPref", out.get(0).toString());
         return out;
     }
 }

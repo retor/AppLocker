@@ -15,7 +15,7 @@
         <option name="logMessagePattern" value="" />
         <option name="logTagPattern" value="ActivityManager" />
         <option name="name" value="ActivityManager" />
-        <option name="packageNamePattern" value="system_process" />
+        <option name="packageNamePattern" value="" />
         <option name="pid" value="" />
       </filter>
     </filters>
@@ -31,11 +31,12 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.retor.AppLocker" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="ActivityManager" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ab884a8-e664-4984-969f-3756e51e35bb" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/Home.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/Home.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/fragments/ListApps.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/fragments/ListApps.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/services/ListenService.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/services/ListenService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
@@ -104,28 +105,8 @@
       <file leaf-file-name="Home.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/Home.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1717" max-vertical-offset="5355">
-              <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Apps.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/classes/Apps.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="782">
-              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RunningApps.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/classes/RunningApps.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="449" max-vertical-offset="1037">
-              <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2251" max-vertical-offset="4556">
+              <caret line="185" column="43" selection-start-line="185" selection-start-column="43" selection-end-line="185" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -134,24 +115,25 @@
       <file leaf-file-name="ListenService.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/services/ListenService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9132653" vertical-offset="2302" max-vertical-offset="3043">
-              <caret line="167" column="31" selection-start-line="167" selection-start-column="31" selection-end-line="167" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.1904762" vertical-offset="1928" max-vertical-offset="3128">
+              <caret line="120" column="18" selection-start-line="120" selection-start-column="18" selection-end-line="120" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#742#743#0" expanded="true" />
                 <element signature="e#798#799#0" expanded="true" />
-                <element signature="e#4401#4402#0" expanded="true" />
-                <element signature="e#4428#4429#0" expanded="true" />
+                <element signature="e#4397#4398#0" expanded="true" />
+                <element signature="e#4424#4425#0" expanded="true" />
+                <element signature="e#6404#6412#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ListAppsAdapter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/adapters/ListAppsAdapter.java">
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="875" max-vertical-offset="1615">
-              <caret line="82" column="16" selection-start-line="82" selection-start-column="16" selection-end-line="82" selection-end-column="16" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="432" max-vertical-offset="1088">
+              <caret line="37" column="27" selection-start-line="37" selection-start-column="27" selection-end-line="37" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -160,8 +142,8 @@
       <file leaf-file-name="ListApps.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/fragments/ListApps.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="636" max-vertical-offset="1615">
-              <caret line="80" column="68" selection-start-line="80" selection-start-column="68" selection-end-line="80" selection-end-column="68" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="126" max-vertical-offset="1632">
+              <caret line="44" column="99" selection-start-line="44" selection-start-column="99" selection-end-line="44" selection-end-column="99" />
               <folding />
             </state>
           </provider>
@@ -210,12 +192,12 @@
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/classes/Apps.java" />
         <option value="$PROJECT_DIR$/res/layout/main.xml" />
         <option value="$PROJECT_DIR$/res/layout/drawer.xml" />
-        <option value="$PROJECT_DIR$/src/com/retor/AppLocker/Home.java" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/receivers/BlockReceiver.java" />
         <option value="$PROJECT_DIR$/res/layout/blockactivity.xml" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/activitys/BlockActivity.java" />
-        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/fragments/ListApps.java" />
+        <option value="$PROJECT_DIR$/src/com/retor/AppLocker/Home.java" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/services/ListenService.java" />
       </list>
     </option>
@@ -496,9 +478,9 @@
     <property name="OverrideImplement.combined" value="false" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
     <property name="SearchEverywhereHistory" value="co" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="emulator-5554" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="192.168.0.52:5555" />
     <property name="FullScreen" value="false" />
-    <property name="DEBUGGABLE_DEVICE" value="emulator-5556 (321)" />
+    <property name="DEBUGGABLE_DEVICE" value="4.1.2 [emulator-5554]" />
     <property name="DEBUGGABLE_PROCESS" value="com.retor.AppLocker" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
     <property name="LayoutCode.rearrangeEntriesJava" value="false" />
@@ -828,7 +810,7 @@
       <workItem from="1400484873215" duration="10665000" />
       <workItem from="1400574254650" duration="60755000" />
       <workItem from="1401437537912" duration="13628000" />
-      <workItem from="1401687245122" duration="17854000" />
+      <workItem from="1401687245122" duration="30669000" />
     </task>
     <task id="LOCAL-00001" summary="Upd 1">
       <created>1395776599379</created>
@@ -934,11 +916,15 @@
       <created>1401459834348</created>
       <updated>1401459834348</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Upd:+">
+      <created>1401717394360</created>
+      <updated>1401717394360</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="333454000" />
+    <option name="totallyTimeSpent" value="346269000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -962,7 +948,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850778" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -980,7 +966,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32739422" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32739422" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31403118" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31403118" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1060,6 +1046,66 @@
           <properties />
           <option name="timeStamp" value="24" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/retor/AppLocker/services/ListenService.java</url>
+          <line>167</line>
+          <properties />
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/retor/AppLocker/services/ListenService.java</url>
+          <line>126</line>
+          <properties />
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/retor/AppLocker/services/ListenService.java</url>
+          <line>128</line>
+          <properties />
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/retor/AppLocker/services/ListenService.java</url>
+          <line>123</line>
+          <properties />
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/retor/AppLocker/services/ListenService.java</url>
+          <line>120</line>
+          <properties />
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/retor/AppLocker/services/ListenService.java</url>
+          <line>77</line>
+          <properties />
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/retor/AppLocker/services/ListenService.java</url>
+          <line>79</line>
+          <properties />
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/retor/AppLocker/services/ListenService.java</url>
+          <line>80</line>
+          <properties />
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/retor/AppLocker/services/ListenService.java</url>
+          <line>76</line>
+          <properties />
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/retor/AppLocker/services/ListenService.java</url>
+          <line>171</line>
+          <properties />
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$USER_HOME$/Desktop/adt-bundle-windows-x86_64-20131030/sdk/sources/android-19/android/app/ActivityManager.java</url>
           <line>1791</line>
@@ -1067,7 +1113,7 @@
           <option name="timeStamp" value="25" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="28" />
+      <option name="time" value="43" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -1104,6 +1150,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3322091" vertical-offset="259359" max-vertical-offset="322813">
           <caret line="15733" column="18" selection-start-line="15733" selection-start-column="18" selection-end-line="15733" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1342,6 +1389,106 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7227891" vertical-offset="102" max-vertical-offset="17527">
           <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2629#2630#0" expanded="true" />
+            <element signature="e#2664#2665#0" expanded="true" />
+            <element signature="e#3208#3209#0" expanded="true" />
+            <element signature="e#3247#3248#0" expanded="true" />
+            <element signature="e#7844#7845#0" expanded="true" />
+            <element signature="e#7905#7906#0" expanded="true" />
+            <element signature="e#10227#10228#0" expanded="true" />
+            <element signature="e#10307#10308#0" expanded="true" />
+            <element signature="e#10435#10436#0" expanded="true" />
+            <element signature="e#10481#10482#0" expanded="true" />
+            <element signature="e#10959#10960#0" expanded="true" />
+            <element signature="e#11036#11037#0" expanded="true" />
+            <element signature="e#11149#11150#0" expanded="true" />
+            <element signature="e#11196#11197#0" expanded="true" />
+            <element signature="e#11366#11367#0" expanded="true" />
+            <element signature="e#11407#11408#0" expanded="true" />
+            <element signature="e#11676#11677#0" expanded="true" />
+            <element signature="e#11762#11763#0" expanded="true" />
+            <element signature="e#11908#11909#0" expanded="true" />
+            <element signature="e#11964#11965#0" expanded="true" />
+            <element signature="e#12391#12392#0" expanded="true" />
+            <element signature="e#12443#12444#0" expanded="true" />
+            <element signature="e#12608#12609#0" expanded="true" />
+            <element signature="e#12655#12656#0" expanded="true" />
+            <element signature="e#12844#12845#0" expanded="true" />
+            <element signature="e#12888#12889#0" expanded="true" />
+            <element signature="e#14046#14047#0" expanded="true" />
+            <element signature="e#14076#14077#0" expanded="true" />
+            <element signature="e#14271#14272#0" expanded="true" />
+            <element signature="e#14324#14325#0" expanded="true" />
+            <element signature="e#14498#14499#0" expanded="true" />
+            <element signature="e#14537#14538#0" expanded="true" />
+            <element signature="e#14821#14822#0" expanded="true" />
+            <element signature="e#14874#14875#0" expanded="true" />
+            <element signature="e#14972#14973#0" expanded="true" />
+            <element signature="e#15005#15006#0" expanded="true" />
+            <element signature="e#15205#15206#0" expanded="true" />
+            <element signature="e#15258#15259#0" expanded="true" />
+            <element signature="e#15383#15384#0" expanded="true" />
+            <element signature="e#15411#15412#0" expanded="true" />
+            <element signature="e#15930#15931#0" expanded="true" />
+            <element signature="e#16021#16022#0" expanded="true" />
+            <element signature="e#16193#16194#0" expanded="true" />
+            <element signature="e#16248#16249#0" expanded="true" />
+            <element signature="e#16423#16424#0" expanded="true" />
+            <element signature="e#16519#16520#0" expanded="true" />
+            <element signature="e#17577#17578#0" expanded="true" />
+            <element signature="e#17621#17622#0" expanded="true" />
+            <element signature="e#18030#18062#0" expanded="true" />
+            <element signature="e#19178#19179#0" expanded="true" />
+            <element signature="e#19229#19230#0" expanded="true" />
+            <element signature="e#19822#19823#0" expanded="true" />
+            <element signature="e#19877#19878#0" expanded="true" />
+            <element signature="e#20314#20315#0" expanded="true" />
+            <element signature="e#20365#20366#0" expanded="true" />
+            <element signature="e#20496#20497#0" expanded="true" />
+            <element signature="e#20544#20545#0" expanded="true" />
+            <element signature="e#22039#22040#0" expanded="true" />
+            <element signature="e#22120#22121#0" expanded="true" />
+            <element signature="e#22265#22266#0" expanded="true" />
+            <element signature="e#22313#22314#0" expanded="true" />
+            <element signature="e#22769#22770#0" expanded="true" />
+            <element signature="e#22826#22827#0" expanded="true" />
+            <element signature="e#23004#23005#0" expanded="true" />
+            <element signature="e#23076#23077#0" expanded="true" />
+            <element signature="e#23228#23229#0" expanded="true" />
+            <element signature="e#23278#23279#0" expanded="true" />
+            <element signature="e#23464#23465#0" expanded="true" />
+            <element signature="e#23509#23510#0" expanded="true" />
+            <element signature="e#23778#23779#0" expanded="true" />
+            <element signature="e#23822#23823#0" expanded="true" />
+            <element signature="e#24025#24026#0" expanded="true" />
+            <element signature="e#24077#24078#0" expanded="true" />
+            <element signature="e#24244#24245#0" expanded="true" />
+            <element signature="e#24290#24291#0" expanded="true" />
+            <element signature="e#24695#24696#0" expanded="true" />
+            <element signature="e#24743#24744#0" expanded="true" />
+            <element signature="e#24919#24920#0" expanded="true" />
+            <element signature="e#24963#24964#0" expanded="true" />
+            <element signature="e#25164#25165#0" expanded="true" />
+            <element signature="e#25211#25212#0" expanded="true" />
+            <element signature="e#25353#25354#0" expanded="true" />
+            <element signature="e#25399#25400#0" expanded="true" />
+            <element signature="e#26056#26057#0" expanded="true" />
+            <element signature="e#26104#26105#0" expanded="true" />
+            <element signature="e#26765#26766#0" expanded="true" />
+            <element signature="e#26821#26822#0" expanded="true" />
+            <element signature="e#27103#27104#0" expanded="true" />
+            <element signature="e#27159#27160#0" expanded="true" />
+            <element signature="e#28752#29219#0" expanded="true" />
+            <element signature="e#29204#29205#0" expanded="true" />
+            <element signature="e#32058#32059#0" expanded="true" />
+            <element signature="e#32131#32132#0" expanded="true" />
+            <element signature="e#32193#32194#0" expanded="true" />
+            <element signature="e#32268#32269#0" expanded="true" />
+            <element signature="e#32589#32590#0" expanded="true" />
+            <element signature="e#32625#32626#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1356,13 +1503,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.54931974" vertical-offset="799" max-vertical-offset="1819">
           <caret line="66" column="76" selection-start-line="66" selection-start-column="76" selection-end-line="66" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/activitys/BlockActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43367347" vertical-offset="0" max-vertical-offset="588">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1401,14 +1541,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/Home.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="943" max-vertical-offset="4743">
-          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/Desktop/adt-bundle-windows-x86_64-20131030/sdk/platforms/android-19/android.jar!/android/R.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="5.8843536" vertical-offset="28534" max-vertical-offset="34136">
@@ -1433,50 +1565,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.88435376" vertical-offset="109" max-vertical-offset="1054">
-          <caret line="37" column="28" selection-start-line="37" selection-start-column="28" selection-end-line="37" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/classes/RunningApps.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="64" max-vertical-offset="1037">
-          <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/adapters/LunchedAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.42086956" vertical-offset="710" max-vertical-offset="1666">
           <caret line="79" column="85" selection-start-line="79" selection-start-column="85" selection-end-line="79" selection-end-column="85" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/classes/Apps.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="782">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/adapters/ListAppsAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="875" max-vertical-offset="1615">
-          <caret line="82" column="16" selection-start-line="82" selection-start-column="16" selection-end-line="82" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/fragments/ListApps.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="636" max-vertical-offset="1615">
-          <caret line="80" column="68" selection-start-line="80" selection-start-column="68" selection-end-line="80" selection-end-column="68" />
           <folding />
         </state>
       </provider>
@@ -1489,16 +1581,76 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/adapters/ListAppsAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36979166" vertical-offset="875" max-vertical-offset="1615">
+          <caret line="82" column="16" selection-start-line="82" selection-start-column="16" selection-end-line="82" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/classes/Apps.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11564626" vertical-offset="0" max-vertical-offset="782">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/classes/RunningApps.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.32993197" vertical-offset="449" max-vertical-offset="1037">
+          <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/activitys/BlockActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.54931974" vertical-offset="0" max-vertical-offset="588">
+          <caret line="22" column="16" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="method#onKeyDown#0;class#BlockActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/fragments/ListApps.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="126" max-vertical-offset="1632">
+          <caret line="44" column="99" selection-start-line="44" selection-start-column="99" selection-end-line="44" selection-end-column="99" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/Home.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2200" max-vertical-offset="4556">
+          <caret line="185" column="43" selection-start-line="185" selection-start-column="43" selection-end-line="185" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="432" max-vertical-offset="1088">
+          <caret line="37" column="27" selection-start-line="37" selection-start-column="27" selection-end-line="37" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/services/ListenService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9132653" vertical-offset="2302" max-vertical-offset="3043">
-          <caret line="167" column="31" selection-start-line="167" selection-start-column="31" selection-end-line="167" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.1904762" vertical-offset="1928" max-vertical-offset="3128">
+          <caret line="120" column="18" selection-start-line="120" selection-start-column="18" selection-end-line="120" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#742#743#0" expanded="true" />
             <element signature="e#798#799#0" expanded="true" />
-            <element signature="e#4401#4402#0" expanded="true" />
-            <element signature="e#4428#4429#0" expanded="true" />
+            <element signature="e#4397#4398#0" expanded="true" />
+            <element signature="e#4424#4425#0" expanded="true" />
+            <element signature="e#6404#6412#0" expanded="true" />
           </folding>
         </state>
       </provider>

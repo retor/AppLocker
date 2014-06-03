@@ -42,11 +42,12 @@ public class ListApps extends ListFragment implements OnItemClickListener {
         getListView().setOnItemClickListener(this);
         getListView().setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         ListAdapter adapt = getListAdapter();
-        SharedPreferences pref = context.getSharedPreferences("applock", Context.MODE_PRIVATE);
+        SharedPreferences pref = context.getSharedPreferences("applock", Context.MODE_MULTI_PROCESS);
+        if (pref!=null)
         for (int i=0; i< adapt.getCount(); i++){
             Apps checker = (Apps) adapt.getItem(i);
-            Boolean a = pref.getBoolean(checker.packageName, false);
-            checker.setCheck(a);
+            if (pref.getString(checker.packageName, null)!=null)
+            checker.setCheck(true);
             if (checker.isCheck())
                 getListView().setItemChecked(i, true);
         }
@@ -66,7 +67,7 @@ public class ListApps extends ListFragment implements OnItemClickListener {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Apps tmpApps = (Apps) parent.getItemAtPosition(position);
-        SharedPreferences preferences = context.getSharedPreferences("applock", Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("applock", Context.MODE_MULTI_PROCESS);
         assert tmpApps != null;
         if (!tmpApps.isCheck()) {
             tmpApps.setCheck(true);

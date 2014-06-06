@@ -68,7 +68,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         setTheme(R.style.Theme_AppCompat_Light);
         super.onCreate(savedInstanceState);
         getSharedPreferences("applock", MODE_MULTI_PROCESS).edit().commit();
-        startService(new Intent(getApplicationContext(), ListenService.class));
+        sendBroadcast(new Intent().setAction("startServiceNormal"));
 
         //set first parameters
         setContentView(R.layout.main);

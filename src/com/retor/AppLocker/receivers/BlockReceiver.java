@@ -53,17 +53,22 @@ public class BlockReceiver extends BroadcastReceiver {
      */
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("Receiver", intent.getAction());
+        Log.d("Received Action", intent.getAction());
         String action = intent.getAction();
-        if (action != null && action.equals(Intent.ACTION_BOOT_COMPLETED) | action.equals(Intent.ACTION_DREAMING_STOPPED)) {
-            Intent serviceIntent = new Intent(context, ListenService.class);
+        Intent serviceIntent = new Intent(context, ListenService.class);
+        if (action != null && action.equals(Intent.ACTION_BOOT_COMPLETED) | action.equals(BlockActivity.NORMAL)) {
+
             if (isServiceRunning(context)) {
+                serviceIntent.putExtra("block", true);
                 context.startService(serviceIntent);
             } else {
                 Toast.makeText(context, "Running", Toast.LENGTH_SHORT).show();
             }
         }
-        if (action != null && action.equals("com.retor.APP_FINDED")) {
+        if (action != null && action.equals(BlockActivity.BLOCK)) {
+            context.stopService(serviceIntent);
+            serviceIntent.putExtra("block", false);
+            startBlockActivity("321", context);
             Toast.makeText(context, "AppFinded", Toast.LENGTH_SHORT).show();
         }
     }
@@ -85,17 +90,10 @@ public class BlockReceiver extends BroadcastReceiver {
         return returning;
     }
 
-    class MyTask implements Runnable {
-
-        /**
-         * Starts executing the active part of the class' code. This method is
-         * called when a thread is started that has been created with a class which
-         * implements {@code Runnable}.
-         */
-        @Override
-        public void run() {
-
-        }
+    private void startBlockActivity(String appname, Context cont){
+        Intent block = new Intent(cont, BlockActivity.class);
+        block.putExtra("appname", appname);
+        block.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        cont.startActivity(block);
     }
-
 }

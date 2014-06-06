@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.ACCESS_CHECKIN_PROPERTIES"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.SET_DEBUG_APP"/>
 
     <uses-sdk
             android:minSdkVersion="14"
@@ -52,6 +53,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <action android:name="com.retor.APP_FINDED"/>
+                <action android:name="startServiceNormal"/>
+                <action android:name="startServiceBlock"/>
             </intent-filter>
         </receiver>
     </application>

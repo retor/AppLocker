@@ -1,14 +1,21 @@
 package com.retor.AppLocker.fragments;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.retor.AppLocker.R;
 import com.retor.AppLocker.classes.Apps;
+
+import java.util.List;
 
 /**
  * Created by retor on 03.04.2014.
@@ -17,13 +24,15 @@ public class InfoFragment extends android.support.v4.app.DialogFragment implemen
     final String TAG = "321";
     int mNum = 0;
     Apps apps;
+    Context context;
 
     public InfoFragment() {
         super();
     }
 
-    public InfoFragment(Apps apps) {
+    public InfoFragment(Apps apps, Context cont) {
         super();
+        context = cont;
         this.apps = apps;
     }
 
@@ -51,20 +60,25 @@ public class InfoFragment extends android.support.v4.app.DialogFragment implemen
         name.setText(apps.packageName.toString());
         TextView loca = (TextView) v.findViewById(R.id.textView2);
         loca.setText(apps.applicationInfo.sourceDir.toString());
-
-        /*View tv = v.findViewById(R.id.text);
-        ((TextView)tv).setText("Dialog #" + mNum + ": using style "
-                + getNameForNum(mNum));
-
-        // Watch for button clicks.
-        Button button = (Button)v.findViewById(R.id.show);
-        button.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                // When button is clicked, call up to owning activity.
-                ((FragmentDialog)getActivity()).showDialog();
+        TextView activity = (TextView)v.findViewById(R.id.infoActivity);
+        String act=null;
+        final PackageManager pm = context.getPackageManager();
+        if (pm != null) {
+            try{
+                act = pm.getLaunchIntentForPackage(apps.packageName).getComponent().getClassName();
+            }catch (NullPointerException e){
+                Log.d("Blya", e.toString());
+                Intent intentFilter = new Intent(Intent.ACTION_MAIN, null);
+                intentFilter.addCategory(Intent.CATEGORY_LAUNCHER);
+                List<ResolveInfo> infs = pm.queryIntentActivities(intentFilter, 0);
+                for (ResolveInfo infa : infs) {
+                    if (infa.toString().contains(apps.packageName)) {//infa.resolvePackageName.contains(tmpApps.packageName))
+                        act = infa.resolvePackageName;
+                    }
+                }
             }
-        });*/
-
+        }
+        activity.setText(act);
         return v;
     }
 

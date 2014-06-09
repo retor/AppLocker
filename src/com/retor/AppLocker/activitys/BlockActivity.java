@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import com.retor.AppLocker.R;
 import com.retor.AppLocker.services.ListenService;
 
@@ -24,9 +25,12 @@ public class BlockActivity extends Activity  {
         setContentView(R.layout.blockactivity);
         serviceIntent = new Intent(getApplicationContext(), ListenService.class);
         Button unlock = (Button)findViewById(R.id.buttonUnlock);
+        final TextView apptitle = (TextView)findViewById(R.id.appBlock);
+        apptitle.setText(getIntent().getStringExtra("appname"));
         unlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sendBroadcast(new Intent(BlockActivity.NORMAL).putExtra("appname", apptitle.getText()));
                 finish();
             }
         });
@@ -34,7 +38,6 @@ public class BlockActivity extends Activity  {
 
     @Override
     protected void onDestroy() {
-        sendBroadcast(new Intent().setAction(NORMAL));
         super.onDestroy();
     }
 

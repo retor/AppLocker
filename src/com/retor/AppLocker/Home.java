@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.retor.AppLocker.activitys.BlockActivity;
 import com.retor.AppLocker.adapters.ListAppsAdapter;
 import com.retor.AppLocker.adapters.LunchedAdapter;
 import com.retor.AppLocker.adapters.ViewPagerAdapter;
@@ -68,7 +69,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         setTheme(R.style.Theme_AppCompat_Light);
         super.onCreate(savedInstanceState);
         getSharedPreferences("applock", MODE_MULTI_PROCESS).edit().commit();
-        sendBroadcast(new Intent().setAction("startServiceNormal"));
+        sendBroadcast(new Intent().setAction(BlockActivity.NORMAL));
 
         //set first parameters
         setContentView(R.layout.main);

@@ -164,6 +164,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         super.onSaveInstanceState(outState);
         listApps.setRetainInstance(true);
         listAppsAuto.setRetainInstance(true);
+        listTasks.setRetainInstance(true);
     }
 
     public ArrayList<AppInfo> getListAppInfo(List<RunningAppProcessInfo> runningAppProcessInfo) {

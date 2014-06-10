@@ -24,43 +24,40 @@ public class ListenService extends Service {
     private SharedPreferences preferences;
     ArrayList<String> apps;
     ArrayList<String> appsNotBlock = new ArrayList<String>();
+    Checking myTask;
+
+    String TAG="ListenService";
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent.hasExtra("appname")) {
-            String tmp = intent.getStringExtra("appname");
-            if (tmp != null) {
-                appsNotBlock.add(tmp);
-                executor.scheduleAtFixedRate(new Checking(), 100, 1000, TimeUnit.MILLISECONDS);
-            }
+        if (intent!=null && intent.getStringExtra("appname")!=null){
+            Log.d(TAG, intent.toString());
+            String t = intent.getStringExtra("appname");
+            appsNotBlock.add(t);
+            Log.d(TAG, "BLYA");
+            myTask.addNot(appsNotBlock);
+            //myTask = new Checking(appsNotBlock);
+            Log.d(TAG, "Created with apps");
+        }else{
+            Log.d(TAG, "Created without");
         }
-            //executor.schedule(new Checking(), 100, TimeUnit.MILLISECONDS);
-            //Log.d("Service thread", "Stop");
-        Log.d("Service", "Created");
         return Service.START_STICKY;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d("ListenService", "Closed");
-        //startService(new Intent(this, ListenService.class));
+        executor.shutdown();
+        Log.d(TAG, "Closed");
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
         apps = openPref();
+        myTask = new Checking();
         executor = Executors.newScheduledThreadPool(1);
-        executor.scheduleAtFixedRate(new Checking(), 100, 1000, TimeUnit.MILLISECONDS);
-//        PendingIntent pinnok = PendingIntent.getService(this, 0, new Intent(this, ListenService.class), 0);
-//        AlarmManager alarmik = (AlarmManager)getSystemService(ALARM_SERVICE);
-//        alarmik.setRepeating(0, Calendar.getInstance().getTimeInMillis(), 1000, pinnok);
-//      ExecutorService executor = Executors.newSingleThreadScheduledExecutor().schedule(new Checking(), 10, TimeUnit.SECONDS);// .newSingleThreadExecutor();
-/*        Thread thread = new Thread(new Checking());
-        thread.setDaemon(true);
-        thread.setPriority(Thread.MAX_PRIORITY);
-        thread.start();*/
+        executor.scheduleAtFixedRate(myTask, 70, 100, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -71,6 +68,7 @@ public class ListenService extends Service {
     public class Checking implements Runnable {
 
         ArrayList<String> appsCheck;
+        ArrayList<String> appsNot;
         Context context;
 
         public Checking(){
@@ -78,11 +76,8 @@ public class ListenService extends Service {
             appsCheck = openPref();
         }
 
-        private void startBlockActivity(String appname, Context cont){
-            Intent block = new Intent(cont, BlockActivity.class);
-            block.putExtra("appname", appname);
-            block.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            cont.startActivity(block);
+        public void addNot(ArrayList<String> in){
+            appsNot = in;
         }
 
         private ArrayList<String> getRunningActivites(){
@@ -97,25 +92,29 @@ public class ListenService extends Service {
 
         private void fullCheck(){
             ActivityManager am = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
-            for(String appC:appsCheck){
-                if((getRunningActivites().contains(appC) && (!checkRunningApps(appC))) && am.getRunningTasks(1).get(0).topActivity.getClassName().contains(appC)){
-                    Log.d("Service(AppFinder)", "AppFinded: "+ appC);
-                    sendBroadcast(new Intent(BlockActivity.BLOCK).putExtra("appname", appC));
+            if (appsCheck!=null) {
+                for (String appC : appsCheck) {
+                    if ((getRunningActivites().contains(appC) && (!checkRunningApps(appC))) && am.getRunningTasks(1).get(0).topActivity.getClassName().contains(appC)) {
+                        Log.d(TAG, "AppFinded: " + appC);
+                        sendBroadcast(new Intent(BlockActivity.BLOCK).putExtra("appname", appC));
+                    }
+                }
+            }
+            if (appsNot!=null) {
+                for (String app : appsNot) {
+                    if (!getRunningActivites().contains(app)) {
+                        Log.d(TAG, "remove app: " + app);
+                        appsNot.remove(app);
+                    }
                 }
             }
         }
 
-        private boolean checkRunningApps(String appCheck){
-            if (appsNotBlock!=null){
-            ArrayList<String> running = getRunningActivites();
-            for (String app:appsNotBlock){
-                if (!running.contains(app)){
-                    appsNotBlock.remove(app);
-                }else{
-                    if(appsNotBlock.contains(appCheck)){
-                        return true;
-                    }
-                }
+        private boolean checkRunningApps(String appCheck) {
+            if (appsNot != null) {
+                if (appsNot.contains(appCheck)) {
+                    Log.d(TAG, "app here: " + appCheck);
+                    return true;
                 }
             }
             return false;
@@ -123,38 +122,20 @@ public class ListenService extends Service {
 
         @Override
         public void run() {
-            Log.d("Servis moi", "Zapuskaem zadachu");
+            Log.d(TAG, "Zapuskaem zadachu");
             fullCheck();
-          /*
-            ActivityManager am = (ActivityManager)getSystemService(ACTIVITY_SERVICE);
-            String tm;
-            List<String> lis = new ArrayList<String>();
-            List<ActivityManager.RunningTaskInfo> get = new ArrayList<ActivityManager.RunningTaskInfo>(am.getRunningTasks(Integer.MAX_VALUE));
-            for (ActivityManager.RunningTaskInfo app:get){
-                if ((tm=app.topActivity.getClassName().toString())!=null)
-                    Log.d("FindingApp", tm);
-                lis.add(tm);
-            }
-            for (String s:lis){
-                if ((checkAppinList(appsCheck, s))){
-                    sendBroadcast(new Intent().setAction(BlockActivity.BLOCK));
-                    executor.shutdown();
-                    Log.d("FindingApp", "App Finded!!!");
-                }
-
-            }*/
         }
     }
 
     private ArrayList<String> openPref(){
         ArrayList<String> out = new ArrayList<String>();
         if ((preferences = getSharedPreferences("applock", MODE_MULTI_PROCESS))!=null) {
-                for (Map.Entry<?, ?> val : preferences.getAll().entrySet()) {
-                    Object obj = val.getValue();
-                    if (obj!=null) {
-                        String tmp = obj.toString();
-                        out.add(tmp);
-                    }
+            for (Map.Entry<?, ?> val : preferences.getAll().entrySet()) {
+                Object obj = val.getValue();
+                if (obj!=null) {
+                    String tmp = obj.toString();
+                    out.add(tmp);
+                }
             }
         }
         return out;

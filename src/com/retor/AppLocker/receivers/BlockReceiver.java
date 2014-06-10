@@ -18,17 +18,30 @@ public class BlockReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("Received Action", intent.getAction());
+        Log.d("Received Action", intent.getAction() + " " + intent.getStringExtra("appname"));
         String action = intent.getAction();
         Intent serviceIntent = new Intent(context, ListenService.class);
         if (action != null && (action.equals(Intent.ACTION_BOOT_COMPLETED) || action.equals(BlockActivity.NORMAL))){
             if (isServiceRunning(context)) {
-                serviceIntent.putExtra("appname", intent.getStringExtra("appname"));
-                context.startService(serviceIntent);
+                String tmp;
+                if(intent.hasExtra("appname")) {
+                    tmp = intent.getStringExtra("appname");
+                    startBlockService(tmp, context);
+                }else {
+                    startBlockService(null, context);
+                }
+                //startBlockService(intent.getStringExtra("appname"), context);
+                Log.d("Receiver", "Get extra " + intent.getStringExtra("appname"));
             } else {
-                context.stopService(serviceIntent);
-                serviceIntent.putExtra("appname", intent.getStringExtra("appname"));
-                context.startService(serviceIntent);
+                //context.stopService(serviceIntent);
+                String tmp;
+                if(intent.hasExtra("appname")) {
+                    tmp = intent.getStringExtra("appname");
+                    startBlockService(tmp, context);
+                }else {
+                    startBlockService(null, context);
+                }
+                Log.d("Receiver", "Get extra" + intent.getStringExtra("appname"));
                 Toast.makeText(context, "ReRunning", Toast.LENGTH_SHORT).show();
             }
         }
@@ -36,21 +49,6 @@ public class BlockReceiver extends BroadcastReceiver {
         if (action!=null && action.equals(BlockActivity.BLOCK)){
             startBlockActivity(intent.getStringExtra("appname"), context);
         }
-/*
-        if (action != null && action.equals(Intent.ACTION_BOOT_COMPLETED) | action.equals(BlockActivity.NORMAL)) {
-            if (isServiceRunning(context)) {
-                serviceIntent.putExtra("block", true);
-                context.startService(serviceIntent);
-            } else {
-                Toast.makeText(context, "Running", Toast.LENGTH_SHORT).show();
-            }
-        }
-        if (action != null && action.equals(BlockActivity.BLOCK)) {
-            context.stopService(serviceIntent);
-            serviceIntent.putExtra("block", false);
-            startBlockActivity("321", context);
-            Toast.makeText(context, "AppFinded", Toast.LENGTH_SHORT).show();
-        }*/
     }
 
     public boolean isServiceRunning(Context context) {
@@ -64,9 +62,7 @@ public class BlockReceiver extends BroadcastReceiver {
             } else {
                 returning = false;
             }
-
         }
-
         return returning;
     }
 
@@ -75,5 +71,13 @@ public class BlockReceiver extends BroadcastReceiver {
         block.putExtra("appname", appname);
         block.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         cont.startActivity(block);
+    }
+
+    private void startBlockService(String appname, Context cont){
+        Intent service = new Intent(cont, ListenService.class);
+        if (appname!=null){
+            service.putExtra("appname", appname);
+        }
+        cont.startService(service);
     }
 }

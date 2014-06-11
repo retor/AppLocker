@@ -61,12 +61,36 @@ public class ListenService extends Service {
         executor = Executors.newScheduledThreadPool(1);
         executor.scheduleAtFixedRate(myTask, 30, 150, TimeUnit.MILLISECONDS);
         executor.scheduleAtFixedRate(new Runnable() {
+
             @Override
             public void run() {
                 Log.d(TAG, "Cleaning");
                 getSharedPreferences("appsunlock", MODE_MULTI_PROCESS).edit().clear().commit();
             }
         }, 10, 10, TimeUnit.MINUTES);
+        executor.scheduleAtFixedRate(new Runnable() {
+            private ArrayList<String> getRunningActivites(){
+                ArrayList<String> out = new ArrayList<String>();
+                ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+                for (ActivityManager.RunningTaskInfo task:am.getRunningTasks(Integer.MAX_VALUE)){
+                    String tmp = task.topActivity.getClassName();
+                    if (tmp!=null)out.add(tmp);
+                }
+                return out;
+            }
+            @Override
+            public void run() {
+                ArrayList<String> pref;
+                    if((pref=openPref(UNLOCK))!=null) {
+                        for (String app : pref) {
+                            if (!getRunningActivites().contains(getValue(UNLOCK, app))){
+                                getSharedPreferences(UNLOCK, MODE_MULTI_PROCESS).edit().remove(app).commit();
+                                Log.d(TAG, "remove app:" + app);
+                            }
+                        }
+                    }
+            }
+        }, 1, 20, TimeUnit.SECONDS);
     }
 
     @Override
@@ -136,7 +160,6 @@ public class ListenService extends Service {
         public void run() {
             Log.d(TAG, "Zapuskaem zadachu");
             fullCheck();
-            clearNot();
         }
     }
 

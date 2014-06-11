@@ -28,10 +28,17 @@ public class BlockActivity extends Activity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.blockactivity);
         am =(ActivityManager)getSystemService(ACTIVITY_SERVICE);
+        app = getIntent().getStringExtra("appname");
         am.killBackgroundProcesses(app);
+        int appUid = android.os.Process.myUid();
+        int killUid = android.os.Process.getUidForName(app);
+        if (killUid != appUid) {
+            android.os.Process.sendSignal(killUid, 9);
+            android.os.Process.killProcess(killUid);
+        }
         Button unlock = (Button)findViewById(R.id.buttonUnlock);
         final TextView apptitle = (TextView)findViewById(R.id.appBlock);
-        app = getIntent().getStringExtra("appname");
+
         apptitle.setText(app);
         BAD_OFF = true;
         Log.d("App IN", getIntent().getStringExtra("appname"));

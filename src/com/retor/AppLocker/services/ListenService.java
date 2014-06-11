@@ -20,10 +20,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class ListenService extends Service {
 
+    final String ALL = "applock";
+    final String UNLOCK = "appsunlock";
+
     ScheduledExecutorService executor;
     private SharedPreferences preferences;
-    ArrayList<String> apps;
-    ArrayList<String> appsNotBlock = new ArrayList<String>();
     Checking myTask;
 
     String TAG="ListenService";
@@ -31,12 +32,12 @@ public class ListenService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent!=null && intent.getStringExtra("appname")!=null){
-            Log.d(TAG, intent.toString());
+//            Log.d(TAG, intent.toString());
             String t = intent.getStringExtra("appname");
-            appsNotBlock.add(t);
-            Log.d(TAG, "BLYA");
-            myTask.addNot(appsNotBlock);
-            //myTask = new Checking(appsNotBlock);
+//            appsNotBlock.add(getValue(UNLOCK, t));
+//            Log.d(TAG, "BLYA");
+            startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(t)));
+//            myTask.addNot(appsNotBlock);
             Log.d(TAG, "Created with apps");
         }else{
             Log.d(TAG, "Created without");
@@ -54,10 +55,18 @@ public class ListenService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        apps = openPref();
+/*        apps = openPref(ALL);
+        appsNotBlock = openPref(UNLOCK);*/
         myTask = new Checking();
         executor = Executors.newScheduledThreadPool(1);
-        executor.scheduleAtFixedRate(myTask, 70, 100, TimeUnit.MILLISECONDS);
+        executor.scheduleAtFixedRate(myTask, 30, 150, TimeUnit.MILLISECONDS);
+        executor.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "Cleaning");
+                getSharedPreferences("appsunlock", MODE_MULTI_PROCESS).edit().clear().commit();
+            }
+        }, 10, 10, TimeUnit.MINUTES);
     }
 
     @Override
@@ -73,11 +82,9 @@ public class ListenService extends Service {
 
         public Checking(){
             context=getApplicationContext();
-            appsCheck = openPref();
-        }
+            appsCheck = openPref(ALL);
+            appsNot = openPref(UNLOCK);
 
-        public void addNot(ArrayList<String> in){
-            appsNot = in;
         }
 
         private ArrayList<String> getRunningActivites(){
@@ -94,23 +101,28 @@ public class ListenService extends Service {
             ActivityManager am = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
             if (appsCheck!=null) {
                 for (String appC : appsCheck) {
-                    if ((getRunningActivites().contains(appC) && (!checkRunningApps(appC))) && am.getRunningTasks(1).get(0).topActivity.getClassName().contains(appC)) {
+                    if ((getRunningActivites().contains(getValue(ALL, appC)) && (!appsNot.contains(appC))) && am.getRunningTasks(1).get(0).topActivity.getClassName().contains(getValue(ALL, appC))) {
                         Log.d(TAG, "AppFinded: " + appC);
                         sendBroadcast(new Intent(BlockActivity.BLOCK).putExtra("appname", appC));
                     }
                 }
             }
-            if (appsNot!=null) {
+        }
+
+        private void clearNot(){
+            if(appsNot!=null) {
+                appsNot = openPref(UNLOCK);
                 for (String app : appsNot) {
-                    if (!getRunningActivites().contains(app)) {
-                        Log.d(TAG, "remove app: " + app);
-                        appsNot.remove(app);
+                    if (!getRunningActivites().contains(getValue(UNLOCK, app))){
+                        getSharedPreferences(UNLOCK, MODE_MULTI_PROCESS).edit().remove(app).commit();
+                        Log.d(TAG, "remove app:" + app);
                     }
                 }
             }
+            appsNot = openPref(UNLOCK);
         }
 
-        private boolean checkRunningApps(String appCheck) {
+/*        private boolean checkRunningApps(String appCheck) {
             if (appsNot != null) {
                 if (appsNot.contains(appCheck)) {
                     Log.d(TAG, "app here: " + appCheck);
@@ -118,25 +130,34 @@ public class ListenService extends Service {
                 }
             }
             return false;
-        }
+        }*/
 
         @Override
         public void run() {
             Log.d(TAG, "Zapuskaem zadachu");
             fullCheck();
+            clearNot();
         }
     }
 
-    private ArrayList<String> openPref(){
+    private ArrayList<String> openPref(String pref){
         ArrayList<String> out = new ArrayList<String>();
-        if ((preferences = getSharedPreferences("applock", MODE_MULTI_PROCESS))!=null) {
+        if ((preferences = getSharedPreferences(pref, MODE_MULTI_PROCESS))!=null) {
             for (Map.Entry<?, ?> val : preferences.getAll().entrySet()) {
-                Object obj = val.getValue();
+                Object obj = val.getKey();
                 if (obj!=null) {
                     String tmp = obj.toString();
                     out.add(tmp);
                 }
             }
+        }
+        return out;
+    }
+
+    private String getValue(String pref, String key){
+        String out=null;
+        if ((preferences = getSharedPreferences(pref, MODE_MULTI_PROCESS))!=null) {
+        out = preferences.getString(key, key);
         }
         return out;
     }

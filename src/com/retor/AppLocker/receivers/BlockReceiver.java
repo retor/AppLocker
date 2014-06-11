@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 import com.retor.AppLocker.activitys.BlockActivity;
 import com.retor.AppLocker.services.ListenService;
 
@@ -22,27 +21,28 @@ public class BlockReceiver extends BroadcastReceiver {
         String action = intent.getAction();
         Intent serviceIntent = new Intent(context, ListenService.class);
         if (action != null && (action.equals(Intent.ACTION_BOOT_COMPLETED) || action.equals(BlockActivity.NORMAL))){
-            if (isServiceRunning(context)) {
-                String tmp;
-                if(intent.hasExtra("appname")) {
-                    tmp = intent.getStringExtra("appname");
-                    startBlockService(tmp, context);
-                }else {
-                    startBlockService(null, context);
+            String tmp=null;
+            if(intent.hasExtra("appname")) {
+                tmp = intent.getStringExtra("appname");
+            }
+            if (!isServiceRunning(context)) {
+                context.stopService(serviceIntent);
+                if(tmp!=null){
+                   startBlockService(tmp, context);
+                   Log.d("Receiver", "ReRun With");
+                }else{
+                   startBlockService(null, context);
+                   Log.d("Receiver", "ReRun Without");
                 }
-                //startBlockService(intent.getStringExtra("appname"), context);
-                Log.d("Receiver", "Get extra " + intent.getStringExtra("appname"));
             } else {
-                //context.stopService(serviceIntent);
-                String tmp;
-                if(intent.hasExtra("appname")) {
-                    tmp = intent.getStringExtra("appname");
+                context.getSharedPreferences("appsunlock", Context.MODE_MULTI_PROCESS).edit().clear().commit();
+                if(tmp!=null){
                     startBlockService(tmp, context);
-                }else {
+                    Log.d("Receiver", "NewRun With");
+                }else{
                     startBlockService(null, context);
+                    Log.d("Receiver", "NewRun Without");
                 }
-                Log.d("Receiver", "Get extra" + intent.getStringExtra("appname"));
-                Toast.makeText(context, "ReRunning", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -52,18 +52,18 @@ public class BlockReceiver extends BroadcastReceiver {
     }
 
     public boolean isServiceRunning(Context context) {
-        Boolean returning = false;
         Log.d("isServiceRun", ListenService.class.getName().toString());
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         ArrayList<ActivityManager.RunningServiceInfo> running = (ArrayList) manager.getRunningServices(Integer.MAX_VALUE);
+        Log.d("isServiceRun", running.get(0).service.getClassName());
         for (ActivityManager.RunningServiceInfo service : running) {
-            if (service.service.getClassName().equals(ListenService.class.getName().toString())) {
-                returning = true;
+            if (service.service.getClassName().contains(ListenService.class.getName().toString())) {
+                return true;
             } else {
-                returning = false;
+                return false;
             }
         }
-        return returning;
+        return false;
     }
 
     private void startBlockActivity(String appname, Context cont){

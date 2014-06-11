@@ -2,13 +2,14 @@ package com.retor.AppLocker.classes;
 
 import android.content.pm.PackageInfo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Антон on 07.05.2014.
  */
-public class Apps extends PackageInfo {
+public class Apps extends PackageInfo implements Serializable {
 
     private boolean check;
 
@@ -35,7 +36,6 @@ public class Apps extends PackageInfo {
                 arrayApps.add(apps);
             }
         }
-
         return arrayApps;
     }
 

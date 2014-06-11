@@ -3,6 +3,7 @@ package com.retor.AppLocker.activitys;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -20,41 +21,36 @@ public class BlockActivity extends Activity  {
     public static final String BLOCK = "startServiceBlock";
     protected boolean BAD_OFF = false;
     protected String app;
+    private ActivityManager am;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.blockactivity);
+        am =(ActivityManager)getSystemService(ACTIVITY_SERVICE);
+        am.killBackgroundProcesses(app);
         Button unlock = (Button)findViewById(R.id.buttonUnlock);
         final TextView apptitle = (TextView)findViewById(R.id.appBlock);
-        apptitle.setText(getIntent().getStringExtra("appname"));
+        app = getIntent().getStringExtra("appname");
+        apptitle.setText(app);
         BAD_OFF = true;
         Log.d("App IN", getIntent().getStringExtra("appname"));
-        //app = workWithString(getIntent().getStringExtra("appname"));
         unlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("Send extra", apptitle.getText().toString());
                 BAD_OFF = false;
-                sendBroadcast(new Intent(NORMAL).putExtra("appname", apptitle.getText().toString()));
+                getSharedPreferences("appsunlock", MODE_MULTI_PROCESS).edit().putString(app, getPackageManager().getLaunchIntentForPackage(app).getComponent().getClassName()).commit();
+                sendBroadcast(new Intent(NORMAL).putExtra("appname", app));
+                //startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app)));
                 finish();
             }
         });
     }
 
-    private String workWithString(String in){
-        String out;
-        int pos = in.indexOf(".");
-        pos = in.indexOf(".", pos+1);
-        pos = in.indexOf(".", pos+1);
-        out = in.substring(0,pos);
-        return out;
-    }
-
     @Override
     protected void onDestroy() {
         if(BAD_OFF){
-            ActivityManager am = (ActivityManager)getSystemService(ACTIVITY_SERVICE);
             Log.d("BlockActivityKilling", app);
             am.killBackgroundProcesses(app);
         }
@@ -84,5 +80,14 @@ public class BlockActivity extends Activity  {
                 break;
         }
         return true;
+    }
+
+    private String getValue(String key){
+        SharedPreferences preferences;
+        String out=null;
+        if ((preferences = getSharedPreferences("applock", MODE_MULTI_PROCESS))!=null) {
+            out = preferences.getString(key, key);
+        }
+        return out;
     }
 }

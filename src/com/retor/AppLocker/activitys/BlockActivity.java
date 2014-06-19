@@ -11,11 +11,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.retor.AppLocker.R;
+import com.retor.AppLocker.services.ListenService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Антон on 30.05.2014.
  */
-public class BlockActivity extends Activity  {
+public class BlockActivity extends Activity {
 
     public static final String NORMAL = "startServiceNormal";
     public static final String BLOCK = "startServiceBlock";
@@ -27,7 +31,7 @@ public class BlockActivity extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.blockactivity);
-        am =(ActivityManager)getSystemService(ACTIVITY_SERVICE);
+        am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         app = getIntent().getStringExtra("appname");
         am.killBackgroundProcesses(app);
         int appUid = android.os.Process.myUid();
@@ -36,8 +40,8 @@ public class BlockActivity extends Activity  {
             android.os.Process.sendSignal(killUid, 9);
             android.os.Process.killProcess(killUid);
         }
-        Button unlock = (Button)findViewById(R.id.buttonUnlock);
-        final TextView apptitle = (TextView)findViewById(R.id.appBlock);
+        Button unlock = (Button) findViewById(R.id.buttonUnlock);
+        final TextView apptitle = (TextView) findViewById(R.id.appBlock);
 
         apptitle.setText(app);
         BAD_OFF = true;
@@ -48,7 +52,7 @@ public class BlockActivity extends Activity  {
                 Log.d("Send extra", apptitle.getText().toString());
                 BAD_OFF = false;
                 getSharedPreferences("appsunlock", MODE_MULTI_PROCESS).edit().putString(app, getPackageManager().getLaunchIntentForPackage(app).getComponent().getClassName()).commit();
-                sendBroadcast(new Intent(NORMAL).putExtra("appname", app));
+                //sendBroadcast(new Intent(NORMAL).putExtra("appname", app));
                 //startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app)));
                 finish();
             }
@@ -57,10 +61,18 @@ public class BlockActivity extends Activity  {
 
     @Override
     protected void onDestroy() {
-        if(BAD_OFF){
+        if (BAD_OFF) {
             Log.d("BlockActivityKilling", app);
             am.killBackgroundProcesses(app);
+        }else{
+            List<String> list = new ArrayList<String>();
+            for (ActivityManager.RunningAppProcessInfo app:am.getRunningAppProcesses()){
+                list.add(app.processName);
+            }
+            if (!list.contains(app))
+            startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app)).setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP));
         }
+        startService(new Intent(getApplicationContext(), ListenService.class));
         super.onDestroy();
     }
 
@@ -76,7 +88,7 @@ public class BlockActivity extends Activity  {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode){
+        switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
                 break;
             case KeyEvent.KEYCODE_HOME:
@@ -89,10 +101,10 @@ public class BlockActivity extends Activity  {
         return true;
     }
 
-    private String getValue(String key){
+    private String getValue(String key) {
         SharedPreferences preferences;
-        String out=null;
-        if ((preferences = getSharedPreferences("applock", MODE_MULTI_PROCESS))!=null) {
+        String out = null;
+        if ((preferences = getSharedPreferences("applock", MODE_MULTI_PROCESS)) != null) {
             out = preferences.getString(key, key);
         }
         return out;

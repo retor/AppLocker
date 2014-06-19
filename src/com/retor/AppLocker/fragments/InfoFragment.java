@@ -60,13 +60,13 @@ public class InfoFragment extends android.support.v4.app.DialogFragment implemen
         name.setText(apps.packageName.toString());
         TextView loca = (TextView) v.findViewById(R.id.textView2);
         loca.setText(apps.applicationInfo.sourceDir.toString());
-        TextView activity = (TextView)v.findViewById(R.id.infoActivity);
-        String act=null;
+        TextView activity = (TextView) v.findViewById(R.id.infoActivity);
+        String act = null;
         final PackageManager pm = context.getPackageManager();
         if (pm != null) {
-            try{
+            try {
                 act = pm.getLaunchIntentForPackage(apps.packageName).getComponent().getClassName();
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 Log.d("Blya", e.toString());
                 Intent intentFilter = new Intent(Intent.ACTION_MAIN, null);
                 intentFilter.addCategory(Intent.CATEGORY_LAUNCHER);

@@ -63,6 +63,7 @@ public class ListLunchedApps extends ListFragment implements OnItemClickListener
         int appUid = android.os.Process.myUid();
         int killUid = appInfo.uid;
         if (killUid != appUid) {
+            activityManager.restartPackage(appInfo.processName);
             android.os.Process.sendSignal(appInfo.pid, 9);
             android.os.Process.killProcess(appInfo.pid);
             activityManager.killBackgroundProcesses(appInfo.processName);

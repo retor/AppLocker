@@ -49,14 +49,14 @@ public class ListApps extends ListFragment implements OnItemClickListener {
         getListView().setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         ListAdapter adapt = getListAdapter();
         SharedPreferences pref = context.getSharedPreferences("applock", Context.MODE_MULTI_PROCESS);
-        if (pref!=null)
-        for (int i=0; i< adapt.getCount(); i++){
-            Apps checker = (Apps) adapt.getItem(i);
-            if (pref.getString(checker.packageName, null)!=null)
-            checker.setCheck(true);
-            if (checker.isCheck())
-                getListView().setItemChecked(i, true);
-        }
+        if (pref != null)
+            for (int i = 0; i < adapt.getCount(); i++) {
+                Apps checker = (Apps) adapt.getItem(i);
+                if (pref.getString(checker.packageName, null) != null)
+                    checker.setCheck(true);
+                if (checker.isCheck())
+                    getListView().setItemChecked(i, true);
+            }
         //getListView().setSelector(R.drawable.selector);
         //android:background="?android:attr/activatedBackgroundIndicator"
 /*        //test
@@ -83,9 +83,9 @@ public class ListApps extends ListFragment implements OnItemClickListener {
             createDialog(tmpApps, context);
             vibration(context, 1);
             if (pm != null) {
-                try{
+                try {
                     act = pm.getLaunchIntentForPackage(tmpApps.packageName).getComponent().getClassName();
-                }catch (NullPointerException e){
+                } catch (NullPointerException e) {
                     Log.d("Blya", e.toString());
                     Intent intentFilter = new Intent(Intent.ACTION_MAIN, null);
                     intentFilter.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -99,7 +99,7 @@ public class ListApps extends ListFragment implements OnItemClickListener {
                 }
             }
             if (!preferences.contains(tmpApps.packageName))
-            preferences.edit().putString(tmpApps.packageName, act).commit();
+                preferences.edit().putString(tmpApps.packageName, act).commit();
             Toast.makeText(context, "+", Toast.LENGTH_SHORT).show();
         } else {
             tmpApps.setCheck(false);

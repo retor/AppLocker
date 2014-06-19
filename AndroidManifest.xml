@@ -52,8 +52,6 @@
                 android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="startServiceNormal"/>
-                <action android:name="startServiceBlock"/>
             </intent-filter>
         </receiver>
     </application>

@@ -4,7 +4,6 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 import com.retor.AppLocker.activitys.BlockActivity;
 import com.retor.AppLocker.interfaces.prefInterface;
 
@@ -43,7 +42,7 @@ public class MyCheckAppsThread extends Thread implements prefInterface, Runnable
 
     @Override
     public void run() {
-        Log.d("MyThread: ", "Started");
+        //Log.d("MyThread: ", "Started");
         fillArrays(BLOCKED, WORKED);
         checkRunning();
     }
@@ -52,11 +51,11 @@ public class MyCheckAppsThread extends Thread implements prefInterface, Runnable
         if (blocked!=null){
             List<RunningTaskInfo> tasks = am.getRunningTasks(Integer.MAX_VALUE);
             for (String app:blocked){
-                Log.d("MyThread: ", app);
-                Log.d("MyThread: ", getRunningTasks().get(0).topActivity.getClassName().toString());
+                //Log.d("MyThread: ", app);
+                //Log.d("MyThread: ", getRunningTasks().get(0).topActivity.getClassName().toString());
                 for (RunningTaskInfo task:tasks){
                     if (task.topActivity.getPackageName().contains(app) && (!checkUnBlockedArray(app)) && am.getRunningTasks(1).get(0).topActivity.getClassName().contains(getValue(BLOCKED, app))){
-                        Log.d("MyThread: ", "I Find It: " + app);
+                        //Log.d("MyThread: ", "I Find It: " + app);
                         am.killBackgroundProcesses(app);
                         context.startActivity(new Intent(context, BlockActivity.class).putExtra("appname", app).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                     }
@@ -73,7 +72,7 @@ public class MyCheckAppsThread extends Thread implements prefInterface, Runnable
     }
 
     private ArrayList<ActivityManager.RunningTaskInfo> getRunningTasks(){
-        Log.d("MyThread: ", "getRunningTasks");
+        //Log.d("MyThread: ", "getRunningTasks");
         ArrayList<ActivityManager.RunningTaskInfo> tasks = new ArrayList<ActivityManager.RunningTaskInfo>();
         if (am!=null)
         for (RunningTaskInfo task:am.getRunningTasks(Integer.MAX_VALUE)){
@@ -83,7 +82,7 @@ public class MyCheckAppsThread extends Thread implements prefInterface, Runnable
     }
 
     private void fillArrays(String block, String work){
-        Log.d("MyThread: ", "FillArrays");
+        //Log.d("MyThread: ", "FillArrays");
         BLOCKED = block;
         if ((preferences = context.getSharedPreferences(block, Context.MODE_MULTI_PROCESS)) != null){
             blocked = new ArrayList<String>();

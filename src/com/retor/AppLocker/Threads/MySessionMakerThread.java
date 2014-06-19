@@ -27,7 +27,6 @@ public class MySessionMakerThread extends Thread implements Runnable, prefInterf
         context = _context;
         WORKED = WORKEDpref;
         am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
-        preferences = context.getSharedPreferences(TIMERPREF, Context.MODE_PRIVATE);
     }
 
     public MySessionMakerThread(String threadName, Context _context, String WORKEDpref) {
@@ -35,7 +34,6 @@ public class MySessionMakerThread extends Thread implements Runnable, prefInterf
         context = _context;
         WORKED = WORKEDpref;
         am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
-        preferences = context.getSharedPreferences(TIMERPREF, Context.MODE_PRIVATE);
     }
 
     @Override
@@ -47,32 +45,34 @@ public class MySessionMakerThread extends Thread implements Runnable, prefInterf
 
     private void makeWorkedCheck(){
         if (worked!=null){
+            Log.d("MyThread: ", "Started");
             for (String app:worked){
+                Log.d("MyThread: ", app);
                 if (checkRunning(app) && checkTop(app) && checkTimer(app)){
+                    Log.d("MyThread: ", "first");
                     renevTimer(app);
-                    return;
                 }
                 if (checkRunning(app) && checkTop(app) && !checkTimer(app)){
+                    Log.d("MyThread: ", "Second");
                     addTimer(app);
-                    return;
                 }
                 if (checkRunning(app) && !checkTop(app) && checkTimer(app)){
+                    Log.d("MyThread: ", "3");
                     if (getTimerValue(TIMERPREF, app)>=System.currentTimeMillis()){
                         delTimer(app);
                         delApp(app);
-                        return;
                     }
                 }
                 if (checkRunning(app) && !checkTop(app) && !checkTimer(app)){
-                        delApp(app);
-                    return;
+                    Log.d("MyThread: ", "4");
+                    delApp(app);
                 }
                 if (!checkRunning(app)){
+                    Log.d("MyThread: ", "5");
                     delApp(app);
                     if (checkTimer(app)){
                         delTimer(app);
                     }
-                    return;
                 }
             }
         }
@@ -103,11 +103,13 @@ public class MySessionMakerThread extends Thread implements Runnable, prefInterf
 
     private void addTimer(String app){
         long time = (System.currentTimeMillis() + ((60*1000)*5));
+        preferences = context.getSharedPreferences(TIMERPREF, Context.MODE_PRIVATE);
         preferences.edit().putLong(app, time).commit();
         fillArray(WORKED, TIMERPREF);
     }
 
     private void renevTimer(String app){
+        preferences = context.getSharedPreferences(TIMERPREF, Context.MODE_PRIVATE);
         if (preferences.contains(app)){
             delTimer(app);
             addTimer(app);
@@ -115,20 +117,28 @@ public class MySessionMakerThread extends Thread implements Runnable, prefInterf
     }
 
     private void delTimer(String app){
-        if (timers!=null && preferences!=null){
+        if (timers!=null){
             for (String timer:timers){
                 if (timer.contains(app)){
                     timers.remove(app);
-                    preferences.edit().remove(app).commit();
                 }
             }
+        }
+        preferences = context.getSharedPreferences(TIMERPREF, Context.MODE_PRIVATE);
+        if (preferences.contains(app)){
+            preferences.edit().remove(app).commit();
         }
     }
 
     private void delApp(String app){
         if (worked!=null){
             for (String ap:worked){
-                if (ap.contains(app)) worked.remove(ap);
+                if (ap.contains(app)){
+                    preferences = context.getSharedPreferences(WORKED, Context.MODE_PRIVATE);
+                    preferences.edit().remove(app).commit();
+                    worked.remove(ap);
+                    Log.d("MyThread: ", "Deleted " + app);
+                }
             }
         }
     }

@@ -9,6 +9,7 @@ import android.util.Log;
 import com.retor.AppLocker.Threads.MyCheckAppsThread;
 import com.retor.AppLocker.Threads.MySessionMakerThread;
 
+import java.util.Calendar;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -58,7 +59,8 @@ public class ListenService extends Service {
         executor1.scheduleAtFixedRate(new MySessionMakerThread(getApplicationContext(), UNLOCK), 0, 35, TimeUnit.SECONDS);
         PendingIntent pending = PendingIntent.getService(getApplicationContext(), 0, new Intent(getApplicationContext(), ListenService.class),0);
         AlarmManager alarm = (AlarmManager)getSystemService(ALARM_SERVICE);
-        alarm.setRepeating(0, 0, 6000, pending);
+        Calendar cal = Calendar.getInstance();
+        alarm.setRepeating(0, cal.getTimeInMillis(), 6000, pending);
     }
 
     @Override

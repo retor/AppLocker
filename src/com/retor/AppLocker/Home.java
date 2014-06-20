@@ -21,7 +21,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.retor.AppLocker.activitys.BlockActivity;
+import com.retor.AppLocker.activites.BlockActivity;
 import com.retor.AppLocker.adapters.ListAppsAdapter;
 import com.retor.AppLocker.adapters.LunchedAdapter;
 import com.retor.AppLocker.adapters.ViewPagerAdapter;

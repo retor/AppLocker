@@ -1,4 +1,4 @@
-package com.retor.AppLocker.activitys;
+package com.retor.AppLocker.activites;
 
 import android.app.Activity;
 import android.app.ActivityManager;

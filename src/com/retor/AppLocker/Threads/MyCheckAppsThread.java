@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import com.retor.AppLocker.activitys.BlockActivity;
+import com.retor.AppLocker.activites.BlockActivity;
 import com.retor.AppLocker.interfaces.prefInterface;
 
 import java.util.ArrayList;

@@ -5,7 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import com.retor.AppLocker.activitys.BlockActivity;
+import com.retor.AppLocker.activites.BlockActivity;
 import com.retor.AppLocker.services.ListenService;
 
 import java.util.ArrayList;

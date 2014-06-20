@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -34,10 +35,16 @@ public class BlockActivity extends Activity {
         app = getIntent().getStringExtra("appname");
         am.killBackgroundProcesses(app);
         int appUid = android.os.Process.myUid();
-        int killUid = android.os.Process.getUidForName(app);
-        if (killUid != appUid) {
-            android.os.Process.sendSignal(killUid, 9);
-            android.os.Process.killProcess(killUid);
+        int killUid = 0;
+        try {
+            killUid = getPackageManager().getApplicationInfo(app, PackageManager.GET_META_DATA).uid;
+            android.os.Process. getUidForName(app);
+            if (killUid != appUid) {
+                android.os.Process.sendSignal(killUid, 9);
+                //android.os.Process.killProcess(killUid);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
         }
         Button unlock = (Button) findViewById(R.id.buttonUnlock);
         final TextView apptitle = (TextView) findViewById(R.id.appBlock);
@@ -54,7 +61,11 @@ public class BlockActivity extends Activity {
                 //finish();
                 List<String> list = new ArrayList<String>();
                 if (!am.getRunningTasks(Integer.MAX_VALUE).contains(app))
-                startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app)).addCategory("android.intent.action.MAIN").addCategory("android.intent.category.LAUNCHER").setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP));
+                startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app))
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET));
+/*                .addCategory("android.intent.action.MAIN")
+                        .addCategory("android.intent.category.LAUNCHER")*/
+
                 finish();
             }
         });

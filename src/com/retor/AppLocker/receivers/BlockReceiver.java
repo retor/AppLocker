@@ -17,37 +17,10 @@ public class BlockReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("Received Action", intent.getAction() + " " + intent.getStringExtra("appname"));
         String action = intent.getAction();
         Intent serviceIntent = new Intent(context, ListenService.class);
-        if (action != null && (action.equals(Intent.ACTION_BOOT_COMPLETED) || action.equals(BlockActivity.NORMAL))) {
-            String tmp = null;
-            if (intent.hasExtra("appname")) {
-                tmp = intent.getStringExtra("appname");
-            }
-            if (!isServiceRunning(context)) {
-                context.stopService(serviceIntent);
-                if (tmp != null) {
-                    startBlockService(tmp, context);
-                    Log.d("Receiver", "ReRun With");
-                } else {
-                    startBlockService(null, context);
-                    Log.d("Receiver", "ReRun Without");
-                }
-            } else {
-                context.getSharedPreferences("appsunlock", Context.MODE_MULTI_PROCESS).edit().clear().commit();
-                if (tmp != null) {
-                    startBlockService(tmp, context);
-                    Log.d("Receiver", "NewRun With");
-                } else {
-                    startBlockService(null, context);
-                    Log.d("Receiver", "NewRun Without");
-                }
-            }
-        }
-
-        if (action != null && action.equals(BlockActivity.BLOCK)) {
-            startBlockActivity(intent.getStringExtra("appname"), context);
+        if (action != null && (action.equals(Intent.ACTION_BOOT_COMPLETED))) {
+            context.startService(serviceIntent);
         }
     }
 

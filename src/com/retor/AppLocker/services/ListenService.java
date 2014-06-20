@@ -44,18 +44,18 @@ public class ListenService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        myTaskBlock = new MyCheckAppsThread(getApplicationContext(), ALL, UNLOCK);
+/*        myTaskBlock = new MyCheckAppsThread(getApplicationContext(), ALL, UNLOCK);
         myTaskSession = new MySessionMakerThread(getApplicationContext(), UNLOCK);
         myTaskBlock.setPriority(Thread.MAX_PRIORITY);
         myTaskBlock.setName("AppsChecker");
         myTaskBlock.setDaemon(true);
         myTaskSession.setPriority(Thread.MAX_PRIORITY);
         myTaskSession.setName("AppsSessions");
-        myTaskSession.setDaemon(true);
+        myTaskSession.setDaemon(true);*/
         executor = Executors.newScheduledThreadPool(1);
         executor1 = Executors.newScheduledThreadPool(1);
-        executor.scheduleAtFixedRate(myTaskBlock, 5, 50, TimeUnit.MILLISECONDS);
-        executor1.scheduleAtFixedRate(myTaskSession, 0, 35, TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(new MyCheckAppsThread(getApplicationContext(), ALL, UNLOCK), 5, 50, TimeUnit.MILLISECONDS);
+        executor1.scheduleAtFixedRate(new MySessionMakerThread(getApplicationContext(), UNLOCK), 0, 35, TimeUnit.SECONDS);
         PendingIntent pending = PendingIntent.getService(getApplicationContext(), 0, new Intent(getApplicationContext(), ListenService.class),0);
         AlarmManager alarm = (AlarmManager)getSystemService(ALARM_SERVICE);
         alarm.setRepeating(0, 0, 6000, pending);

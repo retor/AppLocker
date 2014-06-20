@@ -5,7 +5,8 @@ import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
+import android.os.*;
+import android.os.Process;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -36,12 +37,17 @@ public class BlockActivity extends Activity {
         am.killBackgroundProcesses(app);
         int appUid = android.os.Process.myUid();
         int killUid = 0;
+
         try {
+            int killPid=0;
             killUid = getPackageManager().getApplicationInfo(app, PackageManager.GET_META_DATA).uid;
-            android.os.Process. getUidForName(app);
+            for (ActivityManager.RunningAppProcessInfo appi:am.getRunningAppProcesses()){
+                if (appi.uid==killUid)
+                    killPid = appi.pid;
+            }
             if (killUid != appUid) {
-                android.os.Process.sendSignal(killUid, 9);
-                //android.os.Process.killProcess(killUid);
+                android.os.Process.sendSignal(killUid, Process.SIGNAL_KILL);
+                android.os.Process.killProcess(killPid);
             }
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -62,10 +68,8 @@ public class BlockActivity extends Activity {
                 List<String> list = new ArrayList<String>();
                 if (!am.getRunningTasks(Integer.MAX_VALUE).contains(app))
                 startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app))
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET));
-/*                .addCategory("android.intent.action.MAIN")
-                        .addCategory("android.intent.category.LAUNCHER")*/
-
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET));
                 finish();
             }
         });

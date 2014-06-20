@@ -45,27 +45,50 @@ public class MySessionMakerThread extends Thread implements Runnable, prefInterf
 
     private void makeWorkedCheck(){
         if (worked!=null){
-            Log.d("MyThread: ", "Started");
+            Log.d("MySessionThread: ", "Started");
             for (String app:worked){
                 Log.d("MyThread: ", app);
-                if (checkRunning(app) && checkTop(app) && checkTimer(app)){
+                if (checkRunning(app)){
+                    if (checkTop(app)){
+                        if (checkTimer(app)){
+                            renevTimer(app);
+                        }else{
+                            addTimer(app);
+                        }
+                    }else{
+                        if (checkTimer(app) && getTimerValue(TIMERPREF, app)>=System.currentTimeMillis()){
+                                delTimer(app);
+                                delApp(app);
+                        }
+                    }
+                }else{
+                    delApp(app);
+                    if (checkTimer(app)){
+                        delTimer(app);
+                    }
+                }
+                /*if (checkRunning(app) && checkTop(app) && checkTimer(app)){
                     Log.d("MyThread: ", "first");
                     renevTimer(app);
+                    return;
                 }
                 if (checkRunning(app) && checkTop(app) && !checkTimer(app)){
                     Log.d("MyThread: ", "Second");
                     addTimer(app);
+                    return;
                 }
                 if (checkRunning(app) && !checkTop(app) && checkTimer(app)){
                     Log.d("MyThread: ", "3");
                     if (getTimerValue(TIMERPREF, app)>=System.currentTimeMillis()){
                         delTimer(app);
                         delApp(app);
+                        return;
                     }
                 }
                 if (checkRunning(app) && !checkTop(app) && !checkTimer(app)){
                     Log.d("MyThread: ", "4");
                     delApp(app);
+                    return;
                 }
                 if (!checkRunning(app)){
                     Log.d("MyThread: ", "5");
@@ -73,21 +96,22 @@ public class MySessionMakerThread extends Thread implements Runnable, prefInterf
                     if (checkTimer(app)){
                         delTimer(app);
                     }
-                }
+                    return;
+                }*/
             }
         }
     }
 
     private boolean checkRunning(String appName){
-        for (ActivityManager.RunningAppProcessInfo proc:am.getRunningAppProcesses()){
-             if (proc.processName.contains(appName)) return true;
+        for (ActivityManager.RunningTaskInfo proc:am.getRunningTasks(Integer.MAX_VALUE)){
+             if (proc.topActivity.getPackageName().contains(appName)) return true;
         }
         return false;
     }
 
     private boolean checkTop(String appName){
         for (ActivityManager.RunningTaskInfo task:am.getRunningTasks(Integer.MAX_VALUE)){
-            if (task.topActivity.getClassName().contains(getValue(WORKED,appName)) && am.getRunningTasks(1).get(0).topActivity.getClassName().contains(getValue(WORKED,appName))) return true;
+            if (task.topActivity.getPackageName().contains(appName) && am.getRunningTasks(1).get(0).topActivity.getPackageName().contains(appName)) return true;
         }
         return false;
     }
@@ -103,13 +127,13 @@ public class MySessionMakerThread extends Thread implements Runnable, prefInterf
 
     private void addTimer(String app){
         long time = (System.currentTimeMillis() + ((60*1000)*5));
-        preferences = context.getSharedPreferences(TIMERPREF, Context.MODE_PRIVATE);
+        preferences = context.getSharedPreferences(TIMERPREF, Context.MODE_MULTI_PROCESS);
         preferences.edit().putLong(app, time).commit();
         fillArray(WORKED, TIMERPREF);
     }
 
     private void renevTimer(String app){
-        preferences = context.getSharedPreferences(TIMERPREF, Context.MODE_PRIVATE);
+        preferences = context.getSharedPreferences(TIMERPREF, Context.MODE_MULTI_PROCESS);
         if (preferences.contains(app)){
             delTimer(app);
             addTimer(app);
@@ -117,6 +141,7 @@ public class MySessionMakerThread extends Thread implements Runnable, prefInterf
     }
 
     private void delTimer(String app){
+        preferences = context.getSharedPreferences(TIMERPREF, Context.MODE_MULTI_PROCESS);
         if (timers!=null){
             for (String timer:timers){
                 if (timer.contains(app)){
@@ -124,17 +149,17 @@ public class MySessionMakerThread extends Thread implements Runnable, prefInterf
                 }
             }
         }
-        preferences = context.getSharedPreferences(TIMERPREF, Context.MODE_PRIVATE);
         if (preferences.contains(app)){
             preferences.edit().remove(app).commit();
         }
+        Log.d("MyThread: ", "RemovePref " + app);
     }
 
     private void delApp(String app){
         if (worked!=null){
             for (String ap:worked){
                 if (ap.contains(app)){
-                    preferences = context.getSharedPreferences(WORKED, Context.MODE_PRIVATE);
+                    preferences = context.getSharedPreferences(WORKED, Context.MODE_MULTI_PROCESS);
                     preferences.edit().remove(app).commit();
                     worked.remove(ap);
                     Log.d("MyThread: ", "Deleted " + app);

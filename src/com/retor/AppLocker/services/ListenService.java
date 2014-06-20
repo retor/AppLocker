@@ -1,5 +1,7 @@
 package com.retor.AppLocker.services;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -20,6 +22,7 @@ public class ListenService extends Service {
     final String UNLOCK = "appsunlock";
 
     ScheduledExecutorService executor;
+    ScheduledExecutorService executor1;
     MyCheckAppsThread myTaskBlock;
     MySessionMakerThread myTaskSession;
 
@@ -27,22 +30,20 @@ public class ListenService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return Service.START_STICKY;
+        return Service.START_STICKY_COMPATIBILITY;
     }
 
     @Override
     public void onDestroy() {
         executor.shutdown();
         Log.d(TAG, "Closed");
+        startService(new Intent(getApplicationContext(), ListenService.class));
         super.onDestroy();
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-/*        PendingIntent pending = PendingIntent.getService(getApplicationContext(), 0, new Intent(getApplicationContext(), ListenService.class),0);
-        AlarmManager alarm = (AlarmManager)getSystemService(ALARM_SERVICE);
-        alarm.setRepeating(0, 0, 6000, pending);*/
         myTaskBlock = new MyCheckAppsThread(getApplicationContext(), ALL, UNLOCK);
         myTaskSession = new MySessionMakerThread(getApplicationContext(), UNLOCK);
         myTaskBlock.setPriority(Thread.MAX_PRIORITY);
@@ -51,9 +52,13 @@ public class ListenService extends Service {
         myTaskSession.setPriority(Thread.MAX_PRIORITY);
         myTaskSession.setName("AppsSessions");
         myTaskSession.setDaemon(true);
-        executor = Executors.newScheduledThreadPool(2);
-        executor.scheduleAtFixedRate(myTaskBlock, 30, 150, TimeUnit.MILLISECONDS);
-        executor.scheduleAtFixedRate(myTaskSession, 0, 1, TimeUnit.MINUTES);
+        executor = Executors.newScheduledThreadPool(1);
+        executor1 = Executors.newScheduledThreadPool(1);
+        executor.scheduleAtFixedRate(myTaskBlock, 5, 50, TimeUnit.MILLISECONDS);
+        executor1.scheduleAtFixedRate(myTaskSession, 0, 35, TimeUnit.SECONDS);
+        PendingIntent pending = PendingIntent.getService(getApplicationContext(), 0, new Intent(getApplicationContext(), ListenService.class),0);
+        AlarmManager alarm = (AlarmManager)getSystemService(ALARM_SERVICE);
+        alarm.setRepeating(0, 0, 6000, pending);
     }
 
     @Override

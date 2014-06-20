@@ -1,9 +1,11 @@
 package com.retor.AppLocker.Threads;
 
 import android.app.ActivityManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import com.retor.AppLocker.activitys.BlockActivity;
 import com.retor.AppLocker.interfaces.prefInterface;
 
@@ -24,12 +26,15 @@ public class MyCheckAppsThread extends Thread implements prefInterface, Runnable
     private ActivityManager am;
     private String BLOCKED;
     private String WORKED;
+    private Intent blockin;
 
     public MyCheckAppsThread(Context _context, String prefNameBlock, String prefNameWork) {
         context = _context;
         BLOCKED = prefNameBlock;
         WORKED = prefNameWork;
         am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
+/*        blockin.addFlags(PendingIntent.FLAG_CANCEL_CURRENT);
+        blockin.addFlags(ApplicationInfo.FLAG_KILL_AFTER_RESTORE);*/
     }
 
     public MyCheckAppsThread(String threadName, Context _context, String prefNameBlock, String prefNameWork) {
@@ -38,6 +43,8 @@ public class MyCheckAppsThread extends Thread implements prefInterface, Runnable
         BLOCKED = prefNameBlock;
         WORKED = prefNameWork;
         am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
+/*        blockin.addFlags(PendingIntent.FLAG_CANCEL_CURRENT);
+        blockin.addFlags(ApplicationInfo.FLAG_KILL_AFTER_RESTORE);*/
     }
 
     @Override
@@ -54,10 +61,10 @@ public class MyCheckAppsThread extends Thread implements prefInterface, Runnable
                 //Log.d("MyThread: ", app);
                 //Log.d("MyThread: ", getRunningTasks().get(0).topActivity.getClassName().toString());
                 for (RunningTaskInfo task:tasks){
-                    if (task.topActivity.getPackageName().contains(app) && (!checkUnBlockedArray(app)) && am.getRunningTasks(1).get(0).topActivity.getClassName().contains(getValue(BLOCKED, app))){
-                        //Log.d("MyThread: ", "I Find It: " + app);
+                    if (task.topActivity.getPackageName().contains(app) && (!checkUnBlockedArray(app)) && am.getRunningTasks(1).get(0).topActivity.getPackageName().contains(app)){
+                        Log.d("MyThread: ", "I Find It: " + app);
                         am.killBackgroundProcesses(app);
-                        context.startActivity(new Intent(context, BlockActivity.class).putExtra("appname", app).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                        context.startActivity(new Intent(context, BlockActivity.class).setFlags(PendingIntent.FLAG_CANCEL_CURRENT).putExtra("appname", app).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                     }
                 }
             }

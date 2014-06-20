@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.retor.AppLocker.R;
-import com.retor.AppLocker.services.ListenService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +41,6 @@ public class BlockActivity extends Activity {
         }
         Button unlock = (Button) findViewById(R.id.buttonUnlock);
         final TextView apptitle = (TextView) findViewById(R.id.appBlock);
-
         apptitle.setText(app);
         BAD_OFF = true;
         Log.d("App IN", getIntent().getStringExtra("appname"));
@@ -52,8 +50,11 @@ public class BlockActivity extends Activity {
                 Log.d("Send extra", apptitle.getText().toString());
                 BAD_OFF = false;
                 getSharedPreferences("appsunlock", MODE_MULTI_PROCESS).edit().putString(app, getPackageManager().getLaunchIntentForPackage(app).getComponent().getClassName()).commit();
-                //sendBroadcast(new Intent(NORMAL).putExtra("appname", app));
                 //startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app)));
+                //finish();
+                List<String> list = new ArrayList<String>();
+                if (!am.getRunningTasks(Integer.MAX_VALUE).contains(app))
+                startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app)).addCategory("android.intent.action.MAIN").addCategory("android.intent.category.LAUNCHER").setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP));
                 finish();
             }
         });
@@ -64,21 +65,30 @@ public class BlockActivity extends Activity {
         if (BAD_OFF) {
             Log.d("BlockActivityKilling", app);
             am.killBackgroundProcesses(app);
-        }else{
+        }
+
+        /*else{
             List<String> list = new ArrayList<String>();
             for (ActivityManager.RunningAppProcessInfo app:am.getRunningAppProcesses()){
                 list.add(app.processName);
             }
+            Intent intent = new Intent("android.intent.action.MAIN");
+            intent.addCategory("android.intent.category.LAUNCHER");
+            intent.addFlags(268435456);
+            intent.setPackage(app);
+            //getPackageManager().resolveActivity(intent, ApplicationInfo.FLAG_KILL_AFTER_RESTORE).activityInfo;
             if (!list.contains(app))
-            startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app)).setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP));
-        }
-        startService(new Intent(getApplicationContext(), ListenService.class));
+            startActivity(intent);
+            //startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app)).setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP));
+        }*/
+        //startService(new Intent(getApplicationContext(), ListenService.class));
         super.onDestroy();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        finish();
     }
 
     @Override
@@ -88,7 +98,7 @@ public class BlockActivity extends Activity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode) {
+/*        switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
                 break;
             case KeyEvent.KEYCODE_HOME:
@@ -98,7 +108,8 @@ public class BlockActivity extends Activity {
             case KeyEvent.KEYCODE_APP_SWITCH:
                 break;
         }
-        return true;
+        return true;*/
+        return false;
     }
 
     private String getValue(String key) {

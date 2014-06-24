@@ -78,7 +78,7 @@ public class LunchedAdapter extends BaseAdapter {
             try {
                 String st = appList.get(position).processName;// .importanceReasonComponent.getPackageName().toString();
                 appIcon = pm.getApplicationIcon(appList.get(position).processName);//pm.getApplicationInfo(st, PackageManager.GET_ACTIVITIES)); //.getApplicationIcon(st) ;//context.getPackageManager().getApplicationLabel(pm.getApplicationInfo(appList.get(position).toString(), PackageManager.GET_META_DATA)));
-                Log.i("Icon res", st.toString());
+                Log.d("Icon res", st.toString());
                 vh.appIcon.setImageDrawable(appIcon);
 
             } catch (PackageManager.NameNotFoundException e) {

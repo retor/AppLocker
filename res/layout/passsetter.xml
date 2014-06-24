@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/back">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Password:"
+                android:id="@+id/namePass"
+                android:textColor="#ffff2535"/>
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberPassword"
+                android:ems="10"
+                android:id="@+id/password"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#ffff48fc"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:enabled="true"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Confirmation:"
+                android:id="@+id/passConf"
+                android:textColor="#ffff253b"/>
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberPassword"
+                android:ems="10"
+                android:id="@+id/confirmation"
+                android:textColor="#fffd42ff"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:enabled="true"
+                />
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Control word:"
+                android:id="@+id/tagAnsw"
+                android:textColor="#ffff0e15"/>
+
+        <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="35dp"
+                android:id="@+id/answer"
+                android:textColor="#fffb0dff"
+                android:focusableInTouchMode="true"
+                android:focusable="true"
+                android:enabled="true"/>
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save password"
+                android:id="@+id/setPassButton"
+                android:layout_gravity="center_horizontal"
+                android:alpha="1"
+                android:background="#ff232bff"
+                android:textColor="#ffff4452"/>
+    </LinearLayout>
+
+</LinearLayout>

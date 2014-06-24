@@ -5,14 +5,17 @@ import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.*;
+import android.os.Bundle;
 import android.os.Process;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.*;
 import com.retor.AppLocker.R;
+import com.retor.AppLocker.classes.Cons;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,54 +26,74 @@ import java.util.List;
 public class BlockActivity extends Activity {
 
     public static final String NORMAL = "startServiceNormal";
-    public static final String BLOCK = "startServiceBlock";
     protected boolean BAD_OFF = false;
     protected String app;
     private ActivityManager am;
+    private PackageManager pm;
+    private ImageView ico;
+    String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.blockactivity);
+        getActionBar().hide();
+        setTheme(R.style.Theme_Base_Light);
+        SharedPreferences preferences = getSharedPreferences(Cons.APP_PREF, MODE_MULTI_PROCESS);
+        password = preferences.getString("pass", null);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        final EditText pass = (EditText)findViewById(R.id.passOnBlock);
+        ImageButton forgot = (ImageButton)findViewById(R.id.forgotButton);
+
         am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        pm = getPackageManager();
         app = getIntent().getStringExtra("appname");
-        am.killBackgroundProcesses(app);
+        ico = (ImageView) findViewById(R.id.icoapp);
+        final TextView apptitle = (TextView) findViewById(R.id.appBlock);
         int appUid = android.os.Process.myUid();
         int killUid = 0;
-
         try {
-            int killPid=0;
+            Log.d("Blocker", app);
+            ico.setImageDrawable(pm.getApplicationIcon(app));
+            apptitle.setText(pm.getApplicationInfo(app, PackageManager.GET_META_DATA).loadLabel(pm));
+            int killPid = 0;
             killUid = getPackageManager().getApplicationInfo(app, PackageManager.GET_META_DATA).uid;
-            for (ActivityManager.RunningAppProcessInfo appi:am.getRunningAppProcesses()){
-                if (appi.uid==killUid)
+            for (ActivityManager.RunningAppProcessInfo appi : am.getRunningAppProcesses()) {
+                if (appi.uid == killUid)
                     killPid = appi.pid;
             }
             if (killUid != appUid) {
                 android.os.Process.sendSignal(killUid, Process.SIGNAL_KILL);
                 android.os.Process.killProcess(killPid);
             }
+            am.killBackgroundProcesses(app);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
         Button unlock = (Button) findViewById(R.id.buttonUnlock);
-        final TextView apptitle = (TextView) findViewById(R.id.appBlock);
-        apptitle.setText(app);
         BAD_OFF = true;
         Log.d("App IN", getIntent().getStringExtra("appname"));
         unlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Send extra", apptitle.getText().toString());
-                BAD_OFF = false;
-                getSharedPreferences("appsunlock", MODE_MULTI_PROCESS).edit().putString(app, getPackageManager().getLaunchIntentForPackage(app).getComponent().getClassName()).commit();
-                //startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app)));
-                //finish();
-                List<String> list = new ArrayList<String>();
-                if (!am.getRunningTasks(Integer.MAX_VALUE).contains(app))
-                startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app))
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET));
-                finish();
+                Log.d("Send extra", app);
+                if ((pass.getText().toString()!=null) && pass.getText().toString().equals(password)) {
+                    BAD_OFF = false;
+                    getSharedPreferences("appsunlock", MODE_MULTI_PROCESS).edit().putString(app, getPackageManager().getLaunchIntentForPackage(app).getComponent().getClassName()).commit();
+                    //startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app)));
+                    //finish();
+                    List<String> list = new ArrayList<String>();
+                    if (!am.getRunningTasks(Integer.MAX_VALUE).contains(app))
+                        startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app))
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET));
+                    finish();
+                }else{
+                    Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.abc_slide_out_top);
+                    pass.setAnimation(anim);
+                    pass.animate();
+                    pass.setText("");
+                }
             }
         });
     }

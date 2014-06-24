@@ -4,6 +4,9 @@
     <entry_points version="2.0" />
   </component>
   <component name="IdProvider" IDEtalkID="8C812CF703239A6B169D3DEF8F53A5FB" />
+  <component name="ProjectPlainTextFileTypeManager">
+    <file url="file://$PROJECT_DIR$/res/drawable/keyboard.xml" />
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="Android API 19 Platform" project-jdk-type="Android SDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>

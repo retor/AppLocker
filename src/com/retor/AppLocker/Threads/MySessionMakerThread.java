@@ -14,6 +14,7 @@ import java.util.Map;
  */
 public class MySessionMakerThread extends Thread implements Runnable, prefInterface {
 
+    final String TAG_LOG = "MySessionThread: ";
     private SharedPreferences preferences;
     private Context context;
     private ArrayList<String> worked;
@@ -26,14 +27,14 @@ public class MySessionMakerThread extends Thread implements Runnable, prefInterf
     public MySessionMakerThread(Context _context, String WORKEDpref) {
         context = _context;
         WORKED = WORKEDpref;
-        am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
+        am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
     }
 
     public MySessionMakerThread(String threadName, Context _context, String WORKEDpref) {
         super(threadName);
         context = _context;
         WORKED = WORKEDpref;
-        am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
+        am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
     }
 
     @Override
@@ -43,135 +44,113 @@ public class MySessionMakerThread extends Thread implements Runnable, prefInterf
         super.run();
     }
 
-    private void makeWorkedCheck(){
-        if (worked!=null){
-            Log.d("MySessionThread: ", "Started");
-            for (String app:worked){
-                Log.d("MyThread: ", app);
-                if (checkRunning(app)){
-                    if (checkTop(app)){
-                        if (checkTimer(app)){
-                            renevTimer(app);
-                        }else{
-                            addTimer(app);
-                        }
-                    }else{
-                        if (checkTimer(app) && getTimerValue(TIMERPREF, app)>=System.currentTimeMillis()){
-                                delTimer(app);
-                                delApp(app);
-                        }
-                    }
-                }else{
-                    delApp(app);
-                    if (checkTimer(app)){
-                        delTimer(app);
-                    }
-                }
-                /*if (checkRunning(app) && checkTop(app) && checkTimer(app)){
-                    Log.d("MyThread: ", "first");
+    private void makeWorkedCheck() {
+        if (worked != null) {
+            Log.d(TAG_LOG, "Started");
+            for (String app : worked) {
+                Log.d(TAG_LOG, app);
+                if (checkRunning(app) && checkTop(app) && checkTimer(app)) {
+                    Log.d(TAG_LOG, "if app have timer");
                     renevTimer(app);
                     return;
                 }
-                if (checkRunning(app) && checkTop(app) && !checkTimer(app)){
-                    Log.d("MyThread: ", "Second");
+                if (checkRunning(app) && checkTop(app) && !checkTimer(app)) {
+                    Log.d(TAG_LOG, "if app dont have timer");
                     addTimer(app);
                     return;
                 }
-                if (checkRunning(app) && !checkTop(app) && checkTimer(app)){
-                    Log.d("MyThread: ", "3");
-                    if (getTimerValue(TIMERPREF, app)>=System.currentTimeMillis()){
+                if (checkRunning(app) && !checkTop(app) && checkTimer(app)) {
+                    Log.d(TAG_LOG, "if app not top");
+                    if (getTimerValue(TIMERPREF, app) >= System.currentTimeMillis()) {
                         delTimer(app);
                         delApp(app);
                         return;
                     }
                 }
-                if (checkRunning(app) && !checkTop(app) && !checkTimer(app)){
-                    Log.d("MyThread: ", "4");
+                if (checkRunning(app) && !checkTop(app) && !checkTimer(app)) {
+                    Log.d(TAG_LOG, "if app without timer and top");
                     delApp(app);
                     return;
                 }
-                if (!checkRunning(app)){
-                    Log.d("MyThread: ", "5");
+                if (!checkRunning(app)) {
+                    Log.d(TAG_LOG, "if app not running");
                     delApp(app);
-                    if (checkTimer(app)){
+                    if (checkTimer(app)) {
                         delTimer(app);
                     }
                     return;
-                }*/
+                }
             }
         }
     }
 
-    private boolean checkRunning(String appName){
-        for (ActivityManager.RunningTaskInfo proc:am.getRunningTasks(Integer.MAX_VALUE)){
-             if (proc.topActivity.getPackageName().contains(appName)) return true;
+    private boolean checkRunning(String appName) {
+        am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningTaskInfo proc : am.getRunningTasks(Integer.MAX_VALUE)) {
+            if (proc.topActivity.getPackageName().contains(appName)) return true;
         }
         return false;
     }
 
-    private boolean checkTop(String appName){
-        for (ActivityManager.RunningTaskInfo task:am.getRunningTasks(Integer.MAX_VALUE)){
-            if (task.topActivity.getPackageName().contains(appName) && am.getRunningTasks(1).get(0).topActivity.getPackageName().contains(appName)) return true;
+    private boolean checkTop(String appName) {
+        am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningTaskInfo task : am.getRunningTasks(Integer.MAX_VALUE)) {
+            if (task.topActivity.getPackageName().contains(appName) && am.getRunningTasks(1).get(0).topActivity.getPackageName().contains(appName))
+                return true;
         }
         return false;
     }
 
-    private boolean checkTimer(String appName){
-        if (timers!=null){
-            for (String timer:timers){
+    private boolean checkTimer(String appName) {
+        if (timers != null) {
+            for (String timer : timers) {
                 if (timer.contains(appName)) return true;
             }
         }
         return false;
     }
 
-    private void addTimer(String app){
-        long time = (System.currentTimeMillis() + ((60*1000)*5));
+    private void addTimer(String app) {
+        long time = (System.currentTimeMillis() + ((60 * 1000) * 5));
         preferences = context.getSharedPreferences(TIMERPREF, Context.MODE_MULTI_PROCESS);
         preferences.edit().putLong(app, time).commit();
         fillArray(WORKED, TIMERPREF);
     }
 
-    private void renevTimer(String app){
+    private void renevTimer(String app) {
         preferences = context.getSharedPreferences(TIMERPREF, Context.MODE_MULTI_PROCESS);
-        if (preferences.contains(app)){
+        if (preferences.contains(app)) {
             delTimer(app);
+            addTimer(app);
+        } else {
             addTimer(app);
         }
     }
 
-    private void delTimer(String app){
+    private void delTimer(String app) {
         preferences = context.getSharedPreferences(TIMERPREF, Context.MODE_MULTI_PROCESS);
-        if (timers!=null){
-            for (String timer:timers){
-                if (timer.contains(app)){
-                    timers.remove(app);
-                }
-            }
+        if (timers != null) {
+            timers.remove(app);
         }
-        if (preferences.contains(app)){
+        if (preferences.contains(app)) {
             preferences.edit().remove(app).commit();
         }
-        Log.d("MyThread: ", "RemovePref " + app);
+        Log.d(TAG_LOG, "RemovePref " + app);
     }
 
-    private void delApp(String app){
-        if (worked!=null){
-            for (String ap:worked){
-                if (ap.contains(app)){
-                    preferences = context.getSharedPreferences(WORKED, Context.MODE_MULTI_PROCESS);
-                    preferences.edit().remove(app).commit();
-                    worked.remove(ap);
-                    Log.d("MyThread: ", "Deleted " + app);
-                }
-            }
+    private void delApp(String app) {
+        if (worked != null) {
+            worked.remove(app);
+            preferences = context.getSharedPreferences(WORKED, Context.MODE_MULTI_PROCESS);
+            preferences.edit().remove(app).commit();
+            Log.d(TAG_LOG, "Deleted " + app);
         }
     }
 
-    private void fillArray(String work, String timer){
-        Log.d("MyClearThread: ", "FillArrays");
+    private void fillArray(String work, String timer) {
+        Log.d(TAG_LOG, "FillArrays");
         WORKED = work;
-        if ((preferences = context.getSharedPreferences(work, Context.MODE_MULTI_PROCESS)) != null){
+        if ((preferences = context.getSharedPreferences(work, Context.MODE_MULTI_PROCESS)) != null) {
             worked = new ArrayList<String>();
             for (Map.Entry<?, ?> val : preferences.getAll().entrySet()) {
                 Object obj = val.getKey();
@@ -181,7 +160,7 @@ public class MySessionMakerThread extends Thread implements Runnable, prefInterf
                 }
             }
         }
-        if ((preferences = context.getSharedPreferences(timer, Context.MODE_MULTI_PROCESS)) != null){
+        if ((preferences = context.getSharedPreferences(timer, Context.MODE_MULTI_PROCESS)) != null) {
             timers = new ArrayList<String>();
             for (Map.Entry<?, ?> val : preferences.getAll().entrySet()) {
                 Object obj = val.getKey();

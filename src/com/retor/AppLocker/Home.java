@@ -4,12 +4,15 @@ import android.app.ActivityManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -27,6 +30,8 @@ import com.retor.AppLocker.adapters.LunchedAdapter;
 import com.retor.AppLocker.adapters.ViewPagerAdapter;
 import com.retor.AppLocker.classes.AppInfo;
 import com.retor.AppLocker.classes.Apps;
+import com.retor.AppLocker.classes.Cons;
+import com.retor.AppLocker.fragments.DialogPassSet;
 import com.retor.AppLocker.fragments.ListApps;
 import com.retor.AppLocker.fragments.ListLunchedApps;
 import com.retor.AppLocker.services.ListenService;
@@ -68,6 +73,15 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     public void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.Theme_AppCompat_Light);
         super.onCreate(savedInstanceState);
+        FragmentManager fm = getSupportFragmentManager();
+        SharedPreferences preferences = getSharedPreferences(Cons.APP_PREF, MODE_MULTI_PROCESS);
+        preferences.edit().commit();
+        if (!preferences.getBoolean("passset", false)){
+            DialogFragment di = new DialogPassSet(getApplicationContext());
+            di.setCancelable(false);
+            di.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+            di.show(fm, "SetPass");
+        }
         getSharedPreferences("applock", MODE_MULTI_PROCESS).edit().commit();
         sendBroadcast(new Intent().setAction(BlockActivity.NORMAL));
 

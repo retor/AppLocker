@@ -21,13 +21,9 @@ public class ListenService extends Service {
 
     final String ALL = "applock";
     final String UNLOCK = "appsunlock";
-
+    final String TAG = "ListenService";
     ScheduledExecutorService executor;
     ScheduledExecutorService executor1;
-    MyCheckAppsThread myTaskBlock;
-    MySessionMakerThread myTaskSession;
-
-    String TAG = "ListenService";
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -37,28 +33,21 @@ public class ListenService extends Service {
     @Override
     public void onDestroy() {
         executor.shutdown();
+        executor1.shutdown();
         Log.d(TAG, "Closed");
-        startService(new Intent(getApplicationContext(), ListenService.class));
         super.onDestroy();
+        startService(new Intent(getApplicationContext(), ListenService.class));
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-/*        myTaskBlock = new MyCheckAppsThread(getApplicationContext(), ALL, UNLOCK);
-        myTaskSession = new MySessionMakerThread(getApplicationContext(), UNLOCK);
-        myTaskBlock.setPriority(Thread.MAX_PRIORITY);
-        myTaskBlock.setName("AppsChecker");
-        myTaskBlock.setDaemon(true);
-        myTaskSession.setPriority(Thread.MAX_PRIORITY);
-        myTaskSession.setName("AppsSessions");
-        myTaskSession.setDaemon(true);*/
         executor = Executors.newScheduledThreadPool(1);
         executor1 = Executors.newScheduledThreadPool(1);
         executor.scheduleAtFixedRate(new MyCheckAppsThread(getApplicationContext(), ALL, UNLOCK), 5, 50, TimeUnit.MILLISECONDS);
-        executor1.scheduleAtFixedRate(new MySessionMakerThread(getApplicationContext(), UNLOCK), 0, 35, TimeUnit.SECONDS);
-        PendingIntent pending = PendingIntent.getService(getApplicationContext(), 0, new Intent(getApplicationContext(), ListenService.class),0);
-        AlarmManager alarm = (AlarmManager)getSystemService(ALARM_SERVICE);
+        executor1.scheduleAtFixedRate(new MySessionMakerThread(getApplicationContext(), UNLOCK), 5, 25, TimeUnit.SECONDS);
+        PendingIntent pending = PendingIntent.getService(getApplicationContext(), 0, new Intent(getApplicationContext(), ListenService.class), 0);
+        AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
         Calendar cal = Calendar.getInstance();
         alarm.setRepeating(0, cal.getTimeInMillis(), 6000, pending);
     }

@@ -57,10 +57,12 @@
     <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher"
+            android:src="@android:drawable/stat_notify_error"
             android:id="@+id/forgotButton"
-            android:layout_below="@+id/buttonUnlock"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/buttonUnlock"
+            android:layout_toRightOf="@+id/passOnBlock"
+            />
 
 </RelativeLayout>

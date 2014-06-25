@@ -1,12 +1,14 @@
 package com.retor.AppLocker.activites;
 
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Process;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.*;
 import com.retor.AppLocker.R;
 import com.retor.AppLocker.classes.Cons;
+import com.retor.AppLocker.fragments.DialogForgot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +26,7 @@ import java.util.List;
 /**
  * Created by Антон on 30.05.2014.
  */
-public class BlockActivity extends Activity {
+public class BlockActivity extends FragmentActivity {
 
     public static final String NORMAL = "startServiceNormal";
     protected boolean BAD_OFF = false;
@@ -32,6 +35,7 @@ public class BlockActivity extends Activity {
     private PackageManager pm;
     private ImageView ico;
     String password;
+    FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +44,24 @@ public class BlockActivity extends Activity {
         getActionBar().hide();
         setTheme(R.style.Theme_Base_Light);
         SharedPreferences preferences = getSharedPreferences(Cons.APP_PREF, MODE_MULTI_PROCESS);
-        password = preferences.getString("pass", null);
+        password = preferences.getString(Cons.APP_PREF_PASS, null);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         final EditText pass = (EditText)findViewById(R.id.passOnBlock);
+        pass.requestFocus();
         ImageButton forgot = (ImageButton)findViewById(R.id.forgotButton);
-
+        fm = getSupportFragmentManager();
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment di = new DialogForgot(getApplicationContext(), Cons.MODE_FORGOT);
+                di.setCancelable(true);
+                di.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+                di.show(fm, "SetPass");
+            }
+        });
         am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         pm = getPackageManager();
-        app = getIntent().getStringExtra("appname");
+        app = getIntent().getStringExtra(Cons.APPS_NAME);
         ico = (ImageView) findViewById(R.id.icoapp);
         final TextView apptitle = (TextView) findViewById(R.id.appBlock);
         int appUid = android.os.Process.myUid();
@@ -72,14 +86,14 @@ public class BlockActivity extends Activity {
         }
         Button unlock = (Button) findViewById(R.id.buttonUnlock);
         BAD_OFF = true;
-        Log.d("App IN", getIntent().getStringExtra("appname"));
+        Log.d("App IN", getIntent().getStringExtra(Cons.APPS_NAME));
         unlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("Send extra", app);
                 if ((pass.getText().toString()!=null) && pass.getText().toString().equals(password)) {
                     BAD_OFF = false;
-                    getSharedPreferences("appsunlock", MODE_MULTI_PROCESS).edit().putString(app, getPackageManager().getLaunchIntentForPackage(app).getComponent().getClassName()).commit();
+                    getSharedPreferences(Cons.APPS_UNLOCK, MODE_MULTI_PROCESS).edit().putString(app, getPackageManager().getLaunchIntentForPackage(app).getComponent().getClassName()).commit();
                     //startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app)));
                     //finish();
                     List<String> list = new ArrayList<String>();
@@ -104,22 +118,6 @@ public class BlockActivity extends Activity {
             Log.d("BlockActivityKilling", app);
             am.killBackgroundProcesses(app);
         }
-
-        /*else{
-            List<String> list = new ArrayList<String>();
-            for (ActivityManager.RunningAppProcessInfo app:am.getRunningAppProcesses()){
-                list.add(app.processName);
-            }
-            Intent intent = new Intent("android.intent.action.MAIN");
-            intent.addCategory("android.intent.category.LAUNCHER");
-            intent.addFlags(268435456);
-            intent.setPackage(app);
-            //getPackageManager().resolveActivity(intent, ApplicationInfo.FLAG_KILL_AFTER_RESTORE).activityInfo;
-            if (!list.contains(app))
-            startActivity(intent);
-            //startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app)).setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP));
-        }*/
-        //startService(new Intent(getApplicationContext(), ListenService.class));
         super.onDestroy();
     }
 
@@ -153,9 +151,13 @@ public class BlockActivity extends Activity {
     private String getValue(String key) {
         SharedPreferences preferences;
         String out = null;
-        if ((preferences = getSharedPreferences("applock", MODE_MULTI_PROCESS)) != null) {
+        if ((preferences = getSharedPreferences(Cons.APPS_LOCK, MODE_MULTI_PROCESS)) != null) {
             out = preferences.getString(key, key);
         }
         return out;
+    }
+
+    public void renevPassword(){
+        password = getSharedPreferences(Cons.APP_PREF, MODE_MULTI_PROCESS).getString(Cons.APP_PREF_PASS, null);
     }
 }

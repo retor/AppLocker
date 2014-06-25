@@ -22,6 +22,7 @@ import android.widget.ListAdapter;
 import android.widget.Toast;
 import com.retor.AppLocker.R;
 import com.retor.AppLocker.classes.Apps;
+import com.retor.AppLocker.classes.Cons;
 
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class ListApps extends ListFragment implements OnItemClickListener {
         getListView().setOnItemClickListener(this);
         getListView().setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         ListAdapter adapt = getListAdapter();
-        SharedPreferences pref = context.getSharedPreferences("applock", Context.MODE_MULTI_PROCESS);
+        SharedPreferences pref = context.getSharedPreferences(Cons.APPS_LOCK, Context.MODE_MULTI_PROCESS);
         if (pref != null)
             for (int i = 0; i < adapt.getCount(); i++) {
                 Apps checker = (Apps) adapt.getItem(i);
@@ -73,7 +74,7 @@ public class ListApps extends ListFragment implements OnItemClickListener {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Apps tmpApps = (Apps) parent.getItemAtPosition(position);
-        SharedPreferences preferences = context.getSharedPreferences("applock", Context.MODE_MULTI_PROCESS);
+        SharedPreferences preferences = context.getSharedPreferences(Cons.APPS_LOCK, Context.MODE_MULTI_PROCESS);
         //ActivityManager am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
         PackageManager pm = context.getPackageManager();
         String act = null;

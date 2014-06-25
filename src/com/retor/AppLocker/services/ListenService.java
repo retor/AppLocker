@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.util.Log;
 import com.retor.AppLocker.Threads.MyCheckAppsThread;
 import com.retor.AppLocker.Threads.MySessionMakerThread;
+import com.retor.AppLocker.classes.Cons;
 
 import java.util.Calendar;
 import java.util.concurrent.Executors;
@@ -19,8 +20,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class ListenService extends Service {
 
-    final String ALL = "applock";
-    final String UNLOCK = "appsunlock";
+    final String ALL = Cons.APPS_LOCK;
+    final String UNLOCK = Cons.APPS_UNLOCK;
     final String TAG = "ListenService";
     ScheduledExecutorService executor;
     ScheduledExecutorService executor1;
@@ -42,6 +43,7 @@ public class ListenService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        startService(new Intent(this, NotificationListener.class));
         executor = Executors.newScheduledThreadPool(1);
         executor1 = Executors.newScheduledThreadPool(1);
         executor.scheduleAtFixedRate(new MyCheckAppsThread(getApplicationContext(), ALL, UNLOCK), 5, 50, TimeUnit.MILLISECONDS);

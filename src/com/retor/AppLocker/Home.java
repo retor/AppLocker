@@ -31,6 +31,7 @@ import com.retor.AppLocker.adapters.ViewPagerAdapter;
 import com.retor.AppLocker.classes.AppInfo;
 import com.retor.AppLocker.classes.Apps;
 import com.retor.AppLocker.classes.Cons;
+import com.retor.AppLocker.fragments.DialogForgot;
 import com.retor.AppLocker.fragments.DialogPassSet;
 import com.retor.AppLocker.fragments.ListApps;
 import com.retor.AppLocker.fragments.ListLunchedApps;
@@ -76,13 +77,15 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         FragmentManager fm = getSupportFragmentManager();
         SharedPreferences preferences = getSharedPreferences(Cons.APP_PREF, MODE_MULTI_PROCESS);
         preferences.edit().commit();
-        if (!preferences.getBoolean("passset", false)){
+        if (!preferences.getBoolean(Cons.APP_PREF_PASS_SET, false)){
             DialogFragment di = new DialogPassSet(getApplicationContext());
             di.setCancelable(false);
             di.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
             di.show(fm, "SetPass");
+        }else{
+           // startActivity(new Intent(this, BlockActivity.class).putExtra(Cons.APPS_NAME, getPackageName()));
         }
-        getSharedPreferences("applock", MODE_MULTI_PROCESS).edit().commit();
+        getSharedPreferences(Cons.APPS_LOCK, MODE_MULTI_PROCESS).edit().commit();
         sendBroadcast(new Intent().setAction(BlockActivity.NORMAL));
 
         //set first parameters
@@ -219,9 +222,11 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
                 Toast.makeText(context, "Menu 2", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.textView3:
+                createDialog(Cons.MODE_NEW_WORD);
                 Toast.makeText(context, "Menu 3", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.textView4:
+                createDialog(Cons.MODE_NEW_PASS);
                 Toast.makeText(context, "Menu 4", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -244,7 +249,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     private void initSlidingMenu() {
         //SlidingMenu
         sm = new SlidingMenu(getApplicationContext());
-        sm.setBehindWidth(200);
+        sm.setBehindWidth(350);
         sm.setMenu(R.layout.slidingmenu);
         sm.setMode(SlidingMenu.LEFT);
         sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
@@ -323,6 +328,13 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
             appInfos = getListAppInfo(am.getRunningAppProcesses());
             return null;
         }
+    }
+
+    private void createDialog(int mode){
+        DialogFragment di = new DialogForgot(getApplicationContext(), mode);
+        di.setCancelable(false);
+        di.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        di.show(getSupportFragmentManager(), "SetPass");
     }
 }
 

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import com.retor.AppLocker.activites.BlockActivity;
+import com.retor.AppLocker.classes.Cons;
 import com.retor.AppLocker.interfaces.prefInterface;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import static android.app.ActivityManager.RunningTaskInfo;
 /**
  * Created by Антон on 17.06.2014.
  */
-public class MyCheckAppsThread extends Thread implements prefInterface, Runnable {
+public class MyCheckAppsThread implements prefInterface, Runnable {
     private SharedPreferences preferences;
     private Context context;
     private ArrayList<String> blocked;
@@ -36,7 +37,6 @@ public class MyCheckAppsThread extends Thread implements prefInterface, Runnable
     }
 
     public MyCheckAppsThread(String threadName, Context _context, String prefNameBlock, String prefNameWork) {
-        super(threadName);
         context = _context;
         BLOCKED = prefNameBlock;
         WORKED = prefNameWork;
@@ -60,7 +60,7 @@ public class MyCheckAppsThread extends Thread implements prefInterface, Runnable
                     if (task.topActivity.getPackageName().contains(app) && (!checkUnBlockedArray(app)) && am.getRunningTasks(1).get(0).topActivity.getPackageName().contains(app)) {
                         Log.d("MyThread: ", "I Find It: " + app);
                         //am.killBackgroundProcesses(app);
-                        context.startActivity(new Intent(context, BlockActivity.class).setFlags(PendingIntent.FLAG_CANCEL_CURRENT).putExtra("appname", app).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                        context.startActivity(new Intent(context, BlockActivity.class).setFlags(PendingIntent.FLAG_CANCEL_CURRENT).putExtra(Cons.APPS_NAME, app).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                     }
                 }
             }

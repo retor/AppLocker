@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by Антон on 19.06.2014.
  */
-public class MySessionMakerThread extends Thread implements Runnable, prefInterface {
+public class MySessionMakerThread implements Runnable, prefInterface {
 
     final String TAG_LOG = "MySessionThread: ";
     private SharedPreferences preferences;
@@ -31,7 +31,6 @@ public class MySessionMakerThread extends Thread implements Runnable, prefInterf
     }
 
     public MySessionMakerThread(String threadName, Context _context, String WORKEDpref) {
-        super(threadName);
         context = _context;
         WORKED = WORKEDpref;
         am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -41,7 +40,6 @@ public class MySessionMakerThread extends Thread implements Runnable, prefInterf
     public void run() {
         fillArray(WORKED, TIMERPREF);
         makeWorkedCheck();
-        super.run();
     }
 
     private void makeWorkedCheck() {

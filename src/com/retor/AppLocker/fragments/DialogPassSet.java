@@ -63,7 +63,7 @@ public class DialogPassSet extends DialogFragment {
     private void savePassword(String pass, String answer){
         SharedPreferences preferences = context.getSharedPreferences(Cons.APP_PREF, Context.MODE_MULTI_PROCESS);
         if (pass!=null && answer!=null) {
-            preferences.edit().putString("pass", pass).putString("answer", answer).putBoolean("passset", true).commit();
+            preferences.edit().putString(Cons.APP_PREF_PASS, pass).putString(Cons.APP_PREF_WORD, answer).putBoolean(Cons.APP_PREF_PASS_SET, true).commit();
         }else{
             Toast.makeText(context, "Not correct", Toast.LENGTH_SHORT).show();
         }

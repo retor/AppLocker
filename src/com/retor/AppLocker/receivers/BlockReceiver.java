@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import com.retor.AppLocker.activites.BlockActivity;
+import com.retor.AppLocker.classes.Cons;
 import com.retor.AppLocker.services.ListenService;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class BlockReceiver extends BroadcastReceiver {
 
     private void startBlockActivity(String appname, Context cont) {
         Intent block = new Intent(cont, BlockActivity.class);
-        block.putExtra("appname", appname);
+        block.putExtra(Cons.APPS_NAME, appname);
         block.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         cont.startActivity(block);
     }
@@ -49,7 +50,7 @@ public class BlockReceiver extends BroadcastReceiver {
     private void startBlockService(String appname, Context cont) {
         Intent service = new Intent(cont, ListenService.class);
         if (appname != null) {
-            service.putExtra("appname", appname);
+            service.putExtra(Cons.APPS_NAME, appname);
         }
         cont.startService(service);
     }

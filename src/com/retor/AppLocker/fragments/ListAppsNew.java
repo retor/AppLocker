@@ -47,7 +47,7 @@ public class ListAppsNew extends ListFragment implements OnItemClickListener {
         if (pref != null)
             for (int i = 0; i < adapt.getCount(); i++) {
                 AppsToBlock checker = (AppsToBlock) adapt.getItem(i);
-                if (pref.getString(checker.activityInfo.packageName, null) != null)
+                if (pref.getString(checker.activityInfo.applicationInfo.packageName, null) != null)
                     checker.setCheck(true);
                 if (checker.isCheck())
                     getListView().setItemChecked(i, true);
@@ -73,7 +73,7 @@ public class ListAppsNew extends ListFragment implements OnItemClickListener {
             tmpApps.setCheck(true);
             createDialog(tmpApps, context);
             vibration(context, 1);
-            String act = tmpApps.activityInfo.packageName;
+            String act = tmpApps.activityInfo.name;
             if (!preferences.contains(tmpApps.activityInfo.applicationInfo.packageName))
                 preferences.edit().putString(tmpApps.activityInfo.applicationInfo.packageName, act).commit();
             Toast.makeText(context, "+", Toast.LENGTH_SHORT).show();

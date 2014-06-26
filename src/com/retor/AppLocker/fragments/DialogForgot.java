@@ -308,6 +308,13 @@ public class DialogForgot extends DialogFragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 String input = oldpassword.getText().toString();
+                if (input.length()==passSaved.length()){
+                    if (passSaved.equals(input)) {
+                        dismiss();
+                    } else {
+                        oldpassword.setText("");
+                    }
+                }
                 if ((keyCode == EditorInfo.IME_ACTION_DONE || keyCode == EditorInfo.IME_ACTION_GO || keyCode == EditorInfo.IME_ACTION_NEXT || keyCode == EditorInfo.IME_ACTION_SEARCH || keyCode == EditorInfo.IME_ACTION_SEND || event.getAction() == KeyEvent.ACTION_DOWN) &&
                         event.getKeyCode() == KeyEvent.KEYCODE_ENTER || event.getKeyCode() == KeyEvent.KEYCODE_BUTTON_L1 || event.getKeyCode() == KeyEvent.KEYCODE_SEARCH) {
                     if (passSaved.equals(input)) {

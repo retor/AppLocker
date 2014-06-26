@@ -81,7 +81,11 @@ public class ListAppsAdapter extends BaseAdapter {
             appOtherStr = tests.get(position).applicationInfo.processName.toString();
             appIco = tests.get(position).applicationInfo.loadIcon(pm);
         } else {
-            appNameStr =appList.get(position).activityInfo.loadLabel(pm).toString();
+            if (appList.get(position).isPack()){
+                appNameStr =appList.get(position).getPackApps();
+            }else{
+                appNameStr =appList.get(position).activityInfo.loadLabel(pm).toString();
+            }
             appOtherStr = appList.get(position).activityInfo.processName.toString();
             appIco = appList.get(position).loadIcon(pm);
         }

@@ -9,6 +9,8 @@ import java.io.Serializable;
  */
 public class AppsToBlock extends ResolveInfo implements Serializable {
     private boolean check;
+    private boolean pack;
+    private String packApps;
 
     public AppsToBlock(){
         check = false;
@@ -27,6 +29,7 @@ public class AppsToBlock extends ResolveInfo implements Serializable {
         icon = orig.icon;
         resolvePackageName = orig.resolvePackageName;
         check = false;
+        pack = false;
     }
 
     public boolean isCheck() {
@@ -36,4 +39,13 @@ public class AppsToBlock extends ResolveInfo implements Serializable {
     public void setCheck(boolean check) {
         this.check = check;
     }
+
+    public boolean isPack() {return pack;}
+
+    public void setPack(boolean _pack, String packIn){
+        pack = _pack;
+        packApps = packIn;
+    }
+
+    public String getPackApps(){return packApps;}
 }

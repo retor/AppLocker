@@ -1,5 +1,6 @@
 package com.retor.AppLocker;
 
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -10,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -325,7 +327,8 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
             fragments.add(3, listApps);
             pager.setAdapter(vpa);
             pd.dismiss();
-            getStringToBar(0);
+            TextView textView = (TextView) findViewById(R.id.item1);
+            textView.setText(getStringToBar(0));
             super.onPostExecute(aVoid);
         }
 
@@ -346,8 +349,10 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         di.show(getSupportFragmentManager(), title);
     }
 
+
     private ArrayList<AppsToBlock> createAppList(){
         ArrayList<AppsToBlock> out = new ArrayList<AppsToBlock>();
+
         Intent filterIntent = new Intent(Intent.ACTION_MAIN);
         filterIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         ArrayList<ResolveInfo> appsFiltered = new ArrayList<ResolveInfo>();
@@ -358,6 +363,21 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
             out.add(app);
         }
         return out;
+    }
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    private void clearAppList(ArrayList<ResolveInfo> appsFiltered, ArrayList<AppsToBlock> out){
+        for (AppsToBlock app:out){
+            String pack = null;
+            for (int i=0; i<appsFiltered.size(); i++){
+                ResolveInfo info = new ResolveInfo(appsFiltered.get(i));
+                if (info.activityInfo.name.equals(app.activityInfo.name) && (!info.loadLabel(pm).toString().equals(app.loadLabel(pm)))){
+                    pack = pack + app.loadLabel(pm).toString()+" ";
+                    appsFiltered.remove(i);
+                    out.remove(i);
+                }
+            }
+            app.setPack(true,pack);
+        }
     }
 }
 

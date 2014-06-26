@@ -15,13 +15,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import com.retor.AppLocker.R;
 import com.retor.AppLocker.classes.Cons;
 import com.retor.AppLocker.fragments.DialogForgot;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Антон on 30.05.2014.
@@ -84,9 +82,39 @@ public class BlockActivity extends FragmentActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        Button unlock = (Button) findViewById(R.id.buttonUnlock);
+        final Button unlock = (Button) findViewById(R.id.buttonUnlock);
         BAD_OFF = true;
         Log.d("App IN", getIntent().getStringExtra(Cons.APPS_NAME));
+        pass.setOnKeyListener(new View.OnKeyListener() {
+
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                String input = pass.getText().toString();
+                if (input.length()==password.length()){
+                    if (password.equals(input)) {
+                        BAD_OFF = false;
+                        getSharedPreferences(Cons.APPS_UNLOCK, MODE_MULTI_PROCESS).edit().putString(app, getPackageManager().getLaunchIntentForPackage(app).getComponent().getClassName()).commit();
+                        if (!am.getRunningTasks(Integer.MAX_VALUE).contains(app)) {
+                            startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app))
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET));
+                        }
+                        finish();
+                    } else {
+                        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.abc_slide_out_top);
+                        pass.setAnimation(anim);
+                        pass.animate();
+                        pass.setText("");
+                    }
+                    return true;
+                }
+                if ((keyCode == EditorInfo.IME_ACTION_DONE || keyCode == EditorInfo.IME_ACTION_GO || keyCode == EditorInfo.IME_ACTION_NEXT || keyCode == EditorInfo.IME_ACTION_SEARCH || keyCode == EditorInfo.IME_ACTION_SEND || event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        event.getKeyCode() == KeyEvent.KEYCODE_ENTER || event.getKeyCode() == KeyEvent.KEYCODE_BUTTON_L1 || event.getKeyCode() == KeyEvent.KEYCODE_SEARCH) {
+                    unlock.callOnClick();
+                }
+                return false;
+            }
+        });
         unlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,13 +122,11 @@ public class BlockActivity extends FragmentActivity {
                 if ((pass.getText().toString()!=null) && pass.getText().toString().equals(password)) {
                     BAD_OFF = false;
                     getSharedPreferences(Cons.APPS_UNLOCK, MODE_MULTI_PROCESS).edit().putString(app, getPackageManager().getLaunchIntentForPackage(app).getComponent().getClassName()).commit();
-                    //startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app)));
-                    //finish();
-                    List<String> list = new ArrayList<String>();
-                    if (!am.getRunningTasks(Integer.MAX_VALUE).contains(app))
-                        startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app))
-                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET));
+                           if (!am.getRunningTasks(Integer.MAX_VALUE).contains(app)) {
+                                startActivity(new Intent(getPackageManager().getLaunchIntentForPackage(app))
+                                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET));
+                            }
                     finish();
                 }else{
                     Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.abc_slide_out_top);
@@ -144,8 +170,9 @@ public class BlockActivity extends FragmentActivity {
             case KeyEvent.KEYCODE_APP_SWITCH:
                 break;
         }
-        return true;*/
-        return false;
+
+        return false;*/
+        return true;
     }
 
     private String getValue(String key) {

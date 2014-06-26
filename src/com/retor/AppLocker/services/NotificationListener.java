@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
+import android.widget.Toast;
 import com.retor.AppLocker.classes.Cons;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class NotificationListener extends AccessibilityService {
     public void onAccessibilityEvent(AccessibilityEvent event) {
         fillArray();
         if (event.getEventType() == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED){
+            Toast.makeText(getApplicationContext(), event.getPackageName().toString(), Toast.LENGTH_SHORT).show();
             if (blocked!=null && event.getPackageName()!=null){
                 for (String app:blocked){
                     if (app.contains(event.getPackageName().toString())){

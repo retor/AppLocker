@@ -42,6 +42,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                 return "bootUp";
             case 2:
                 return "lunchedApps";
+            case 3:
+                return "Testik";
             default:
                 return null;
         }

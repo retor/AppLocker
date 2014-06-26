@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,14 +31,16 @@ import com.retor.AppLocker.adapters.LunchedAdapter;
 import com.retor.AppLocker.adapters.ViewPagerAdapter;
 import com.retor.AppLocker.classes.AppInfo;
 import com.retor.AppLocker.classes.Apps;
+import com.retor.AppLocker.classes.AppsToBlock;
 import com.retor.AppLocker.classes.Cons;
 import com.retor.AppLocker.fragments.DialogForgot;
-import com.retor.AppLocker.fragments.DialogPassSet;
 import com.retor.AppLocker.fragments.ListApps;
+import com.retor.AppLocker.fragments.ListAppsNew;
 import com.retor.AppLocker.fragments.ListLunchedApps;
 import com.retor.AppLocker.services.ListenService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static android.app.ActivityManager.RunningAppProcessInfo;
@@ -56,9 +59,11 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     private ListApps listApps;
     private ListApps listAppsAuto;
     private ListLunchedApps listTasks;
+    private ListAppsNew listik;
     //arrays
-    private List<PackageInfo> appList;
-    private List<PackageInfo> appListAuto;
+    private ArrayList<AppsToBlock> listApss;
+    private ArrayList<Apps> testArray;
+    private ArrayList<Apps> testArray1;
     private ArrayList<AppInfo> appInfos; //my class
     //other
     private PackageManager pm;
@@ -67,8 +72,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     private Typeface tf;
     private android.support.v7.app.ActionBar actionBar;
     //tests
-    private ArrayList<Apps> testArray;
-    private ArrayList<Apps> testArray1;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,12 +82,9 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         SharedPreferences preferences = getSharedPreferences(Cons.APP_PREF, MODE_MULTI_PROCESS);
         preferences.edit().commit();
         if (!preferences.getBoolean(Cons.APP_PREF_PASS_SET, false)){
-            DialogFragment di = new DialogPassSet(getApplicationContext());
-            di.setCancelable(false);
-            di.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
-            di.show(fm, "SetPass");
+            createDialog(Cons.MODE_NEW_PASSWORD, false, "First set");
         }else{
-           // startActivity(new Intent(this, BlockActivity.class).putExtra(Cons.APPS_NAME, getPackageName()));
+            createDialog(Cons.MODE_AUTH_APP, false, "Auth app");
         }
         getSharedPreferences(Cons.APPS_LOCK, MODE_MULTI_PROCESS).edit().commit();
         sendBroadcast(new Intent().setAction(BlockActivity.NORMAL));
@@ -106,9 +107,11 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         initSlidingMenu();
 
         //create/init fragments
+        listik = new ListAppsNew();
         listApps = new ListApps();
         listAppsAuto = new ListApps();
         listTasks = new ListLunchedApps();
+        listApss = new ArrayList<AppsToBlock>();
         testArray = new ArrayList<Apps>();
         testArray1 = new ArrayList<Apps>();
         appInfos = new ArrayList<AppInfo>();
@@ -222,11 +225,11 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
                 Toast.makeText(context, "Menu 2", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.textView3:
-                createDialog(Cons.MODE_NEW_WORD);
+                createDialog(Cons.MODE_NEW_WORD, true, "new word");
                 Toast.makeText(context, "Menu 3", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.textView4:
-                createDialog(Cons.MODE_NEW_PASS);
+                createDialog(Cons.MODE_NEW_PASS, true, "new password");
                 Toast.makeText(context, "Menu 4", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -249,7 +252,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     private void initSlidingMenu() {
         //SlidingMenu
         sm = new SlidingMenu(getApplicationContext());
-        sm.setBehindWidth(350);
+        sm.setBehindWidth(450);
         sm.setMenu(R.layout.slidingmenu);
         sm.setMode(SlidingMenu.LEFT);
         sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
@@ -285,11 +288,13 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     public String getStringToBar(int i) {
         switch (i) {
             case 0:
-                return String.valueOf(testArray.size());
+                return String.valueOf(listApss.size());
             case 1:
                 return String.valueOf(testArray1.size());
             case 2:
                 return String.valueOf(appInfos.size());
+            case 3:
+                return String.valueOf(testArray.size());
         }
         return null;
     }
@@ -309,20 +314,24 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         @Override
         protected void onPostExecute(Void aVoid) {
             //create/set adapters for fragments
+            listik.setListAdapter(new ListAppsAdapter(getApplicationContext(), listApss, R.layout.app, pm));
             listApps.setListAdapter(new ListAppsAdapter(getApplicationContext(), testArray, R.layout.app, pm));
             listAppsAuto.setListAdapter(new ListAppsAdapter(getApplicationContext(), testArray1, R.layout.app, pm));
             listTasks.setListAdapter(new LunchedAdapter(pm, context, appInfos, R.layout.app));
             //fill viewpager
-            fragments.add(0, listApps);
+            fragments.add(0, listik);
             fragments.add(1, listAppsAuto);
             fragments.add(2, listTasks);
+            fragments.add(3, listApps);
             pager.setAdapter(vpa);
             pd.dismiss();
+            getStringToBar(0);
             super.onPostExecute(aVoid);
         }
 
         @Override
         protected Void doInBackground(Void... params) {
+            listApss = createAppList();
             testArray = makeApps(getAppList());
             testArray1 = makeApps(catchAutoRun(getAppList()));
             appInfos = getListAppInfo(am.getRunningAppProcesses());
@@ -330,11 +339,25 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         }
     }
 
-    private void createDialog(int mode){
+    private void createDialog(int mode, boolean cancelable, String title){
         DialogFragment di = new DialogForgot(getApplicationContext(), mode);
-        di.setCancelable(false);
+        di.setCancelable(cancelable);
         di.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
-        di.show(getSupportFragmentManager(), "SetPass");
+        di.show(getSupportFragmentManager(), title);
+    }
+
+    private ArrayList<AppsToBlock> createAppList(){
+        ArrayList<AppsToBlock> out = new ArrayList<AppsToBlock>();
+        Intent filterIntent = new Intent(Intent.ACTION_MAIN);
+        filterIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        ArrayList<ResolveInfo> appsFiltered = new ArrayList<ResolveInfo>();
+        appsFiltered = (ArrayList<ResolveInfo>)pm.queryIntentActivities(filterIntent, PackageManager.GET_RESOLVED_FILTER);
+        Collections.sort(appsFiltered, new ResolveInfo.DisplayNameComparator(pm));
+        for (ResolveInfo info:appsFiltered){
+            AppsToBlock app = new AppsToBlock(info);
+            out.add(app);
+        }
+        return out;
     }
 }
 

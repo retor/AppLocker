@@ -30,8 +30,6 @@ public class DialogForgot extends DialogFragment {
     EditText answer;
     private int MODE;
     //MODE 1-forgot 2-change//
-    String pass;
-    String conf;
     SharedPreferences preferences;
     private String passSaved;
     private String wordSaved;
@@ -59,6 +57,12 @@ public class DialogForgot extends DialogFragment {
         }
         if (MODE==Cons.MODE_NEW_WORD){
             ifChangeWord();
+        }
+        if (MODE==Cons.MODE_AUTH_APP){
+            ifAuth();
+        }
+        if (MODE==Cons.MODE_NEW_PASSWORD){
+            ifNewPassword();
         }
         return v;
     }
@@ -132,6 +136,8 @@ public class DialogForgot extends DialogFragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((keyCode == EditorInfo.IME_ACTION_DONE || keyCode == EditorInfo.IME_ACTION_GO || keyCode == EditorInfo.IME_ACTION_NEXT || keyCode == EditorInfo.IME_ACTION_SEARCH || keyCode == EditorInfo.IME_ACTION_SEND || event.getAction() == KeyEvent.ACTION_DOWN)&&
                         event.getKeyCode() == KeyEvent.KEYCODE_ENTER ||  event.getKeyCode() == KeyEvent.KEYCODE_BUTTON_L1 ||  event.getKeyCode() == KeyEvent.KEYCODE_SEARCH){
+                    String pass;
+                    String conf;
                     conf = confirmpassword.getText().toString();
                     pass = newpassword.getText().toString();
                     if (checkPassConfirm(pass, conf)){
@@ -191,6 +197,8 @@ public class DialogForgot extends DialogFragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((keyCode == EditorInfo.IME_ACTION_DONE || keyCode == EditorInfo.IME_ACTION_GO || keyCode == EditorInfo.IME_ACTION_NEXT || keyCode == EditorInfo.IME_ACTION_SEARCH || keyCode == EditorInfo.IME_ACTION_SEND || event.getAction() == KeyEvent.ACTION_DOWN)&&
                         event.getKeyCode() == KeyEvent.KEYCODE_ENTER ||  event.getKeyCode() == KeyEvent.KEYCODE_BUTTON_L1 ||  event.getKeyCode() == KeyEvent.KEYCODE_SEARCH){
+                    String pass;
+                    String conf;
                     conf = confirmpassword.getText().toString();
                     pass = newpassword.getText().toString();
                     if (checkPassConfirm(pass, conf)){
@@ -272,6 +280,8 @@ public class DialogForgot extends DialogFragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((keyCode == EditorInfo.IME_ACTION_DONE || keyCode == EditorInfo.IME_ACTION_GO || keyCode == EditorInfo.IME_ACTION_NEXT || keyCode == EditorInfo.IME_ACTION_SEARCH || keyCode == EditorInfo.IME_ACTION_SEND || event.getAction() == KeyEvent.ACTION_DOWN)&&
                         event.getKeyCode() == KeyEvent.KEYCODE_ENTER ||  event.getKeyCode() == KeyEvent.KEYCODE_BUTTON_L1 ||  event.getKeyCode() == KeyEvent.KEYCODE_SEARCH){
+                    String pass;
+                    String conf;
                     conf = confirmpassword.getText().toString();
                     pass = newpassword.getText().toString();
                     if (pass.equals(conf)){
@@ -290,9 +300,87 @@ public class DialogForgot extends DialogFragment {
         });
     }
 
-    @Override
-    public void dismiss() {
-        super.dismiss();
+    private void ifAuth(){
+        old.setText("Enter password");
+        old.setVisibility(View.VISIBLE);
+        oldpassword.setVisibility(View.VISIBLE);
+        oldpassword.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                String input = oldpassword.getText().toString();
+                if ((keyCode == EditorInfo.IME_ACTION_DONE || keyCode == EditorInfo.IME_ACTION_GO || keyCode == EditorInfo.IME_ACTION_NEXT || keyCode == EditorInfo.IME_ACTION_SEARCH || keyCode == EditorInfo.IME_ACTION_SEND || event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        event.getKeyCode() == KeyEvent.KEYCODE_ENTER || event.getKeyCode() == KeyEvent.KEYCODE_BUTTON_L1 || event.getKeyCode() == KeyEvent.KEYCODE_SEARCH) {
+                    if (passSaved.equals(input)) {
+                        dismiss();
+                    } else {
+                        oldpassword.setText("");
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
+    }
+
+    private void ifNewPassword(){
+        anshint.setText("Enter security word");
+        anshint.setVisibility(View.VISIBLE);
+        answer.setVisibility(View.VISIBLE);
+        answer.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                String input = answer.getText().toString();
+                if ((keyCode == EditorInfo.IME_ACTION_DONE || keyCode == EditorInfo.IME_ACTION_GO || keyCode == EditorInfo.IME_ACTION_NEXT || keyCode == EditorInfo.IME_ACTION_SEARCH || keyCode == EditorInfo.IME_ACTION_SEND || event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        event.getKeyCode() == KeyEvent.KEYCODE_ENTER || event.getKeyCode() == KeyEvent.KEYCODE_BUTTON_L1 || event.getKeyCode() == KeyEvent.KEYCODE_SEARCH) {
+                    if (input!=null && input.length()>1) {
+                        newpas.setVisibility(View.VISIBLE);
+                        confirm.setVisibility(View.VISIBLE);
+                        newpassword.setVisibility(View.VISIBLE);
+                        confirmpassword.setVisibility(View.VISIBLE);
+                    } else {
+                        answer.setText("");
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+        newpassword.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((keyCode == EditorInfo.IME_ACTION_DONE || keyCode == EditorInfo.IME_ACTION_GO || keyCode == EditorInfo.IME_ACTION_NEXT || keyCode == EditorInfo.IME_ACTION_SEARCH || keyCode == EditorInfo.IME_ACTION_SEND || event.getAction() == KeyEvent.ACTION_DOWN)&&
+                        event.getKeyCode() == KeyEvent.KEYCODE_ENTER ||  event.getKeyCode() == KeyEvent.KEYCODE_BUTTON_L1 ||  event.getKeyCode() == KeyEvent.KEYCODE_SEARCH){
+                    if (newpassword.getText()!=null && newpassword.getText().length()>=4)
+                        confirmpassword.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+        confirmpassword.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((keyCode == EditorInfo.IME_ACTION_DONE || keyCode == EditorInfo.IME_ACTION_GO || keyCode == EditorInfo.IME_ACTION_NEXT || keyCode == EditorInfo.IME_ACTION_SEARCH || keyCode == EditorInfo.IME_ACTION_SEND || event.getAction() == KeyEvent.ACTION_DOWN)&&
+                        event.getKeyCode() == KeyEvent.KEYCODE_ENTER ||  event.getKeyCode() == KeyEvent.KEYCODE_BUTTON_L1 ||  event.getKeyCode() == KeyEvent.KEYCODE_SEARCH){
+                    String pass;
+                    String conf;
+                    conf = confirmpassword.getText().toString();
+                    pass = newpassword.getText().toString();
+                    if (pass.equals(conf)){
+                        preferences = context.getSharedPreferences(Cons.APP_PREF, Context.MODE_MULTI_PROCESS);
+                        preferences.edit().putString(Cons.APP_PREF_WORD, answer.getText().toString()).putString(Cons.APP_PREF_PASS, pass).putBoolean(Cons.APP_PREF_PASS_SET, true).commit();
+                        dismiss();
+                    }else{
+                        newpassword.setText("");
+                        confirmpassword.setText("");
+                    }
+                    return true;
+                }
+
+                return false;
+            }
+        });
     }
 
     private void initial(View v){

@@ -28,7 +28,7 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="menu 3"
+            android:text="Change word"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:clickable="true"
             android:focusableInTouchMode="true"/>

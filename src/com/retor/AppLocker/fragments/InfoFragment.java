@@ -2,20 +2,14 @@ package com.retor.AppLocker.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.retor.AppLocker.R;
-import com.retor.AppLocker.classes.Apps;
-
-import java.util.List;
+import com.retor.AppLocker.classes.AppsToBlock;
 
 /**
  * Created by retor on 03.04.2014.
@@ -23,14 +17,14 @@ import java.util.List;
 public class InfoFragment extends android.support.v4.app.DialogFragment implements DialogInterface {
     final String TAG = "321";
     int mNum = 0;
-    Apps apps;
+    AppsToBlock apps;
     Context context;
 
     public InfoFragment() {
         super();
     }
 
-    public InfoFragment(Apps apps, Context cont) {
+    public InfoFragment(AppsToBlock apps, Context cont) {
         super();
         context = cont;
         this.apps = apps;
@@ -38,12 +32,10 @@ public class InfoFragment extends android.support.v4.app.DialogFragment implemen
 
     static InfoFragment newInstance(int num) {
         InfoFragment f = new InfoFragment();
-
         // Supply num input as an argument.
         Bundle args = new Bundle();
         args.putInt("num", num);
         f.setArguments(args);
-
         return f;
     }
 
@@ -57,28 +49,11 @@ public class InfoFragment extends android.support.v4.app.DialogFragment implemen
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.info, container, false);
         TextView name = (TextView) v.findViewById(R.id.textView);
-        name.setText(apps.packageName.toString());
+        name.setText(apps.loadLabel(context.getPackageManager()).toString());
         TextView loca = (TextView) v.findViewById(R.id.textView2);
-        loca.setText(apps.applicationInfo.sourceDir.toString());
+        loca.setText(apps.activityInfo.applicationInfo.sourceDir.toString());
         TextView activity = (TextView) v.findViewById(R.id.infoActivity);
-        String act = null;
-        final PackageManager pm = context.getPackageManager();
-        if (pm != null) {
-            try {
-                act = pm.getLaunchIntentForPackage(apps.packageName).getComponent().getClassName();
-            } catch (NullPointerException e) {
-                Log.d("Blya", e.toString());
-                Intent intentFilter = new Intent(Intent.ACTION_MAIN, null);
-                intentFilter.addCategory(Intent.CATEGORY_LAUNCHER);
-                List<ResolveInfo> infs = pm.queryIntentActivities(intentFilter, 0);
-                for (ResolveInfo infa : infs) {
-                    if (infa.toString().contains(apps.packageName)) {//infa.resolvePackageName.contains(tmpApps.packageName))
-                        act = infa.resolvePackageName;
-                    }
-                }
-            }
-        }
-        activity.setText(act);
+        activity.setText((apps.activityInfo.packageName));
         return v;
     }
 

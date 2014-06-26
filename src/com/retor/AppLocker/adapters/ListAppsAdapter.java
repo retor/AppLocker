@@ -1,7 +1,6 @@
 package com.retor.AppLocker.adapters;
 
 import android.content.Context;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -12,21 +11,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.retor.AppLocker.R;
 import com.retor.AppLocker.classes.Apps;
+import com.retor.AppLocker.classes.AppsToBlock;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListAppsAdapter extends BaseAdapter {
     Context context;
-    List<PackageInfo> appList;
+    List<AppsToBlock> appList;
     int res;
     PackageManager pm;
     ArrayList<Apps> tests;
 
-    public ListAppsAdapter(Context _context, List<PackageInfo> _appList, int _res, PackageManager _pm) {
+    public ListAppsAdapter(Context _context, List<AppsToBlock> _appList, int _res, PackageManager _pm) {
         context = _context;
         res = _res;
-        appList = new ArrayList<PackageInfo>();
+        appList = new ArrayList<AppsToBlock>();
         appList = _appList;
         pm = _pm;
     }
@@ -49,7 +49,7 @@ public class ListAppsAdapter extends BaseAdapter {
     }
 
     @Override
-    public PackageInfo getItem(int position) {
+    public Object getItem(int position) {
         if (appList == null) {
             return tests.get(position);
         } else {
@@ -81,9 +81,9 @@ public class ListAppsAdapter extends BaseAdapter {
             appOtherStr = tests.get(position).applicationInfo.processName.toString();
             appIco = tests.get(position).applicationInfo.loadIcon(pm);
         } else {
-            appNameStr = appList.get(position).applicationInfo.loadLabel(pm).toString();
-            appOtherStr = appList.get(position).applicationInfo.processName.toString();
-            appIco = appList.get(position).applicationInfo.loadIcon(pm);
+            appNameStr =appList.get(position).activityInfo.loadLabel(pm).toString();
+            appOtherStr = appList.get(position).activityInfo.processName.toString();
+            appIco = appList.get(position).loadIcon(pm);
         }
         vh.appName.setText(appNameStr);
         vh.appOther.setText(appOtherStr);

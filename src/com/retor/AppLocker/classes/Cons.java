@@ -17,4 +17,6 @@ public class Cons {
     public static int MODE_FORGOT = 1;
     public static int MODE_NEW_PASS = 2;
     public static int MODE_NEW_WORD = 3;
+    public static int MODE_NEW_PASSWORD = 4;
+    public static int MODE_AUTH_APP = 5;
 }

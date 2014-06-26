@@ -2,14 +2,12 @@ package com.retor.AppLocker.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +17,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 import com.retor.AppLocker.R;
-import com.retor.AppLocker.classes.Apps;
+import com.retor.AppLocker.classes.AppsToBlock;
 import com.retor.AppLocker.classes.Cons;
-
-import java.util.List;
 
 /**
  * Created by Антон on 25.03.14.
  */
-public class ListApps extends ListFragment implements OnItemClickListener {
+public class ListAppsNew extends ListFragment implements OnItemClickListener {
 
     Context context;
 
@@ -50,8 +46,8 @@ public class ListApps extends ListFragment implements OnItemClickListener {
         SharedPreferences pref = context.getSharedPreferences(Cons.APPS_LOCK, Context.MODE_MULTI_PROCESS);
         if (pref != null)
             for (int i = 0; i < adapt.getCount(); i++) {
-                Apps checker = (Apps) adapt.getItem(i);
-                if (pref.getString(checker.packageName, null) != null)
+                AppsToBlock checker = (AppsToBlock) adapt.getItem(i);
+                if (pref.getString(checker.activityInfo.packageName, null) != null)
                     checker.setCheck(true);
                 if (checker.isCheck())
                     getListView().setItemChecked(i, true);
@@ -71,38 +67,20 @@ public class ListApps extends ListFragment implements OnItemClickListener {
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Apps tmpApps = (Apps) parent.getItemAtPosition(position);
+        AppsToBlock tmpApps = (AppsToBlock) parent.getItemAtPosition(position);
         SharedPreferences preferences = context.getSharedPreferences(Cons.APPS_LOCK, Context.MODE_MULTI_PROCESS);
-        //ActivityManager am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
-        PackageManager pm = context.getPackageManager();
-        String act = null;
-        assert tmpApps != null;
         if (!tmpApps.isCheck()) {
             tmpApps.setCheck(true);
+            createDialog(tmpApps, context);
             vibration(context, 1);
-            if (pm != null) {
-                try {
-                    act = pm.getLaunchIntentForPackage(tmpApps.packageName).getComponent().getClassName();
-                } catch (NullPointerException e) {
-                    Log.d("Blya", e.toString());
-                    Intent intentFilter = new Intent(Intent.ACTION_MAIN, null);
-                    intentFilter.addCategory(Intent.CATEGORY_LAUNCHER);
-                    intentFilter.resolveActivity(pm);
-                    List<ResolveInfo> infs = pm.queryIntentActivities(intentFilter, 0);
-                    for (ResolveInfo infa : infs) {
-                        if (infa.toString().contains(tmpApps.packageName)) {
-                            act = infa.resolvePackageName;
-                        }
-                    }
-                }
-            }
-            if (!preferences.contains(tmpApps.packageName))
-                preferences.edit().putString(tmpApps.packageName, act).commit();
+            String act = tmpApps.activityInfo.packageName;
+            if (!preferences.contains(tmpApps.activityInfo.applicationInfo.packageName))
+                preferences.edit().putString(tmpApps.activityInfo.applicationInfo.packageName, act).commit();
             Toast.makeText(context, "+", Toast.LENGTH_SHORT).show();
         } else {
             tmpApps.setCheck(false);
             vibration(context, 2);
-            preferences.edit().remove(tmpApps.packageName).commit();
+            preferences.edit().remove(tmpApps.activityInfo.applicationInfo.packageName).commit();
             Toast.makeText(context, "-", Toast.LENGTH_SHORT).show();
         }
         Toast.makeText(context, String.valueOf(getListView().getCheckedItemCount()), Toast.LENGTH_SHORT).show();
@@ -118,4 +96,17 @@ public class ListApps extends ListFragment implements OnItemClickListener {
                     vibrator.vibrate(15);
             }
     }
+
+    private void createDialog(AppsToBlock apps, Context cont) {
+        InfoFragment dialogFragment = null;
+        if (apps != null)
+            dialogFragment = new InfoFragment(apps, cont);
+        assert dialogFragment != null;
+        dialogFragment.setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_Holo_Dialog);
+        dialogFragment.setRetainInstance(true);
+        dialogFragment.setCancelable(true);
+        final FragmentManager fragmentManager = getFragmentManager();
+        dialogFragment.show(fragmentManager, "Apps");
+    }
+
 }

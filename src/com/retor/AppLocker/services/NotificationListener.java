@@ -18,6 +18,7 @@ import java.util.Map;
 public class NotificationListener extends AccessibilityService {
     boolean isInit = false;
     ArrayList<String> blocked;
+
     /**
      * Callback for {@link android.view.accessibility.AccessibilityEvent}s.
      *
@@ -26,11 +27,11 @@ public class NotificationListener extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         fillArray();
-        if (event.getEventType() == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED){
+        if (event.getEventType() == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED) {
             Toast.makeText(getApplicationContext(), event.getPackageName().toString(), Toast.LENGTH_SHORT).show();
-            if (blocked!=null && event.getPackageName()!=null){
-                for (String app:blocked){
-                    if (app.contains(event.getPackageName().toString())){
+            if (blocked != null && event.getPackageName() != null) {
+                for (String app : blocked) {
+                    if (app.contains(event.getPackageName().toString())) {
                         event.setEnabled(false);
                     }
                 }
@@ -44,7 +45,7 @@ public class NotificationListener extends AccessibilityService {
     }
 
     @Override
-    public void onServiceConnected(){
+    public void onServiceConnected() {
         Log.d("Notifi Service", "Service connected");
         if (isInit) {
             return;

@@ -2,4 +2,24 @@
 <resources>
 
     <style name="App.Asds" parent="android:Theme.Holo.Light"/>
+    <style name="App">App</style>
+    <style name="App.Try">
+        <item name="android:textSize">14sp</item>
+        <item name="android:alpha">1</item>
+    </style>
+
+
+	 <style name="AppTheme" parent="android:Theme.Light">
+	        <item name="android:buttonStyle">@style/ButtonTheme</item>
+	  </style>
+
+     <style name="ButtonTheme" parent="@android:style/Widget.Button">
+	       <item name="android:background">@drawable/button</item>
+	       <item name="android:textColor">@color/White</item>
+           <item name="android:textStyle">bold</item>
+	 </style>
+
+
+
+
 </resources>

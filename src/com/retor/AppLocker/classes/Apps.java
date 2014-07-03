@@ -40,7 +40,6 @@ public class Apps extends PackageInfo implements Serializable {
     }
 
 
-
     public boolean isCheck() {
         return check;
     }

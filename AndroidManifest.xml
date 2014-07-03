@@ -22,16 +22,36 @@
     <application
             android:label="@string/app_name"
             android:icon="@drawable/ic_launcher"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
-            >
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
         <activity
-                android:name="Home"
+                android:name=".activites.Blocker"
                 android:label="@string/app_name"
->
+                android:finishOnTaskLaunch="true"
+                android:screenOrientation="sensorPortrait"
+                android:configChanges="keyboard|orientation|screenSize"
+                android:launchMode="singleInstance"
+                android:windowSoftInputMode="stateHidden|adjustResize"
+                android:noHistory="true"
+
+                android:excludeFromRecents="true"
+                android:finishOnCloseSystemDialogs="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+        <activity
+                android:name=".Home"
+                android:finishOnTaskLaunch="true"
+                android:label="@string/app_name"
+                android:screenOrientation="sensorPortrait"
+                android:configChanges="keyboard|orientation|screenSize"
+                android:launchMode="singleInstance"
+                android:permission="android.permission.SYSTEM_ALERT_WINDOW"
+                android:exported="true"
+                android:excludeFromRecents="true"
+                android:finishOnCloseSystemDialogs="true">
         </activity>
         <activity
                 android:name=".activites.BlockActivity"
@@ -44,14 +64,17 @@
                 android:noHistory="true"
                 android:exported="true"
                 android:excludeFromRecents="true"
-                android:finishOnCloseSystemDialogs="true"
-                >
+                android:finishOnCloseSystemDialogs="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.HOME"/>
+            </intent-filter>
         </activity>
-
         <service
                 android:name=".services.ListenService"
                 android:enabled="true"
-                android:exported="false">
+                android:exported="false"
+                >
         </service>
         <service android:name=".services.NotificationListener" android:enabled="true">
             <intent-filter>
@@ -61,8 +84,9 @@
         <receiver
                 android:name=".receivers.BlockReceiver"
                 android:enabled="true"
-                android:exported="false">
-            <intent-filter>
+                android:exported="true"
+                android:priority="2147483647">
+            <intent-filter android:priority="2147483647">
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>

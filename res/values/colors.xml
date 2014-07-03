@@ -3,4 +3,11 @@
     <color name="background_default">#ff000000</color>
     <color name="background_selected">#ff3300FF</color>
     <color name="background_checked">#ffCC3300</color>
+    <color name="button_focused_color_start">#7FA40E</color>
+    <color name="button_focused_color_end">#79C83F</color>
+	<color name="button_normal_color_start">#1f71df</color>
+	<color name="button_normal_color_end">#619be9</color>
+	<color name="button_pressed_color_start">#7FA40E</color>
+	<color name="button_pressed_color_end">#79C83F</color>
+	<color name="White">#FFFFFF</color>
 </resources>

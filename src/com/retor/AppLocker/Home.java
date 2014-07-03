@@ -1,6 +1,7 @@
 package com.retor.AppLocker;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -27,7 +28,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.retor.AppLocker.activites.BlockActivity;
+import com.retor.AppLocker.activites.Blocker;
 import com.retor.AppLocker.adapters.ListAppsAdapter;
 import com.retor.AppLocker.adapters.LunchedAdapter;
 import com.retor.AppLocker.adapters.ViewPagerAdapter;
@@ -75,7 +76,6 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     private android.support.v7.app.ActionBar actionBar;
     //tests
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.Theme_AppCompat_Light);
@@ -83,14 +83,8 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         FragmentManager fm = getSupportFragmentManager();
         SharedPreferences preferences = getSharedPreferences(Cons.APP_PREF, MODE_MULTI_PROCESS);
         preferences.edit().commit();
-        if (!preferences.getBoolean(Cons.APP_PREF_PASS_SET, false)){
-            createDialog(Cons.MODE_NEW_PASSWORD, false, "First set");
-        }else{
-            createDialog(Cons.MODE_AUTH_APP, false, "Auth app");
-        }
         getSharedPreferences(Cons.APPS_LOCK, MODE_MULTI_PROCESS).edit().commit();
-        sendBroadcast(new Intent().setAction(BlockActivity.NORMAL));
-
+        startService(new Intent(this, ListenService.class));
         //set first parameters
         setContentView(R.layout.main);
         context = getApplicationContext();
@@ -123,13 +117,12 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        pd = new ProgressDialog(this).show(this, null, "Loading...", true, true);
+        //pd = new ProgressDialog(this).show(this, null, "Loading...", true, true);
+
         testArray = new ArrayList<Apps>();
-        new RequestInfo();
+        new RequestInfo(this);
         vpa = new ViewPagerAdapter(getSupportFragmentManager(), fragments, getApplicationContext(), actionBar);
         pager.setOnPageChangeListener(this);
-
-
     }
 
     @Override
@@ -184,6 +177,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        listik.setRetainInstance(true);
         listApps.setRetainInstance(true);
         listAppsAuto.setRetainInstance(true);
         listTasks.setRetainInstance(true);
@@ -218,7 +212,6 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         //Log.d("SlidingMenu", "pressed" + String.valueOf(v.getId()));
         switch (v.getId()) {
             case R.id.textView1:
-                pager.setCurrentItem(1);
                 Toast.makeText(context, "Menu 1", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.textView2:
@@ -227,11 +220,13 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
                 Toast.makeText(context, "Menu 2", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.textView3:
-                createDialog(Cons.MODE_NEW_WORD, true, "new word");
+                startActivity(new Intent(this, Blocker.class).putExtra("mode", Cons.MODE_NEW_WORD));
+                //createDialog(Cons.MODE_NEW_WORD, true, "new word");
                 Toast.makeText(context, "Menu 3", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.textView4:
-                createDialog(Cons.MODE_NEW_PASS, true, "new password");
+                startActivity(new Intent(this, Blocker.class).putExtra("mode", Cons.MODE_NEW_PASS));
+                //createDialog(Cons.MODE_NEW_PASS, true, "new password");
                 Toast.makeText(context, "Menu 4", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -301,15 +296,55 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         return null;
     }
 
-    private class RequestInfo extends AsyncTask<Void, Void, Void> {
+    private void createDialog(int mode, boolean cancelable, String title) {
+        DialogFragment di = new DialogForgot(getApplicationContext(), mode);
+        di.setCancelable(cancelable);
+        di.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        di.show(getSupportFragmentManager(), title);
+    }
 
-        public RequestInfo() {
+    private ArrayList<AppsToBlock> createAppList() {
+        ArrayList<AppsToBlock> out = new ArrayList<AppsToBlock>();
+        Intent filterIntent = new Intent(Intent.ACTION_MAIN);
+        filterIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        ArrayList<ResolveInfo> appsFiltered = new ArrayList<ResolveInfo>();
+        appsFiltered = (ArrayList<ResolveInfo>) pm.queryIntentActivities(filterIntent, PackageManager.GET_RESOLVED_FILTER);
+        Collections.sort(appsFiltered, new ResolveInfo.DisplayNameComparator(pm));
+        for (ResolveInfo info : appsFiltered) {
+            AppsToBlock app = new AppsToBlock(info);
+            out.add(app);
+        }
+        return out;
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    private void clearAppList(ArrayList<ResolveInfo> appsFiltered, ArrayList<AppsToBlock> out) {
+        for (AppsToBlock app : out) {
+            String pack = null;
+            for (int i = 0; i < appsFiltered.size(); i++) {
+                ResolveInfo info = new ResolveInfo(appsFiltered.get(i));
+                if (info.activityInfo.name.equals(app.activityInfo.name) && (!info.loadLabel(pm).toString().equals(app.loadLabel(pm)))) {
+                    pack = pack + app.loadLabel(pm).toString() + " ";
+                    appsFiltered.remove(i);
+                    out.remove(i);
+                }
+            }
+            app.setPack(true, pack);
+        }
+    }
+
+    private class RequestInfo extends AsyncTask<Void, Void, Void> {
+        Activity activity;
+
+        public RequestInfo(Activity activity) {
+            this.activity = activity;
+            pd = new ProgressDialog(activity).show(activity, null, "Loading...", true, true);
             execute();
         }
 
         @Override
         protected void onPreExecute() {
-            pd.show();
+            //pd.show();//(context, null, "Loading...", true, false);
             super.onPreExecute();
         }
 
@@ -339,44 +374,6 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
             testArray1 = makeApps(catchAutoRun(getAppList()));
             appInfos = getListAppInfo(am.getRunningAppProcesses());
             return null;
-        }
-    }
-
-    private void createDialog(int mode, boolean cancelable, String title){
-        DialogFragment di = new DialogForgot(getApplicationContext(), mode);
-        di.setCancelable(cancelable);
-        di.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
-        di.show(getSupportFragmentManager(), title);
-    }
-
-
-    private ArrayList<AppsToBlock> createAppList(){
-        ArrayList<AppsToBlock> out = new ArrayList<AppsToBlock>();
-
-        Intent filterIntent = new Intent(Intent.ACTION_MAIN);
-        filterIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        ArrayList<ResolveInfo> appsFiltered = new ArrayList<ResolveInfo>();
-        appsFiltered = (ArrayList<ResolveInfo>)pm.queryIntentActivities(filterIntent, PackageManager.GET_RESOLVED_FILTER);
-        Collections.sort(appsFiltered, new ResolveInfo.DisplayNameComparator(pm));
-        for (ResolveInfo info:appsFiltered){
-            AppsToBlock app = new AppsToBlock(info);
-            out.add(app);
-        }
-        return out;
-    }
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void clearAppList(ArrayList<ResolveInfo> appsFiltered, ArrayList<AppsToBlock> out){
-        for (AppsToBlock app:out){
-            String pack = null;
-            for (int i=0; i<appsFiltered.size(); i++){
-                ResolveInfo info = new ResolveInfo(appsFiltered.get(i));
-                if (info.activityInfo.name.equals(app.activityInfo.name) && (!info.loadLabel(pm).toString().equals(app.loadLabel(pm)))){
-                    pack = pack + app.loadLabel(pm).toString()+" ";
-                    appsFiltered.remove(i);
-                    out.remove(i);
-                }
-            }
-            app.setPack(true,pack);
         }
     }
 }

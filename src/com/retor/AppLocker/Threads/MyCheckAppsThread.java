@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import com.retor.AppLocker.activites.BlockActivity;
+import com.retor.AppLocker.activites.Blocker;
 import com.retor.AppLocker.classes.Cons;
 import com.retor.AppLocker.interfaces.prefInterface;
 
@@ -60,7 +60,7 @@ public class MyCheckAppsThread implements prefInterface, Runnable {
                     if (task.topActivity.getPackageName().contains(app) && (!checkUnBlockedArray(app)) && am.getRunningTasks(1).get(0).topActivity.getPackageName().contains(app)) {
                         Log.d("MyThread: ", "I Find It: " + app);
                         //am.killBackgroundProcesses(app);
-                        context.startActivity(new Intent(context, BlockActivity.class).setFlags(PendingIntent.FLAG_CANCEL_CURRENT).putExtra(Cons.APPS_NAME, app).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                        context.startActivity(new Intent(context, Blocker.class).setFlags(PendingIntent.FLAG_CANCEL_CURRENT).putExtra(Cons.APPS_NAME, app).putExtra("mode", Cons.MODE_AUTH_APP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                     }
                 }
             }

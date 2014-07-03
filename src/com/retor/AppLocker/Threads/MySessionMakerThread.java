@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import com.retor.AppLocker.classes.Cons;
 import com.retor.AppLocker.interfaces.prefInterface;
 
 import java.util.ArrayList;
@@ -21,7 +22,6 @@ public class MySessionMakerThread implements Runnable, prefInterface {
     private ArrayList<String> timers;
     private ActivityManager am;
     private String WORKED;
-    private String TIMERPREF = "appstimer";
 
 
     public MySessionMakerThread(Context _context, String WORKEDpref) {
@@ -38,7 +38,7 @@ public class MySessionMakerThread implements Runnable, prefInterface {
 
     @Override
     public void run() {
-        fillArray(WORKED, TIMERPREF);
+        fillArray(WORKED, Cons.APP_TIMER);
         makeWorkedCheck();
     }
 
@@ -59,7 +59,7 @@ public class MySessionMakerThread implements Runnable, prefInterface {
                 }
                 if (checkRunning(app) && !checkTop(app) && checkTimer(app)) {
                     Log.d(TAG_LOG, "if app not top");
-                    if (getTimerValue(TIMERPREF, app) >= System.currentTimeMillis()) {
+                    if (getTimerValue(Cons.APP_TIMER, app) >= System.currentTimeMillis()) {
                         delTimer(app);
                         delApp(app);
                         return;
@@ -110,13 +110,13 @@ public class MySessionMakerThread implements Runnable, prefInterface {
 
     private void addTimer(String app) {
         long time = (System.currentTimeMillis() + ((60 * 1000) * 5));
-        preferences = context.getSharedPreferences(TIMERPREF, Context.MODE_MULTI_PROCESS);
+        preferences = context.getSharedPreferences(Cons.APP_TIMER, Context.MODE_MULTI_PROCESS);
         preferences.edit().putLong(app, time).commit();
-        fillArray(WORKED, TIMERPREF);
+        fillArray(WORKED, Cons.APP_TIMER);
     }
 
     private void renevTimer(String app) {
-        preferences = context.getSharedPreferences(TIMERPREF, Context.MODE_MULTI_PROCESS);
+        preferences = context.getSharedPreferences(Cons.APP_TIMER, Context.MODE_MULTI_PROCESS);
         if (preferences.contains(app)) {
             delTimer(app);
             addTimer(app);
@@ -126,7 +126,7 @@ public class MySessionMakerThread implements Runnable, prefInterface {
     }
 
     private void delTimer(String app) {
-        preferences = context.getSharedPreferences(TIMERPREF, Context.MODE_MULTI_PROCESS);
+        preferences = context.getSharedPreferences(Cons.APP_TIMER, Context.MODE_MULTI_PROCESS);
         if (timers != null) {
             timers.remove(app);
         }

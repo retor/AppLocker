@@ -12,11 +12,11 @@ public class AppsToBlock extends ResolveInfo implements Serializable {
     private boolean pack;
     private String packApps;
 
-    public AppsToBlock(){
+    public AppsToBlock() {
         check = false;
     }
 
-    public AppsToBlock(ResolveInfo orig){
+    public AppsToBlock(ResolveInfo orig) {
         activityInfo = orig.activityInfo;
         serviceInfo = orig.serviceInfo;
         filter = orig.filter;
@@ -40,12 +40,16 @@ public class AppsToBlock extends ResolveInfo implements Serializable {
         this.check = check;
     }
 
-    public boolean isPack() {return pack;}
+    public boolean isPack() {
+        return pack;
+    }
 
-    public void setPack(boolean _pack, String packIn){
+    public void setPack(boolean _pack, String packIn) {
         pack = _pack;
         packApps = packIn;
     }
 
-    public String getPackApps(){return packApps;}
+    public String getPackApps() {
+        return packApps;
+    }
 }

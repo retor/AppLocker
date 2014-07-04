@@ -21,7 +21,6 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
-import com.retor.AppLocker.Home;
 import com.retor.AppLocker.R;
 import com.retor.AppLocker.classes.Cons;
 
@@ -182,7 +181,7 @@ public class Blocker extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.passwordactivity);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED );
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED);
         imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
 
         initial();

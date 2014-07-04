@@ -2,10 +2,10 @@
 
 	<!-- Корневым элементом должен быть объект share (холс) -->
 	<!-- android:shape - задает форму кнопки. В нашем случаем форма кнопки - прямоугольник -->
-	<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+	<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
 
 	    <!-- Устанавливаем значение радиуса скругления для всех углов прямоугольника -->
-	 <corners android:radius="12px" />
+	 <corners android:radius="15px" />
 
 	 <!-- Задаем линейный градиент для заливки прямоугольника -->
 	 <gradient android:angle="90"

@@ -1,4 +1,4 @@
-package com.retor.AppLocker;
+package com.retor.AppLocker.activites;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -14,7 +14,6 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerTabStrip;
@@ -28,7 +27,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.retor.AppLocker.activites.Blocker;
+import com.retor.AppLocker.R;
 import com.retor.AppLocker.adapters.ListAppsAdapter;
 import com.retor.AppLocker.adapters.LunchedAdapter;
 import com.retor.AppLocker.adapters.ViewPagerAdapter;
@@ -36,7 +35,6 @@ import com.retor.AppLocker.classes.AppInfo;
 import com.retor.AppLocker.classes.Apps;
 import com.retor.AppLocker.classes.AppsToBlock;
 import com.retor.AppLocker.classes.Cons;
-import com.retor.AppLocker.fragments.DialogForgot;
 import com.retor.AppLocker.fragments.ListApps;
 import com.retor.AppLocker.fragments.ListAppsNew;
 import com.retor.AppLocker.fragments.ListLunchedApps;
@@ -294,13 +292,6 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
                 return String.valueOf(testArray.size());
         }
         return null;
-    }
-
-    private void createDialog(int mode, boolean cancelable, String title) {
-        DialogFragment di = new DialogForgot(getApplicationContext(), mode);
-        di.setCancelable(cancelable);
-        di.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
-        di.show(getSupportFragmentManager(), title);
     }
 
     private ArrayList<AppsToBlock> createAppList() {

@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import com.retor.AppLocker.activites.BlockActivity;
 import com.retor.AppLocker.classes.Cons;
 import com.retor.AppLocker.services.ListenService;
 
@@ -38,13 +37,6 @@ public class BlockReceiver extends BroadcastReceiver {
             }
         }
         return false;
-    }
-
-    private void startBlockActivity(String appname, Context cont) {
-        Intent block = new Intent(cont, BlockActivity.class);
-        block.putExtra(Cons.APPS_NAME, appname);
-        block.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        cont.startActivity(block);
     }
 
     private void startBlockService(String appname, Context cont) {

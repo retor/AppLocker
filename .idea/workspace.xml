@@ -35,32 +35,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ab884a8-e664-4984-969f-3756e51e35bb" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/activites/Blocker.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/drawable/button.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/drawable/button_focused.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/drawable/button_normal.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/drawable/button_presed.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/layout/keyboard.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/layout/passwordactivity.xml" />
-      <change type="DELETED" beforePath="C:\Users\Антон\IdeaProjects\AppLocker\res\drawable\background.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Антон\IdeaProjects\AppLocker\res\layout\blockactivity.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Антон\IdeaProjects\AppLocker\res\layout\drawer.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Антон\IdeaProjects\AppLocker\res\layout\forgotdialog.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Антон\IdeaProjects\AppLocker\res\layout\passsetter.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Антон\IdeaProjects\AppLocker\src\com\retor\AppLocker\activites\BlockActivity.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Антон\IdeaProjects\AppLocker\src\com\retor\AppLocker\fragments\DialogForgot.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Антон\IdeaProjects\AppLocker\src\com\retor\AppLocker\fragments\DialogPassSet.java" afterPath="" />
+      <change type="MOVED" beforePath="C:\Users\Антон\IdeaProjects\AppLocker\src\com\retor\AppLocker\Home.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/activites/Home.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/classes/Apps.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/classes/Apps.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/classes/AppsToBlock.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/classes/AppsToBlock.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/classes/Cons.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/classes/Cons.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/Home.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/Home.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/adapters/ListAppsAdapter.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/adapters/ListAppsAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/Threads/MyCheckAppsThread.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/Threads/MyCheckAppsThread.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/Threads/MySessionMakerThread.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/Threads/MySessionMakerThread.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/services/NotificationListener.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/services/NotificationListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/colors.xml" afterPath="$PROJECT_DIR$/res/values/colors.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/styles.xml" afterPath="$PROJECT_DIR$/res/values/styles.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/receivers/BlockReceiver.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/receivers/BlockReceiver.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/retor/AppLocker/activites/Blocker.java" afterPath="$PROJECT_DIR$/src/com/retor/AppLocker/activites/Blocker.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable/button_focused.xml" afterPath="$PROJECT_DIR$/res/drawable/button_focused.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable/button_normal.xml" afterPath="$PROJECT_DIR$/res/drawable/button_normal.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/drawable/button_presed.xml" afterPath="$PROJECT_DIR$/res/drawable/button_presed.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/passwordactivity.xml" afterPath="$PROJECT_DIR$/res/layout/passwordactivity.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="AppLocker.iws" />
@@ -133,49 +115,79 @@
         <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/activites/Blocker.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="2728" max-vertical-offset="10829">
-              <caret line="204" column="39" selection-start-line="204" selection-start-column="39" selection-end-line="204" selection-end-column="39" />
+              <caret line="203" column="39" selection-start-line="203" selection-start-column="39" selection-end-line="203" selection-end-column="39" />
               <folding>
-                <element signature="e#5760#6329#0" expanded="true" />
-                <element signature="e#6318#6319#0" expanded="true" />
-                <element signature="e#13550#13920#0" expanded="true" />
-                <element signature="e#13905#13906#0" expanded="true" />
-                <element signature="e#14206#15986#0" expanded="true" />
-                <element signature="e#15971#15972#0" expanded="true" />
-                <element signature="e#16411#16781#0" expanded="true" />
-                <element signature="e#16766#16767#0" expanded="true" />
-                <element signature="e#17067#18999#0" expanded="true" />
-                <element signature="e#18984#18985#0" expanded="true" />
-                <element signature="e#20820#21302#0" expanded="true" />
-                <element signature="e#21271#21272#0" expanded="true" />
-                <element signature="e#24152#26080#0" expanded="true" />
-                <element signature="e#26057#26058#0" expanded="true" />
-                <element signature="e#26616#26958#0" expanded="true" />
-                <element signature="e#26947#26948#0" expanded="true" />
-                <element signature="e#30823#30824#0" expanded="true" />
-                <element signature="e#30887#30888#0" expanded="true" />
+                <element signature="e#5727#6296#0" expanded="true" />
+                <element signature="e#6285#6286#0" expanded="true" />
+                <element signature="e#13516#13886#0" expanded="true" />
+                <element signature="e#13871#13872#0" expanded="true" />
+                <element signature="e#14172#15952#0" expanded="true" />
+                <element signature="e#15937#15938#0" expanded="true" />
+                <element signature="e#16377#16747#0" expanded="true" />
+                <element signature="e#16732#16733#0" expanded="true" />
+                <element signature="e#17033#18965#0" expanded="true" />
+                <element signature="e#18950#18951#0" expanded="true" />
+                <element signature="e#20786#21268#0" expanded="true" />
+                <element signature="e#21237#21238#0" expanded="true" />
+                <element signature="e#24118#26046#0" expanded="true" />
+                <element signature="e#26023#26024#0" expanded="true" />
+                <element signature="e#26582#26924#0" expanded="true" />
+                <element signature="e#26913#26914#0" expanded="true" />
+                <element signature="e#30789#30790#0" expanded="true" />
+                <element signature="e#30853#30854#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="passwordactivity.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="passwordactivity.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/res/layout/passwordactivity.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-17.11111" vertical-offset="524" max-vertical-offset="3740">
-              <caret line="58" column="45" selection-start-line="58" selection-start-column="45" selection-end-line="58" selection-end-column="45" />
+          <provider editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3944">
+              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
               <folding />
             </state>
           </provider>
-          <provider editor-type-id="android-designer">
+          <provider selected="true" editor-type-id="android-designer">
             <state />
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <file leaf-file-name="styles.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/values/styles.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4832776" vertical-offset="255" max-vertical-offset="1700">
-              <caret line="32" column="70" selection-start-line="32" selection-start-column="70" selection-end-line="32" selection-end-column="70" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
+              <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="button_presed.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/drawable/button_presed.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="442">
+              <caret line="12" column="28" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="button_normal.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/drawable/button_normal.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+              <caret line="3" column="33" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="button_focused.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/drawable/button_focused.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
+              <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -194,7 +206,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/res/layout/info.xml" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/fragments/ListLunchedApps.java" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/interfaces/prefInterface.java" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/classes/myCheckAppsThread.java" />
@@ -207,7 +218,6 @@
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/classes/KeyboardImpl.java" />
         <option value="$PROJECT_DIR$/res/layout/passsetter.xml" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/fragments/DialogPassSet.java" />
-        <option value="$PROJECT_DIR$/src/com/retor/AppLocker/receivers/BlockReceiver.java" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/Threads/MyCheckNotificationsThread.java" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/services/ListenService.java" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/services/NotificationListener.java" />
@@ -236,15 +246,17 @@
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/Threads/MyCheckAppsThread.java" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/Home.java" />
         <option value="$PROJECT_DIR$/res/layout/blockactivity.xml" />
-        <option value="$PROJECT_DIR$/res/drawable/button_focused.xml" />
         <option value="$PROJECT_DIR$/res/values/colors.xml" />
-        <option value="$PROJECT_DIR$/res/drawable/button_normal.xml" />
-        <option value="$PROJECT_DIR$/res/drawable/button_presed.xml" />
         <option value="$PROJECT_DIR$/res/drawable/button.xml" />
         <option value="$PROJECT_DIR$/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/src/com/retor/AppLocker/activites/Blocker.java" />
-        <option value="$PROJECT_DIR$/res/layout/passwordactivity.xml" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/src/com/retor/AppLocker/activites/Home.java" />
+        <option value="$PROJECT_DIR$/src/com/retor/AppLocker/receivers/BlockReceiver.java" />
+        <option value="$PROJECT_DIR$/res/drawable/button_presed.xml" />
+        <option value="$PROJECT_DIR$/res/drawable/button_normal.xml" />
+        <option value="$PROJECT_DIR$/res/drawable/button_focused.xml" />
+        <option value="$PROJECT_DIR$/res/layout/passwordactivity.xml" />
       </list>
     </option>
   </component>
@@ -314,24 +326,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="AppLocker" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AppLocker" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AppLocker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AppLocker" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="AppLocker" />
@@ -864,7 +858,7 @@
     </configuration>
     <configuration default="false" name="AppLocker" type="AndroidRunConfigurationType" factoryName="Android Application">
       <module name="AppLocker" />
-      <option name="ACTIVITY_CLASS" value="com.retor.AppLocker.Home" />
+      <option name="ACTIVITY_CLASS" value="com.retor.AppLocker.activites.Home" />
       <option name="MODE" value="default_activity" />
       <option name="DEPLOY" value="true" />
       <option name="ARTIFACT_NAME" value="" />
@@ -955,7 +949,7 @@
       <workItem from="1403694170589" duration="40726000" />
       <workItem from="1403870592901" duration="31779000" />
       <workItem from="1404217147192" duration="27983000" />
-      <workItem from="1404306692094" duration="21219000" />
+      <workItem from="1404306692094" duration="23161000" />
     </task>
     <task id="LOCAL-00001" summary="Upd 1">
       <created>1395776599379</created>
@@ -1133,11 +1127,15 @@
       <created>1403793852152</created>
       <updated>1403793852152</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="Upd: first alfa app lock work fine.">
+      <created>1404395927457</created>
+      <updated>1404395927457</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="649382000" />
+    <option name="totallyTimeSpent" value="651324000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1181,6 +1179,7 @@
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3975501" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32739422" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1191,7 +1190,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39863715" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -1459,6 +1457,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.22742476" vertical-offset="0" max-vertical-offset="1717">
           <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1499,14 +1498,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/Home.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5451505" vertical-offset="2054" max-vertical-offset="5525">
-          <caret line="191" column="27" selection-start-line="191" selection-start-column="27" selection-end-line="191" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/slidingmenu.xml">
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="850">
@@ -1516,38 +1507,6 @@
       </provider>
       <provider selected="true" editor-type-id="android-designer">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable/button.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.08528428" vertical-offset="0" max-vertical-offset="598">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable/button_presed.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.11371238" vertical-offset="0" max-vertical-offset="598">
-          <caret line="4" column="39" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable/button_normal.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22742476" vertical-offset="0" max-vertical-offset="598">
-          <caret line="8" column="34" selection-start-line="8" selection-start-column="34" selection-end-line="8" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable/button_focused.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3411371" vertical-offset="0" max-vertical-offset="598">
-          <caret line="12" column="42" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Desktop/adt-bundle-windows-x86_64-20131030/sdk/sources/android-19/android/view/Window.java">
@@ -1574,58 +1533,126 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/activites/Blocker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2728" max-vertical-offset="10829">
+          <caret line="203" column="39" selection-start-line="203" selection-start-column="39" selection-end-line="203" selection-end-column="39" />
+          <folding>
+            <element signature="e#5727#6296#0" expanded="true" />
+            <element signature="e#6285#6286#0" expanded="true" />
+            <element signature="e#13516#13886#0" expanded="true" />
+            <element signature="e#13871#13872#0" expanded="true" />
+            <element signature="e#14172#15952#0" expanded="true" />
+            <element signature="e#15937#15938#0" expanded="true" />
+            <element signature="e#16377#16747#0" expanded="true" />
+            <element signature="e#16732#16733#0" expanded="true" />
+            <element signature="e#17033#18965#0" expanded="true" />
+            <element signature="e#18950#18951#0" expanded="true" />
+            <element signature="e#20786#21268#0" expanded="true" />
+            <element signature="e#21237#21238#0" expanded="true" />
+            <element signature="e#24118#26046#0" expanded="true" />
+            <element signature="e#26023#26024#0" expanded="true" />
+            <element signature="e#26582#26924#0" expanded="true" />
+            <element signature="e#26913#26914#0" expanded="true" />
+            <element signature="e#30789#30790#0" expanded="true" />
+            <element signature="e#30853#30854#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/adt-bundle-windows-x86_64-20131030/sdk/sources/android-19/java/lang/String.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33275262" vertical-offset="11760" max-vertical-offset="33320">
+          <caret line="749" column="36" selection-start-line="749" selection-start-column="36" selection-end-line="749" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/adt-bundle-windows-x86_64-20131030/sdk/sources/android-19/java/lang/Object.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33275262" vertical-offset="4875" max-vertical-offset="6970">
+          <caret line="330" column="18" selection-start-line="330" selection-start-column="18" selection-end-line="330" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="1700">
+          <caret line="44" column="46" selection-start-line="44" selection-start-column="46" selection-end-line="44" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/receivers/BlockReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.1450777" vertical-offset="0" max-vertical-offset="935">
+          <caret line="39" column="5" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/drawable/button.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.08528428" vertical-offset="0" max-vertical-offset="598">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/activites/Home.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34615386" vertical-offset="5573" max-vertical-offset="6171">
+          <caret line="354" column="0" selection-start-line="354" selection-start-column="0" selection-end-line="354" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/res/values/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5117057" vertical-offset="0" max-vertical-offset="598">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
           <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/retor/AppLocker/activites/Blocker.java">
+    <entry file="file://$PROJECT_DIR$/res/drawable/button_presed.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2728" max-vertical-offset="10829">
-          <caret line="204" column="39" selection-start-line="204" selection-start-column="39" selection-end-line="204" selection-end-column="39" />
-          <folding>
-            <element signature="e#5760#6329#0" expanded="true" />
-            <element signature="e#6318#6319#0" expanded="true" />
-            <element signature="e#13550#13920#0" expanded="true" />
-            <element signature="e#13905#13906#0" expanded="true" />
-            <element signature="e#14206#15986#0" expanded="true" />
-            <element signature="e#15971#15972#0" expanded="true" />
-            <element signature="e#16411#16781#0" expanded="true" />
-            <element signature="e#16766#16767#0" expanded="true" />
-            <element signature="e#17067#18999#0" expanded="true" />
-            <element signature="e#18984#18985#0" expanded="true" />
-            <element signature="e#20820#21302#0" expanded="true" />
-            <element signature="e#21271#21272#0" expanded="true" />
-            <element signature="e#24152#26080#0" expanded="true" />
-            <element signature="e#26057#26058#0" expanded="true" />
-            <element signature="e#26616#26958#0" expanded="true" />
-            <element signature="e#26947#26948#0" expanded="true" />
-            <element signature="e#30823#30824#0" expanded="true" />
-            <element signature="e#30887#30888#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="442">
+          <caret line="12" column="28" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/drawable/button_normal.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+          <caret line="3" column="33" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/drawable/button_focused.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
+          <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/passwordactivity.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-17.11111" vertical-offset="524" max-vertical-offset="3740">
-          <caret line="58" column="45" selection-start-line="58" selection-start-column="45" selection-end-line="58" selection-end-column="45" />
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3944">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer">
+      <provider selected="true" editor-type-id="android-designer">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4832776" vertical-offset="255" max-vertical-offset="1700">
-          <caret line="32" column="70" selection-start-line="32" selection-start-column="70" selection-end-line="32" selection-end-column="70" />
-          <folding />
-        </state>
       </provider>
     </entry>
   </component>

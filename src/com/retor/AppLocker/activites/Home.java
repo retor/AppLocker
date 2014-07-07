@@ -147,7 +147,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
-        
+
 
         return super.onCreatePanelMenu(featureId, menu);
     }

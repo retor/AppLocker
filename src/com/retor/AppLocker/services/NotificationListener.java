@@ -1,75 +1,58 @@
 package com.retor.AppLocker.services;
 
-import android.accessibilityservice.AccessibilityService;
-import android.accessibilityservice.AccessibilityServiceInfo;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
-import android.view.accessibility.AccessibilityEvent;
-import android.widget.Toast;
+import android.os.Build;
+import android.service.notification.NotificationListenerService;
+import android.service.notification.StatusBarNotification;
 import com.retor.AppLocker.classes.Cons;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-/**
- * Created by Антон on 25.06.2014.
- */
-public class NotificationListener extends AccessibilityService {
-    boolean isInit = false;
-    ArrayList<String> blocked;
+@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+public class NotificationListener extends NotificationListenerService {
 
-    /**
-     * Callback for {@link android.view.accessibility.AccessibilityEvent}s.
-     *
-     * @param event An event.
-     */
+    ArrayList<String> blocks;
+
     @Override
-    public void onAccessibilityEvent(AccessibilityEvent event) {
-        fillArray();
-        if (event.getEventType() == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED) {
-            Toast.makeText(getApplicationContext(), event.getPackageName().toString(), Toast.LENGTH_SHORT).show();
-            if (blocked != null && event.getPackageName() != null) {
-                for (String app : blocked) {
-                    if (app.contains(event.getPackageName().toString())) {
-                        event.setEnabled(false);
-                    }
-                }
+    public StatusBarNotification[] getActiveNotifications() {
+        return super.getActiveNotifications();
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        blocks = fillArray();
+    }
+
+    @Override
+    public void onNotificationPosted(StatusBarNotification sbn) {
+        for (StatusBarNotification noti:getActiveNotifications()){
+            if (blocks.contains(noti.getPackageName().toString())){
+                cancelNotification(noti.getPackageName(), noti.getTag(), noti.getId());
             }
         }
     }
 
     @Override
-    public void onInterrupt() {
-        isInit = false;
+    public void onNotificationRemoved(StatusBarNotification sbn) {
+
     }
 
-    @Override
-    public void onServiceConnected() {
-        Log.d("Notifi Service", "Service connected");
-        if (isInit) {
-            return;
-        }
-        AccessibilityServiceInfo info = new AccessibilityServiceInfo();
-        info.eventTypes = AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED;
-        info.feedbackType = AccessibilityServiceInfo.FEEDBACK_SPOKEN;
-        setServiceInfo(info);
-        isInit = true;
-    }
-
-
-    private void fillArray() {
-        //Log.d("MyThread: ", "FillArrays");
+    private ArrayList<String> fillArray() {
+        ArrayList<String> out = new ArrayList<String>();
         SharedPreferences preferences;
         if ((preferences = getSharedPreferences(Cons.APPS_LOCK, Context.MODE_MULTI_PROCESS)) != null) {
-            blocked = new ArrayList<String>();
             for (Map.Entry<?, ?> val : preferences.getAll().entrySet()) {
                 Object obj = val.getKey();
                 if (obj != null) {
                     String tmp = obj.toString();
-                    blocked.add(tmp);
+                    out.add(tmp);
                 }
             }
         }
+        return out;
     }
 }

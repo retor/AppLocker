@@ -169,12 +169,23 @@ public class Blocker extends Activity implements View.OnClickListener {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public void onBackPressed() {
         Intent intent = new Intent("android.intent.action.MAIN");
         intent.addCategory("android.intent.category.HOME");
         intent.setFlags(268435456);
         startActivity(intent);
-        return false;
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (MODE==Cons.MODE_AUTH_APP || MODE==Cons.MODE_AUTH_MY) {
+            Intent intent = new Intent("android.intent.action.MAIN");
+            intent.addCategory("android.intent.category.HOME");
+            intent.setFlags(268435456);
+            startActivity(intent);
+        }
+        return true;
     }
 
     @Override
@@ -204,7 +215,7 @@ public class Blocker extends Activity implements View.OnClickListener {
         if (MODE == Cons.MODE_AUTH_MY){
             appName.setText("Авторизация для Входа");
             appName.animate();
-            appIcon.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_dialog_info));
+            appIcon.setImageDrawable(getResources().getDrawable(R.drawable.lock_icon));
             appIcon.animate();
             hint.setText("Input password");
             hint.animate();

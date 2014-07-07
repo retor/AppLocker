@@ -5,7 +5,9 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:background="?android:attr/activatedBackgroundIndicator">
+                android:background="@drawable/appretortheme_activated_background_holo_light">
+                <!--android:background="?android:attr/activatedBackgroundIndicator"-->
+
 
     <ImageView
             android:layout_width="50dp"

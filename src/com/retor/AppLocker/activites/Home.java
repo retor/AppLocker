@@ -1,9 +1,9 @@
 package com.retor.AppLocker.activites;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,10 +16,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
+import android.support.v7.widget.SearchView;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -121,6 +122,8 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         new RequestInfo(this);
         vpa = new ViewPagerAdapter(getSupportFragmentManager(), fragments, getApplicationContext(), actionBar);
         pager.setOnPageChangeListener(this);
+/*        Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
+        startActivityForResult(intent, 0);*/
     }
 
     @Override
@@ -137,8 +140,15 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     public boolean onCreatePanelMenu(int featureId, Menu menu) {
         getMenuInflater().inflate(R.menu.actionbar, menu);
         String firs = String.valueOf(testArray.size());
-        menu.getItem(0).setTitle(firs);
-        menu.getItem(0).setEnabled(false);
+        menu.getItem(1).setTitle(firs);
+        menu.getItem(1).setEnabled(false);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
+        
+
         return super.onCreatePanelMenu(featureId, menu);
     }
 
@@ -196,11 +206,6 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
             case android.R.id.home:
                 sm.toggle(true);
                 break;
-            case R.id.item2:
-                Log.d("SendBroadcast", "Yes");
-                Intent serviceIntent = new Intent(getApplicationContext(), ListenService.class);
-                stopService(serviceIntent);
-                startService(serviceIntent);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -210,11 +215,18 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         //Log.d("SlidingMenu", "pressed" + String.valueOf(v.getId()));
         switch (v.getId()) {
             case R.id.textView1:
-                Toast.makeText(context, "Menu 1", Toast.LENGTH_SHORT).show();
+                int currentapiVersion = Build.VERSION.SDK_INT;
+                if (currentapiVersion>=Build.VERSION_CODES.JELLY_BEAN) {
+                    Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(context, "Menu 1", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.textView2:
-                Intent service = new Intent(this, ListenService.class);
-                startService(service);
+                Intent serviceIntent = new Intent(getApplicationContext(), ListenService.class);
+                stopService(serviceIntent);
+                startService(serviceIntent);
                 Toast.makeText(context, "Menu 2", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.textView3:
@@ -247,11 +259,14 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     private void initSlidingMenu() {
         //SlidingMenu
         sm = new SlidingMenu(getApplicationContext());
-        sm.setBehindWidth(450);
+        sm.setBehindWidth(400);
         sm.setMenu(R.layout.slidingmenu);
         sm.setMode(SlidingMenu.LEFT);
         sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
         sm.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+        sm.setShadowDrawable(getResources().getDrawable(R.drawable.sm_shadow));
+        sm.setShadowWidth(50);
+        sm.setFadeEnabled(true);
         sm.setOnCloseListener(new SlidingMenu.OnCloseListener() {
             @Override
             public void onClose() {
@@ -298,30 +313,13 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         ArrayList<AppsToBlock> out = new ArrayList<AppsToBlock>();
         Intent filterIntent = new Intent(Intent.ACTION_MAIN);
         filterIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        ArrayList<ResolveInfo> appsFiltered = new ArrayList<ResolveInfo>();
-        appsFiltered = (ArrayList<ResolveInfo>) pm.queryIntentActivities(filterIntent, PackageManager.GET_RESOLVED_FILTER);
+        ArrayList<ResolveInfo> appsFiltered = (ArrayList<ResolveInfo>)pm.queryIntentActivities(filterIntent, PackageManager.GET_RESOLVED_FILTER);
         Collections.sort(appsFiltered, new ResolveInfo.DisplayNameComparator(pm));
         for (ResolveInfo info : appsFiltered) {
             AppsToBlock app = new AppsToBlock(info);
             out.add(app);
         }
         return out;
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void clearAppList(ArrayList<ResolveInfo> appsFiltered, ArrayList<AppsToBlock> out) {
-        for (AppsToBlock app : out) {
-            String pack = null;
-            for (int i = 0; i < appsFiltered.size(); i++) {
-                ResolveInfo info = new ResolveInfo(appsFiltered.get(i));
-                if (info.activityInfo.name.equals(app.activityInfo.name) && (!info.loadLabel(pm).toString().equals(app.loadLabel(pm)))) {
-                    pack = pack + app.loadLabel(pm).toString() + " ";
-                    appsFiltered.remove(i);
-                    out.remove(i);
-                }
-            }
-            app.setPack(true, pack);
-        }
     }
 
     private class RequestInfo extends AsyncTask<Void, Void, Void> {

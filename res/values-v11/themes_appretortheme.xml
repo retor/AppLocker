@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="AppRetorTheme" parent="@style/_AppRetorTheme"/>
+
+  <style name="_AppRetorTheme" parent="Theme.AppCompat.Light">
+
+    <item name="android:editTextBackground">@drawable/appretortheme_edit_text_holo_light</item>
+
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewAppRetorTheme</item>
+
+    <item name="android:buttonStyle">@style/ButtonAppRetorTheme</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonAppRetorTheme</item>
+
+    <item name="android:listChoiceBackgroundIndicator">@drawable/appretortheme_list_selector_holo_light</item>
+
+    <item name="android:activatedBackgroundIndicator">@drawable/appretortheme_activated_background_holo_light</item>
+
+  </style>
+
+</resources>

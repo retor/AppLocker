@@ -2,11 +2,13 @@ package com.retor.AppLocker.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.retor.AppLocker.R;
 import com.retor.AppLocker.classes.AppsToBlock;
@@ -19,6 +21,7 @@ public class InfoFragment extends android.support.v4.app.DialogFragment implemen
     int mNum = 0;
     AppsToBlock apps;
     Context context;
+    PackageManager pm;
 
     public InfoFragment() {
         super();
@@ -28,6 +31,7 @@ public class InfoFragment extends android.support.v4.app.DialogFragment implemen
         super();
         context = cont;
         this.apps = apps;
+        pm = cont.getPackageManager();
     }
 
     static InfoFragment newInstance(int num) {
@@ -54,6 +58,8 @@ public class InfoFragment extends android.support.v4.app.DialogFragment implemen
         loca.setText(apps.activityInfo.applicationInfo.sourceDir.toString());
         TextView activity = (TextView) v.findViewById(R.id.infoActivity);
         activity.setText((apps.activityInfo.packageName));
+        ImageView ico = (ImageView)v.findViewById(R.id.infoIco);
+        ico.setImageDrawable(apps.activityInfo.loadIcon(pm));
         return v;
     }
 

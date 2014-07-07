@@ -4,42 +4,50 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:background="@android:color/black">
+              android:background="@android:color/transparent">
 
     <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="menu 1"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Enable NL"
+
             android:clickable="true"
-            android:focusableInTouchMode="true"/>
+            android:focusableInTouchMode="false"
+            android:textColor="@color/background_selected"
+            style="@style/SMButtonAppRetorTheme"/>
 
     <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="menu 2"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Serv restart"
+
             android:clickable="true"
-            android:focusableInTouchMode="true"/>
+            android:focusableInTouchMode="false"
+            android:textColor="@color/background_selected"
+            style="@style/SMButtonAppRetorTheme"/>
 
     <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Change word"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+
             android:clickable="true"
-            android:focusableInTouchMode="true"/>
+            android:focusableInTouchMode="false"
+            android:textColor="@color/background_selected"
+            style="@style/SMButtonAppRetorTheme"/>
 
     <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Change pass"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+
             android:clickable="true"
-            android:focusableInTouchMode="true"/>
+            android:focusableInTouchMode="false"
+            android:textColor="@color/background_selected"
+            style="@style/SMButtonAppRetorTheme"/>
 
 </LinearLayout>

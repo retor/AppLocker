@@ -102,9 +102,10 @@ public class ListAppsNew extends ListFragment implements OnItemClickListener {
         if (apps != null)
             dialogFragment = new InfoFragment(apps, cont);
         assert dialogFragment != null;
-        dialogFragment.setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_Holo_Dialog);
+        dialogFragment.setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_Holo_Light_Dialog);
         dialogFragment.setRetainInstance(true);
         dialogFragment.setCancelable(true);
+
         final FragmentManager fragmentManager = getFragmentManager();
         dialogFragment.show(fragmentManager, "Apps");
     }

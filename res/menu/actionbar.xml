@@ -15,13 +15,13 @@
     </item>
     <item
             android:id="@+id/item3"
-            android:icon="@android:drawable/ic_menu_info_details"
+            android:icon="@android:drawable/ic_menu_preferences"
             android:showAsAction="ifRoom|withText"
             android:title="item3">
     </item>
     <item
             android:id="@+id/item4"
-            android:icon="@android:drawable/ic_menu_view"
+            android:icon="@android:drawable/ic_menu_info_details"
             android:showAsAction="never"
             android:title="item4">
     </item>

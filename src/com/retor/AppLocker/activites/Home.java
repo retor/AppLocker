@@ -3,7 +3,6 @@ package com.retor.AppLocker.activites;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ProgressDialog;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,10 +20,12 @@ import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
+import android.text.InputType;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -124,6 +125,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         pager.setOnPageChangeListener(this);
 /*        Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
         startActivityForResult(intent, 0);*/
+
     }
 
     @Override
@@ -137,18 +139,29 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     }
 
     @Override
-    public boolean onCreatePanelMenu(int featureId, Menu menu) {
+    public boolean onCreatePanelMenu(final int featureId, Menu menu) {
         getMenuInflater().inflate(R.menu.actionbar, menu);
         String firs = String.valueOf(testArray.size());
         menu.getItem(1).setTitle(firs);
         menu.getItem(1).setEnabled(false);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
-
-
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setIconifiedByDefault(false);
+        searchView.setFocusable(true);
+        searchView.setFocusableInTouchMode(true);
+        searchItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                searchView.onActionViewExpanded();
+                searchView.setInputType(InputType.TYPE_CLASS_TEXT);
+                searchView.requestFocus();
+                InputMethodManager imm=(InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
+                return false;
+            }
+        });
+        //searchItem.setVisible(false);
         return super.onCreatePanelMenu(featureId, menu);
     }
 
@@ -298,7 +311,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     public String getStringToBar(int i) {
         switch (i) {
             case 0:
-                return String.valueOf(listApss.size());
+                return String.valueOf(listik.getListView().getCount());
             case 1:
                 return String.valueOf(testArray1.size());
             case 2:
@@ -327,13 +340,12 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
 
         public RequestInfo(Activity activity) {
             this.activity = activity;
-            pd = new ProgressDialog(activity).show(activity, null, "Loading...", true, true);
+            pd = new ProgressDialog(activity).show(activity, null, "Loading...", true, false);
             execute();
         }
 
         @Override
         protected void onPreExecute() {
-            //pd.show();//(context, null, "Loading...", true, false);
             super.onPreExecute();
         }
 
@@ -353,6 +365,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
             pd.dismiss();
             TextView textView = (TextView) findViewById(R.id.item1);
             textView.setText(getStringToBar(0));
+            //listik.setOldAdapter(listik.getListAdapter());
             super.onPostExecute(aVoid);
         }
 

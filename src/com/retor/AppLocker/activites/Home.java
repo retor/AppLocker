@@ -75,6 +75,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     private Typeface tf;
     private android.support.v7.app.ActionBar actionBar;
     //tests
+    MenuItem col;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -141,9 +142,11 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     @Override
     public boolean onCreatePanelMenu(final int featureId, Menu menu) {
         getMenuInflater().inflate(R.menu.actionbar, menu);
-        String firs = String.valueOf(testArray.size());
-        menu.getItem(1).setTitle(firs);
-        menu.getItem(1).setEnabled(false);
+/*        col = menu.getItem(1);
+        col.setEnabled(false);
+        col.setVisible(true);*/
+
+
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
@@ -156,7 +159,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
                 searchView.onActionViewExpanded();
                 searchView.setInputType(InputType.TYPE_CLASS_TEXT);
                 searchView.requestFocus();
-                InputMethodManager imm=(InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
                 return false;
             }
@@ -229,10 +232,10 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         switch (v.getId()) {
             case R.id.textView1:
                 int currentapiVersion = Build.VERSION.SDK_INT;
-                if (currentapiVersion>=Build.VERSION_CODES.JELLY_BEAN) {
+                if (currentapiVersion >= Build.VERSION_CODES.JELLY_BEAN) {
                     Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
                     startActivity(intent);
-                }else {
+                } else {
                     Toast.makeText(context, "Menu 1", Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -261,8 +264,8 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
 
     @Override
     public void onPageSelected(int i) {
-        TextView textView = (TextView) findViewById(R.id.item1);
-        textView.setText(getStringToBar(i));
+/*        col.setTitle(getStringToBar(i));
+        col.setVisible(true);*/
     }
 
     @Override
@@ -308,10 +311,10 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         menu4.setOnClickListener(this);
     }
 
-    public String getStringToBar(int i) {
+/*    public String getStringToBar(int i) {
         switch (i) {
             case 0:
-                return String.valueOf(listik.getListView().getCount());
+                return String.valueOf(listApss.size());
             case 1:
                 return String.valueOf(testArray1.size());
             case 2:
@@ -320,13 +323,13 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
                 return String.valueOf(testArray.size());
         }
         return null;
-    }
+    }*/
 
     private ArrayList<AppsToBlock> createAppList() {
         ArrayList<AppsToBlock> out = new ArrayList<AppsToBlock>();
         Intent filterIntent = new Intent(Intent.ACTION_MAIN);
         filterIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        ArrayList<ResolveInfo> appsFiltered = (ArrayList<ResolveInfo>)pm.queryIntentActivities(filterIntent, PackageManager.GET_RESOLVED_FILTER);
+        ArrayList<ResolveInfo> appsFiltered = (ArrayList<ResolveInfo>) pm.queryIntentActivities(filterIntent, PackageManager.GET_RESOLVED_FILTER);
         Collections.sort(appsFiltered, new ResolveInfo.DisplayNameComparator(pm));
         for (ResolveInfo info : appsFiltered) {
             AppsToBlock app = new AppsToBlock(info);
@@ -363,9 +366,8 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
             fragments.add(3, listApps);
             pager.setAdapter(vpa);
             pd.dismiss();
-            TextView textView = (TextView) findViewById(R.id.item1);
-            textView.setText(getStringToBar(0));
-            //listik.setOldAdapter(listik.getListAdapter());
+/*            col.setTitle(getStringToBar(0));
+            col.setVisible(true);*/
             super.onPostExecute(aVoid);
         }
 

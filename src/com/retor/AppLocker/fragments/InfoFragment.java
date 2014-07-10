@@ -58,7 +58,7 @@ public class InfoFragment extends android.support.v4.app.DialogFragment implemen
         loca.setText(apps.activityInfo.applicationInfo.sourceDir.toString());
         TextView activity = (TextView) v.findViewById(R.id.infoActivity);
         activity.setText((apps.activityInfo.packageName));
-        ImageView ico = (ImageView)v.findViewById(R.id.infoIco);
+        ImageView ico = (ImageView) v.findViewById(R.id.infoIco);
         ico.setImageDrawable(apps.activityInfo.loadIcon(pm));
         return v;
     }

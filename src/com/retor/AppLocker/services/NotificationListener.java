@@ -29,8 +29,8 @@ public class NotificationListener extends NotificationListenerService {
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-        for (StatusBarNotification noti:getActiveNotifications()){
-            if (blocks.contains(noti.getPackageName().toString())){
+        for (StatusBarNotification noti : getActiveNotifications()) {
+            if (blocks.contains(noti.getPackageName().toString())) {
                 cancelNotification(noti.getPackageName(), noti.getTag(), noti.getId());
             }
         }

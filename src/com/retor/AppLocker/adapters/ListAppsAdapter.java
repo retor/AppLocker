@@ -6,9 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 import com.retor.AppLocker.R;
 import com.retor.AppLocker.classes.Apps;
 import com.retor.AppLocker.classes.AppsToBlock;
@@ -16,18 +14,19 @@ import com.retor.AppLocker.classes.AppsToBlock;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListAppsAdapter extends BaseAdapter {
+public class ListAppsAdapter extends BaseAdapter implements Filterable {
     Context context;
     List<AppsToBlock> appList;
     int res;
     PackageManager pm;
     ArrayList<Apps> tests;
+    MyFilterListApps myfilter;
 
     public ListAppsAdapter(Context _context, List<AppsToBlock> _appList, int _res, PackageManager _pm) {
         context = _context;
         res = _res;
-        appList = new ArrayList<AppsToBlock>();
-        appList = _appList;
+        appList = new ArrayList<AppsToBlock>(_appList);
+        //appList = _appList;
         pm = _pm;
     }
 
@@ -37,6 +36,7 @@ public class ListAppsAdapter extends BaseAdapter {
         tests = new ArrayList<Apps>();
         tests = _appList;
         pm = _pm;
+        appList = null;
     }
 
     @Override
@@ -95,6 +95,13 @@ public class ListAppsAdapter extends BaseAdapter {
         return v;
     }
 
+    @Override
+    public Filter getFilter() {
+        if (myfilter == null)
+            myfilter = new MyFilterListApps();
+        return myfilter;
+    }
+
     public class ViewHolder {
         public boolean check;
         TextView appName;
@@ -106,6 +113,48 @@ public class ListAppsAdapter extends BaseAdapter {
             appOther = (TextView) v.findViewById(R.id.otherApp);
             appIcon = (ImageView) v.findViewById(R.id.iconApp);
             check = false;
+        }
+    }
+
+    private class MyFilterListApps extends Filter {
+        final ArrayList<AppsToBlock> filter;
+
+        public MyFilterListApps() {
+            filter = new ArrayList<AppsToBlock>(appList);
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults();
+            // We implement here the filter logic
+            if (constraint == "" || constraint == null || constraint.length() == 0) {
+                // No filter implemented we return all the list
+                results.values = filter;
+                results.count = filter.size();
+            } else {
+                // We perform filtering operation
+                ArrayList<AppsToBlock> tmpApps = new ArrayList<AppsToBlock>();
+                for (AppsToBlock app : filter) {
+                    if (app.loadLabel(pm).toString().toLowerCase().startsWith(constraint.toString().toLowerCase()))
+                        tmpApps.add(app);
+                }
+                results.values = tmpApps;
+                results.count = tmpApps.size();
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            if (results.count == 0 || constraint == null) {
+                appList = filter;
+                notifyDataSetChanged();
+                //notifyDataSetInvalidated();
+            }
+            if (results.count>0 || constraint!=null){
+                appList = (ArrayList<AppsToBlock>) results.values;
+                notifyDataSetChanged();
+            }
         }
     }
 }

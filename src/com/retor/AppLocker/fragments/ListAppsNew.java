@@ -12,25 +12,25 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListAdapter;
-import android.widget.Toast;
 import com.retor.AppLocker.R;
 import com.retor.AppLocker.adapters.ListAppsAdapter;
 import com.retor.AppLocker.classes.AppsToBlock;
 import com.retor.AppLocker.classes.Cons;
-
-import java.util.ArrayList;
 
 /**
  * Created by Антон on 25.03.14.
  */
 public class ListAppsNew extends ListFragment implements OnItemClickListener {
 
-    Context context;
     static ListAppsAdapter oldAdapter;
+    Context context;
+    MenuItem col;
+
+    static public void setOldAdapter(ListAdapter adapter) {
+        oldAdapter = (ListAppsAdapter) adapter;
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -50,6 +50,7 @@ public class ListAppsNew extends ListFragment implements OnItemClickListener {
         final ListAppsAdapter adapt = (ListAppsAdapter) getListAdapter();
         checkSelected(adapt);
         oldAdapter = adapt;
+
         //getListView().setSelector(R.drawable.selector);
         //android:background="?android:attr/activatedBackgroundIndicator"
 /*        //test
@@ -105,24 +106,44 @@ public class ListAppsNew extends ListFragment implements OnItemClickListener {
         dialogFragment.setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_Holo_Light_Dialog);
         dialogFragment.setRetainInstance(true);
         dialogFragment.setCancelable(true);
-
         final FragmentManager fragmentManager = getFragmentManager();
         dialogFragment.show(fragmentManager, "Apps");
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        col = menu.getItem(1);
+        col.setEnabled(false);
+        col.setVisible(true);
+        col.setTitle(String.valueOf(getListAdapter().getCount()));
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==R.id.action_search){
+        if (item.getItemId() == R.id.action_search) {
             final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+            final ListAppsAdapter adapter = (ListAppsAdapter) getListView().getAdapter();
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
-                public boolean onQueryTextSubmit(String s) {
-                    searching(s);
+                public boolean onQueryTextSubmit(final String s) {
+                    if (s.length() != 0)
+                        adapter.getFilter().filter(s);
+                    else {
+                        adapter.getFilter().filter(null);
+                    }
+                    col.setTitle(String.valueOf(adapter.getCount()));
                     return false;
                 }
+
                 @Override
                 public boolean onQueryTextChange(String s) {
-                    searching(s);
+                    if (s.length() != 0) {
+                        adapter.getFilter().filter(s);
+                    }else {
+                        adapter.getFilter().filter(null);
+                    }
+                    col.setTitle(String.valueOf(adapter.getCount()));
                     return false;
                 }
             });
@@ -131,22 +152,15 @@ public class ListAppsNew extends ListFragment implements OnItemClickListener {
                 public boolean onDrag(View v, DragEvent event) {
                     setListAdapter(oldAdapter);
                     checkSelected(oldAdapter);
-                    InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(searchView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                    return false;
-                }
-            });
-            searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-                @Override
-                public boolean onClose() {
-                    searchView.setQuery("", true);
                     return false;
                 }
             });
 /*            searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-
+                    searchView.setQuery("", true);
                 }
             });*/
         }
@@ -154,7 +168,7 @@ public class ListAppsNew extends ListFragment implements OnItemClickListener {
         return super.onOptionsItemSelected(item);
     }
 
-    private void checkSelected(ListAppsAdapter appsAdapter){
+    private void checkSelected(ListAppsAdapter appsAdapter) {
         SharedPreferences pref = context.getSharedPreferences(Cons.APPS_LOCK, Context.MODE_MULTI_PROCESS);
         if (pref != null)
             for (int i = 0; i < appsAdapter.getCount(); i++) {
@@ -166,7 +180,7 @@ public class ListAppsNew extends ListFragment implements OnItemClickListener {
             }
     }
 
-    private void searching(String toSearch) {
+/*    private void searching(String toSearch) {
         if (toSearch == null || toSearch.equalsIgnoreCase("") || toSearch.equalsIgnoreCase(" ") || toSearch.length() == 0) {
             {
                 setListAdapter(oldAdapter);
@@ -197,12 +211,8 @@ public class ListAppsNew extends ListFragment implements OnItemClickListener {
             ListAppsAdapter newAdapter = new ListAppsAdapter(context, tmpArray, R.layout.app, context.getPackageManager());
             setListAdapter(newAdapter);
             getListView().setTextFilterEnabled(true);
-            newAdapter.notifyDataSetInvalidated();
+            newAdapter.notifyDataSetChanged();
             checkSelected(newAdapter);
         }
-    }
-
-    static public void setOldAdapter(ListAdapter adapter){
-        oldAdapter = (ListAppsAdapter)adapter;
-    }
+    }*/
 }

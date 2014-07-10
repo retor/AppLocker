@@ -56,6 +56,7 @@ public class Blocker extends Activity implements View.OnClickListener {
     private Animation anim;
     private String app;
     private InputMethodManager imm;
+
     public Blocker() {
     }
 
@@ -66,7 +67,7 @@ public class Blocker extends Activity implements View.OnClickListener {
             MODE = getIntent().getIntExtra("mode", 0);
             Log.d("Blocker", String.valueOf(MODE));
         }
-        if (getIntent().getStringExtra(Cons.APPS_NAME)!=null){
+        if (getIntent().getStringExtra(Cons.APPS_NAME) != null) {
             am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
             pm = getPackageManager();
             int appUid = android.os.Process.myUid();
@@ -179,7 +180,7 @@ public class Blocker extends Activity implements View.OnClickListener {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (MODE==Cons.MODE_AUTH_APP || MODE==Cons.MODE_AUTH_MY) {
+        if (MODE == Cons.MODE_AUTH_APP || MODE == Cons.MODE_AUTH_MY) {
             Intent intent = new Intent("android.intent.action.MAIN");
             intent.addCategory("android.intent.category.HOME");
             intent.setFlags(268435456);
@@ -193,13 +194,13 @@ public class Blocker extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.passwordactivity);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED);
-        imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
         initial();
         if (getSharedPreferences(Cons.APP_PREF, MODE_MULTI_PROCESS) != null && !getSharedPreferences(Cons.APP_PREF, MODE_MULTI_PROCESS).getBoolean(Cons.APP_PREF_PASS_SET, false)) {
             MODE = Cons.MODE_FIRST_RUN;
         }
-        if (getSharedPreferences(Cons.APP_PREF, MODE_MULTI_PROCESS).getBoolean(Cons.APP_PREF_PASS_SET, false) && MODE==0){
+        if (getSharedPreferences(Cons.APP_PREF, MODE_MULTI_PROCESS).getBoolean(Cons.APP_PREF_PASS_SET, false) && MODE == 0) {
             MODE = Cons.MODE_AUTH_MY;
         }
 
@@ -209,10 +210,10 @@ public class Blocker extends Activity implements View.OnClickListener {
             appIcon.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_dialog_info));
             appIcon.animate();
             passwordCreate();
-            BAD_OFF=false;
+            BAD_OFF = false;
         }
 
-        if (MODE == Cons.MODE_AUTH_MY){
+        if (MODE == Cons.MODE_AUTH_MY) {
             appName.setText("Авторизация для Входа");
             appName.animate();
             appIcon.setImageDrawable(getResources().getDrawable(R.drawable.lock_icon));
@@ -237,20 +238,20 @@ public class Blocker extends Activity implements View.OnClickListener {
                 @Override
                 public void afterTextChanged(Editable s) {
                     String input = editor.getText().toString();
-                    if (savedPassword.length()==input.length()){
-                        if (savedPassword.equals(input)){
+                    if (savedPassword.length() == input.length()) {
+                        if (savedPassword.equals(input)) {
                             finish();
                             startMain();
-                        }else{
+                        } else {
                             editor.setText("");
                             editor.animate();
                         }
                     }
                 }
             });
-            BAD_OFF=false;
+            BAD_OFF = false;
         }
-        if (MODE==Cons.MODE_AUTH_APP) {
+        if (MODE == Cons.MODE_AUTH_APP) {
             hint.setText("Input password");
             hint.animate();
             editor.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
@@ -283,10 +284,12 @@ public class Blocker extends Activity implements View.OnClickListener {
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
                 }
+
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 }
+
                 @Override
                 public void afterTextChanged(Editable s) {
                     String input = editor.getText().toString();
@@ -299,7 +302,7 @@ public class Blocker extends Activity implements View.OnClickListener {
                                 startActivity(new Intent(Intent.ACTION_MAIN).setComponent(getPackageManager().getLaunchIntentForPackage(app).getComponent())
                                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET | Intent.FLAG_FROM_BACKGROUND | Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY));
                             }
-                            BAD_OFF=false;
+                            BAD_OFF = false;
                             finish();
                         } else {
                             Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.abc_slide_out_top);
@@ -310,9 +313,9 @@ public class Blocker extends Activity implements View.OnClickListener {
                     }
                 }
             });
-            BAD_OFF=false;
+            BAD_OFF = false;
         }
-        if (MODE==Cons.MODE_FORGOT){
+        if (MODE == Cons.MODE_FORGOT) {
             hideKeyboard();
             appName.setText("Восстановление пароля");
             appName.animate();
@@ -360,9 +363,9 @@ public class Blocker extends Activity implements View.OnClickListener {
                     return true;
                 }
             });
-            BAD_OFF=false;
+            BAD_OFF = false;
         }
-        if (MODE==Cons.MODE_NEW_PASS){
+        if (MODE == Cons.MODE_NEW_PASS) {
             hideKeyboard();
             appName.setText("Изменение пароля");
             appName.animate();
@@ -411,9 +414,9 @@ public class Blocker extends Activity implements View.OnClickListener {
                     return true;
                 }
             });
-            BAD_OFF=false;
+            BAD_OFF = false;
         }
-        if (MODE == Cons.MODE_NEW_WORD){
+        if (MODE == Cons.MODE_NEW_WORD) {
             appName.setText("Изменение слова");
             appName.animate();
             appIcon.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_dialog_info));
@@ -449,8 +452,8 @@ public class Blocker extends Activity implements View.OnClickListener {
                 @Override
                 public void afterTextChanged(Editable s) {
                     final String input = editor.getText().toString();
-                    if (input.length()==savedPassword.length()){
-                        if (savedPassword.equals(input)){
+                    if (input.length() == savedPassword.length()) {
+                        if (savedPassword.equals(input)) {
                             editor.setOnTouchListener(new View.OnTouchListener() {
                                 @Override
                                 public boolean onTouch(View v, MotionEvent event) {
@@ -462,7 +465,7 @@ public class Blocker extends Activity implements View.OnClickListener {
                             editor.removeTextChangedListener(this);
                             imm.setCurrentInputMethodSubtype(null);
                             wordCreate();
-                        }else{
+                        } else {
                             hint.animate();
                             editor.animate();
                             editor.setText("");
@@ -470,7 +473,7 @@ public class Blocker extends Activity implements View.OnClickListener {
                     }
                 }
             });
-            BAD_OFF=false;
+            BAD_OFF = false;
         }
     }
 
@@ -516,7 +519,7 @@ public class Blocker extends Activity implements View.OnClickListener {
                         }
                     });
                     forgot_btn.setOnClickListener(null);
-                    forgot_btn = (Button)findViewById(R.id.forgot_btn);
+                    forgot_btn = (Button) findViewById(R.id.forgot_btn);
                     forgot_btn.setEnabled(true);
                     forgot_btn.setText("Done");
                     forgot_btn.setOnClickListener(new View.OnClickListener() {
@@ -532,11 +535,11 @@ public class Blocker extends Activity implements View.OnClickListener {
                                     if (MODE == Cons.MODE_FORGOT || MODE == Cons.MODE_NEW_PASS) {
                                         finish();
                                         Intent intent = new Intent(getApplicationContext(), Blocker.class);
-                                        intent.putExtra("mode", (getIntent().getIntExtra("modeold",0)));
+                                        intent.putExtra("mode", (getIntent().getIntExtra("modeold", 0)));
                                         if (getIntent().getStringExtra(Cons.APPS_NAME) != null) {
                                             intent.putExtra(Cons.APPS_NAME, getIntent().getStringExtra(Cons.APPS_NAME));
                                         }
-                                        BAD_OFF=false;
+                                        BAD_OFF = false;
                                         startActivity(intent);
                                     }
                                 } else {
@@ -551,7 +554,7 @@ public class Blocker extends Activity implements View.OnClickListener {
                             }
                         }
                     });
-                }else {
+                } else {
                     hint.animate();
                     editor.animate();
                     editor.setText("");
@@ -588,7 +591,7 @@ public class Blocker extends Activity implements View.OnClickListener {
                 if ((keyCode == EditorInfo.IME_ACTION_DONE || keyCode == EditorInfo.IME_ACTION_GO || keyCode == EditorInfo.IME_ACTION_NEXT || keyCode == EditorInfo.IME_ACTION_SEARCH || keyCode == EditorInfo.IME_ACTION_SEND || event.getAction() == KeyEvent.ACTION_DOWN) &&
                         event.getKeyCode() == KeyEvent.KEYCODE_ENTER || event.getKeyCode() == KeyEvent.KEYCODE_BUTTON_L1 || event.getKeyCode() == KeyEvent.KEYCODE_SEARCH) {
                     final String word = editor.getText().toString();
-                    if (word != null && word.length()>3) {
+                    if (word != null && word.length() > 3) {
                         hint.setText("Confirm word");
                         hint.animate();
                         editor.setText("");
@@ -605,10 +608,10 @@ public class Blocker extends Activity implements View.OnClickListener {
                                         imm.setCurrentInputMethodSubtype(null);
                                         getSharedPreferences(Cons.APP_PREF, MODE_MULTI_PROCESS).edit()
                                                 .putString(Cons.APP_PREF_WORD, word).commit();
-                                        if (MODE == Cons.MODE_FIRST_RUN || MODE == Cons.MODE_NEW_WORD){
+                                        if (MODE == Cons.MODE_FIRST_RUN || MODE == Cons.MODE_NEW_WORD) {
                                             getSharedPreferences(Cons.APP_PREF, MODE_MULTI_PROCESS).edit().putBoolean(Cons.APP_PREF_PASS_SET, true).commit();
                                             imm.setCurrentInputMethodSubtype(null);
-                                            BAD_OFF=false;
+                                            BAD_OFF = false;
                                             finish();
                                             startMain();
                                         }
@@ -664,23 +667,24 @@ public class Blocker extends Activity implements View.OnClickListener {
     @Override
     protected void onPause() {
         super.onPause();
-        if (MODE!=Cons.MODE_AUTH_MY && MODE!=Cons.MODE_FIRST_RUN)
-        finish();
+        if (MODE != Cons.MODE_AUTH_MY && MODE != Cons.MODE_FIRST_RUN)
+            finish();
     }
 
-    private void startMain(){
+    private void startMain() {
         startActivity(new Intent(this, Home.class)
                 .setFlags(PendingIntent.FLAG_CANCEL_CURRENT)
                 .putExtra("mode", Cons.MODE_FIRST_RUN)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
-    private void hideKeyboard(){
-        LinearLayout keyboard = (LinearLayout)findViewById(R.id.keyboard);
+    private void hideKeyboard() {
+        LinearLayout keyboard = (LinearLayout) findViewById(R.id.keyboard);
         keyboard.setVisibility(View.INVISIBLE);
     }
-    private void showKeyboard(){
-        LinearLayout keyboard = (LinearLayout)findViewById(R.id.keyboard);
+
+    private void showKeyboard() {
+        LinearLayout keyboard = (LinearLayout) findViewById(R.id.keyboard);
         keyboard.setVisibility(View.VISIBLE);
     }
 

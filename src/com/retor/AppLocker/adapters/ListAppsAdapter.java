@@ -90,9 +90,9 @@ public class ListAppsAdapter extends BaseAdapter implements Filterable {
             appOtherStr = appList.get(position).activityInfo.processName.toString();
             appIco = appList.get(position).loadIcon(pm);
             if (appList.get(position).isCheck()){
-                lock = context.getResources().getDrawable(R.drawable.encrypted);
+                lock = context.getResources().getDrawable(R.drawable.lock_ic);
             }else{
-                lock = context.getResources().getDrawable(R.drawable.decrypted);
+                lock = context.getResources().getDrawable(R.drawable.unlock_ic);
             }
         }
         vh.appName.setText(appNameStr);

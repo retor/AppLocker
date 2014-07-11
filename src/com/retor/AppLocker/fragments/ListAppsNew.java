@@ -73,21 +73,21 @@ public class ListAppsNew extends ListFragment implements OnItemClickListener {
         ImageView lock = (ImageView)view.findViewById(R.id.imageLock);
         if (!tmpApps.isCheck()) {
             tmpApps.setCheck(true);
-            lock.setImageDrawable(getResources().getDrawable(R.drawable.encrypted));
-            createDialog(tmpApps, context);
+            lock.setImageDrawable(getResources().getDrawable(R.drawable.lock_ic));
+            //createDialog(tmpApps, context);
             vibration(context, 1);
             String act = tmpApps.activityInfo.name;
             if (!preferences.contains(tmpApps.activityInfo.applicationInfo.packageName))
                 preferences.edit().putString(tmpApps.activityInfo.applicationInfo.packageName, act).commit();
-            Toast.makeText(context, "+", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "+", Toast.LENGTH_SHORT).show();
         } else {
             tmpApps.setCheck(false);
-            lock.setImageDrawable(getResources().getDrawable(R.drawable.decrypted));
+            lock.setImageDrawable(getResources().getDrawable(R.drawable.unlock_ic));
             vibration(context, 2);
             preferences.edit().remove(tmpApps.activityInfo.applicationInfo.packageName).commit();
-            Toast.makeText(context, "-", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "-", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(context, String.valueOf(getListView().getCheckedItemCount()), Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Total block: " + String.valueOf(getListView().getCheckedItemCount()), Toast.LENGTH_SHORT).show();
     }
 
     private void vibration(Context _context, int _repeat) {

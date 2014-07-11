@@ -31,15 +31,12 @@ import android.widget.Toast;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.retor.AppLocker.R;
 import com.retor.AppLocker.adapters.ListAppsAdapter;
-import com.retor.AppLocker.adapters.LunchedAdapter;
 import com.retor.AppLocker.adapters.ViewPagerAdapter;
 import com.retor.AppLocker.classes.AppInfo;
 import com.retor.AppLocker.classes.Apps;
 import com.retor.AppLocker.classes.AppsToBlock;
 import com.retor.AppLocker.classes.Cons;
-import com.retor.AppLocker.fragments.ListApps;
 import com.retor.AppLocker.fragments.ListAppsNew;
-import com.retor.AppLocker.fragments.ListLunchedApps;
 import com.retor.AppLocker.services.ListenService;
 
 import java.util.ArrayList;
@@ -59,9 +56,9 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     private PagerTabStrip pagerTab;
     private ViewPagerAdapter vpa;
     //fragments
-    private ListApps listApps;
+/*    private ListApps listApps;
     private ListApps listAppsAuto;
-    private ListLunchedApps listTasks;
+    private ListLunchedApps listTasks;*/
     private ListAppsNew listik;
     //arrays
     private ArrayList<AppsToBlock> listApss;
@@ -105,13 +102,13 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
 
         //create/init fragments
         listik = new ListAppsNew();
-        listApps = new ListApps();
+/*        listApps = new ListApps();
         listAppsAuto = new ListApps();
-        listTasks = new ListLunchedApps();
+        listTasks = new ListLunchedApps();*/
         listApss = new ArrayList<AppsToBlock>();
-        testArray = new ArrayList<Apps>();
+/*        testArray = new ArrayList<Apps>();
         testArray1 = new ArrayList<Apps>();
-        appInfos = new ArrayList<AppInfo>();
+        appInfos = new ArrayList<AppInfo>();*/
         fragments = new ArrayList<Fragment>();
 
         //ActionBar
@@ -203,9 +200,9 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         listik.setRetainInstance(true);
-        listApps.setRetainInstance(true);
+/*        listApps.setRetainInstance(true);
         listAppsAuto.setRetainInstance(true);
-        listTasks.setRetainInstance(true);
+        listTasks.setRetainInstance(true);*/
     }
 
     public ArrayList<AppInfo> getListAppInfo(List<RunningAppProcessInfo> runningAppProcessInfo) {
@@ -237,24 +234,24 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
                     Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
                     startActivity(intent);
                 } else {
-                    Toast.makeText(context, "Menu 1", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Another android version", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.textView2:
                 Intent serviceIntent = new Intent(getApplicationContext(), ListenService.class);
                 stopService(serviceIntent);
                 startService(serviceIntent);
-                Toast.makeText(context, "Menu 2", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Menu 2", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.textView3:
                 startActivity(new Intent(this, Blocker.class).putExtra("mode", Cons.MODE_NEW_WORD));
                 //createDialog(Cons.MODE_NEW_WORD, true, "new word");
-                Toast.makeText(context, "Menu 3", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Menu 3", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.textView4:
                 startActivity(new Intent(this, Blocker.class).putExtra("mode", Cons.MODE_NEW_PASS));
                 //createDialog(Cons.MODE_NEW_PASS, true, "new password");
-                Toast.makeText(context, "Menu 4", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Menu 4", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -357,14 +354,14 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         protected void onPostExecute(Void aVoid) {
             //create/set adapters for fragments
             listik.setListAdapter(new ListAppsAdapter(getApplicationContext(), listApss, R.layout.app, pm));
-            listApps.setListAdapter(new ListAppsAdapter(getApplicationContext(), testArray, R.layout.app, pm));
+/*            listApps.setListAdapter(new ListAppsAdapter(getApplicationContext(), testArray, R.layout.app, pm));
             listAppsAuto.setListAdapter(new ListAppsAdapter(getApplicationContext(), testArray1, R.layout.app, pm));
-            listTasks.setListAdapter(new LunchedAdapter(pm, context, appInfos, R.layout.app));
+            listTasks.setListAdapter(new LunchedAdapter(pm, context, appInfos, R.layout.app));*/
             //fill viewpager
             fragments.add(0, listik);
-            fragments.add(1, listAppsAuto);
+/*            fragments.add(1, listAppsAuto);
             fragments.add(2, listTasks);
-            fragments.add(3, listApps);
+            fragments.add(3, listApps);*/
             pager.setAdapter(vpa);
             pd.dismiss();
 /*            col.setTitle(getStringToBar(0));

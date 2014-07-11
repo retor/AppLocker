@@ -70,8 +70,10 @@ public class ListAppsNew extends ListFragment implements OnItemClickListener {
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         AppsToBlock tmpApps = (AppsToBlock) parent.getItemAtPosition(position);
         SharedPreferences preferences = context.getSharedPreferences(Cons.APPS_LOCK, Context.MODE_MULTI_PROCESS);
+        ImageView lock = (ImageView)view.findViewById(R.id.imageLock);
         if (!tmpApps.isCheck()) {
             tmpApps.setCheck(true);
+            lock.setImageDrawable(getResources().getDrawable(R.drawable.encrypted));
             createDialog(tmpApps, context);
             vibration(context, 1);
             String act = tmpApps.activityInfo.name;
@@ -80,6 +82,7 @@ public class ListAppsNew extends ListFragment implements OnItemClickListener {
             Toast.makeText(context, "+", Toast.LENGTH_SHORT).show();
         } else {
             tmpApps.setCheck(false);
+            lock.setImageDrawable(getResources().getDrawable(R.drawable.decrypted));
             vibration(context, 2);
             preferences.edit().remove(tmpApps.activityInfo.applicationInfo.packageName).commit();
             Toast.makeText(context, "-", Toast.LENGTH_SHORT).show();
@@ -173,14 +176,19 @@ public class ListAppsNew extends ListFragment implements OnItemClickListener {
         if (pref != null)
             for (int i = 0; i < appsAdapter.getCount(); i++) {
                 AppsToBlock checker = (AppsToBlock) appsAdapter.getItem(i);
-                if (pref.getString(checker.activityInfo.applicationInfo.packageName, null) != null)
+                if (pref.getString(checker.activityInfo.applicationInfo.packageName, null) != null) {
                     checker.setCheck(true);
-                if (checker.isCheck())
+                }
+                if (checker.isCheck()){
                     getListView().setItemChecked(i, true);
+                }
+
             }
     }
 
-/*    private void searching(String toSearch) {
+
+
+    /*    private void searching(String toSearch) {
         if (toSearch == null || toSearch.equalsIgnoreCase("") || toSearch.equalsIgnoreCase(" ") || toSearch.length() == 0) {
             {
                 setListAdapter(oldAdapter);

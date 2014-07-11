@@ -40,4 +40,12 @@
             android:layout_toRightOf="@+id/iconApp"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"/>
+
+    <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:id="@+id/imageLock"
+            android:layout_alignBottom="@+id/iconApp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
 </RelativeLayout>

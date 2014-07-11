@@ -116,6 +116,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
 
         //ActionBar
         actionBar = getSupportActionBar();
+
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         //pd = new ProgressDialog(this).show(this, null, "Loading...", true, true);

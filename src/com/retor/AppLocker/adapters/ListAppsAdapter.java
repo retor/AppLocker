@@ -76,6 +76,7 @@ public class ListAppsAdapter extends BaseAdapter implements Filterable {
         String appNameStr;
         String appOtherStr;
         Drawable appIco;
+        Drawable lock =null;
         if (appList == null) {
             appNameStr = tests.get(position).applicationInfo.loadLabel(pm).toString();
             appOtherStr = tests.get(position).applicationInfo.processName.toString();
@@ -88,10 +89,16 @@ public class ListAppsAdapter extends BaseAdapter implements Filterable {
             }
             appOtherStr = appList.get(position).activityInfo.processName.toString();
             appIco = appList.get(position).loadIcon(pm);
+            if (appList.get(position).isCheck()){
+                lock = context.getResources().getDrawable(R.drawable.encrypted);
+            }else{
+                lock = context.getResources().getDrawable(R.drawable.decrypted);
+            }
         }
         vh.appName.setText(appNameStr);
         vh.appOther.setText(appOtherStr);
         vh.appIcon.setImageDrawable(appIco);
+        vh.lock.setImageDrawable(lock);
         return v;
     }
 
@@ -107,11 +114,13 @@ public class ListAppsAdapter extends BaseAdapter implements Filterable {
         TextView appName;
         TextView appOther;
         ImageView appIcon;
+        ImageView lock;
 
         public ViewHolder(View v) {
             appName = (TextView) v.findViewById(R.id.nameApp);
             appOther = (TextView) v.findViewById(R.id.otherApp);
             appIcon = (ImageView) v.findViewById(R.id.iconApp);
+            lock = (ImageView) v.findViewById(R.id.imageLock);
             check = false;
         }
     }

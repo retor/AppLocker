@@ -16,8 +16,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="library" exported="" />
-    <orderEntry type="library" exported="" name="libs" level="project" />
     <orderEntry type="module" module-name="appcompat" exported="" />
+    <orderEntry type="library" exported="" name="libs" level="project" />
   </component>
 </module>
 

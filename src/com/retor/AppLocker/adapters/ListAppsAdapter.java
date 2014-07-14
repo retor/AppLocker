@@ -1,6 +1,7 @@
 package com.retor.AppLocker.adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.*;
 import com.retor.AppLocker.R;
 import com.retor.AppLocker.classes.Apps;
 import com.retor.AppLocker.classes.AppsToBlock;
+import com.retor.AppLocker.classes.Cons;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +74,7 @@ public class ListAppsAdapter extends BaseAdapter implements Filterable {
         View v;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         v = inflater.inflate(res, null);
+        checkSelected(appList.get(position));
         ViewHolder vh = new ViewHolder(v);
         String appNameStr;
         String appOtherStr;
@@ -163,6 +166,16 @@ public class ListAppsAdapter extends BaseAdapter implements Filterable {
             if (results.count>0 || constraint!=null){
                 appList = (ArrayList<AppsToBlock>) results.values;
                 notifyDataSetChanged();
+            }
+        }
+    }
+
+    private void checkSelected(AppsToBlock app) {
+        SharedPreferences pref = context.getSharedPreferences(Cons.APPS_LOCK, Context.MODE_MULTI_PROCESS);
+        if (pref != null && app!=null){
+            String tmpName = app.activityInfo.applicationInfo.packageName;
+               if (pref.getString(tmpName, null) != null) {
+                app.setCheck(true);
             }
         }
     }

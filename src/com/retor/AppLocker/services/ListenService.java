@@ -43,7 +43,7 @@ public class ListenService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        startService(new Intent(this, NotificationListener.class));
+        //startService(new Intent(this, NotificationListener.class));
         executor = Executors.newScheduledThreadPool(1);
         executor1 = Executors.newScheduledThreadPool(1);
         executor.scheduleAtFixedRate(new MyCheckAppsThread(getApplicationContext(), ALL, UNLOCK), 5, 50, TimeUnit.MILLISECONDS);

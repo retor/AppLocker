@@ -307,6 +307,9 @@ public class Home extends ActionBarActivity implements View.OnClickListener, Vie
         TextView menu4 = (TextView) findViewById(R.id.textView4);
         menu4.setTypeface(tf);
         menu4.setOnClickListener(this);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            menu1.setEnabled(false);
+        }
     }
 
 /*    public String getStringToBar(int i) {

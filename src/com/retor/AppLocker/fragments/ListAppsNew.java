@@ -46,16 +46,7 @@ public class ListAppsNew extends ListFragment implements OnItemClickListener {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getListView().setOnItemClickListener(this);
-        getListView().setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-        final ListAppsAdapter adapt = (ListAppsAdapter) getListAdapter();
-        checkSelected(adapt);
-        oldAdapter = adapt;
-
-        //getListView().setSelector(R.drawable.selector);
-        //android:background="?android:attr/activatedBackgroundIndicator"
-/*        //test
-        getListView().setItemChecked(2,true);*/
-
+        //getListView().setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
     }
 
     @Override
@@ -71,11 +62,13 @@ public class ListAppsNew extends ListFragment implements OnItemClickListener {
         AppsToBlock tmpApps = (AppsToBlock) parent.getItemAtPosition(position);
         SharedPreferences preferences = context.getSharedPreferences(Cons.APPS_LOCK, Context.MODE_MULTI_PROCESS);
         ImageView lock = (ImageView)view.findViewById(R.id.imageLock);
+        if (!tmpApps.loadLabel(getActivity().getPackageManager()).toString().equalsIgnoreCase("applocker"))
         if (!tmpApps.isCheck()) {
             tmpApps.setCheck(true);
             lock.setImageDrawable(getResources().getDrawable(R.drawable.lock_ic));
             //createDialog(tmpApps, context);
             vibration(context, 1);
+            view.setSelected(false);
             String act = tmpApps.activityInfo.name;
             if (!preferences.contains(tmpApps.activityInfo.applicationInfo.packageName))
                 preferences.edit().putString(tmpApps.activityInfo.applicationInfo.packageName, act).commit();
@@ -87,7 +80,7 @@ public class ListAppsNew extends ListFragment implements OnItemClickListener {
             preferences.edit().remove(tmpApps.activityInfo.applicationInfo.packageName).commit();
             //Toast.makeText(context, "-", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(context, "Total block: " + String.valueOf(getListView().getCheckedItemCount()), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "Total block: " + String.valueOf(getListView().getCheckedItemCount()), Toast.LENGTH_SHORT).show();
     }
 
     private void vibration(Context _context, int _repeat) {
@@ -143,8 +136,12 @@ public class ListAppsNew extends ListFragment implements OnItemClickListener {
                 public boolean onQueryTextChange(String s) {
                     if (s.length() != 0) {
                         adapter.getFilter().filter(s);
+                        adapter.notifyDataSetInvalidated();
+                        adapter.notifyDataSetChanged();
                     }else {
                         adapter.getFilter().filter(null);
+                        adapter.notifyDataSetInvalidated();
+                        adapter.notifyDataSetChanged();
                     }
                     col.setTitle(String.valueOf(adapter.getCount()));
                     return false;
@@ -154,7 +151,7 @@ public class ListAppsNew extends ListFragment implements OnItemClickListener {
                 @Override
                 public boolean onDrag(View v, DragEvent event) {
                     setListAdapter(oldAdapter);
-                    checkSelected(oldAdapter);
+                    //checkSelected(oldAdapter);
                     InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(searchView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     return false;
